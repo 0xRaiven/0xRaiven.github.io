@@ -1,38 +1,56 @@
 ---
 title: 0xraiven.github.io
-description: Personal cybersecurity research portfolio, knowledge base, and interactive terminal system built with Next.js and Keystatic CMS.
+description: Public offensive security portfolio, red teaming repository, and technical knowledge base maintained by @0xraiven.
 status: active
 category: red-team-tooling
 technologies:
   - TypeScript
-  - Next.js
-  - React
-  - Tailwind CSS
-  - Keystatic CMS
-  - Markdoc
+  - Roff
+  - CSS
+  - JavaScript
 githubUrl: https://github.com/0xraiven/0xraiven.github.io
 screenshots: []
 relatedWriteupSlugs: []
 ---
 
-# 0xraiven.github.io
+# r41n // 0xraiven.github.io
 
-Technical portfolio, offensive security research directory, and interactive terminal interface engineered by Neil (0xraiven / r41n).
+> Public offensive security portfolio, red teaming repository, and technical knowledge base maintained by **[@0xraiven](https://github.com/0xraiven)**.
 
-## Overview
+---
 
-The platform serves as an operational hub and public technical repository for security research, vulnerability writeups, machine walkthroughs, and custom defensive/offensive tooling. Designed with a cyber-tactical aesthetic, the platform combines static site generation speed with local CMS workflows and interactive client-side execution primitives.
+## Purpose & Scope
 
-## Architecture
+This platform serves as a centralized, open-access operational archive for:
 
-- **Framework**: Next.js (App Router) with React Server Components (RSC)
-- **Content Management**: Local-first Keystatic CMS with Markdoc document parsing and schema validation
-- **Styling**: Tailored CSS design tokens with custom CRT scanline shaders, cyberpunk HUD components, and telemetry widgets
-- **Search System**: Pre-indexed client-side search engine covering writeups, research papers, field notes, and repository artifacts
-- **Terminal System**: Interactive terminal shell supporting command execution, theme toggling, directory traversal, and direct routing
+- **Security Engineering & Tools ([`/projects`](https://0xraiven.github.io/projects))**: Open-source cybersecurity tools, threat detection sensors, and security architectures.
+- **Offensive Security Walkthroughs ([`/writeups`](https://0xraiven.github.io/writeups))**: Detailed attack paths, Active Directory escalation vectors, and Hack The Box machine writeups categorized across Low, Medium, Hard, and Insane tiers.
+- **Tactical Field Notes ([`/notes`](https://0xraiven.github.io/notes))**: Incident runbooks, command cheatsheets, and privilege escalation techniques.
+- **Vulnerability Research ([`/research`](https://0xraiven.github.io/research))**: Threat modeling, vulnerability analysis, and exploit research.
+- **Operator Profile & Resume ([`/about`](https://0xraiven.github.io/about), [`/resume`](https://0xraiven.github.io/resume))**: Background, technical competencies, and professional credentials.
+- **Direct Dispatch & Communications ([`/contact`](https://0xraiven.github.io/contact))**: Verified public coordinates, ProtonMail E2EE WKD routing, and direct dispatch channel.
 
-## Key Features
+---
 
-1. **Structured Writeup Repository**: Hack The Box and CTF post-mortems categorized by machine difficulty tiers (Low, Medium, Hard, Insane) with exploit timelines and remediation guidelines.
-2. **Repository Sync Engine**: Automated GitHub API synchronization pipeline that scaffolds missing project artifacts directly into Keystatic-managed markdown collections.
-3. **Encrypted Communications**: Integrated contact channel with verified PGP public keys and security disclosure parameters.
+## Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org/) (App Router, Static HTML Export)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) v4 with custom Obsidian & Wine Red aesthetic tokens
+- **CMS**: [Keystatic](https://keystatic.com/) (File-based Markdown & MDOC collections)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Deployment**: [GitHub Pages](https://pages.github.com/) via GitHub Actions CI/CD
+
+---
+
+## 💻 Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run repo sync and local dev server
+npm run dev
+
+# Build static production bundle
+npm run build
+```

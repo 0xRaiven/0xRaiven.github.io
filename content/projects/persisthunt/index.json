@@ -1,5 +1,5 @@
 {
-  "title": "Persistence Hunter",
+  "title": "Persist Hunt",
   "description": "Linux persistence detection framework. Standardizes host anomaly telemetry across cron schedules, systemd service units, and shell environment initialization vectors",
   "status": "active",
   "category": "detection-engineering",

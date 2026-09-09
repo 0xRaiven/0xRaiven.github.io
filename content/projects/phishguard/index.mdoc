@@ -118,97 +118,75 @@ This allows individual detection components to evolve independently without coup
 
 ### Implemented Functionality
 
-#### Real-time URL Canonicalization
+- **Real-time URL Canonicalization**
+  - Bounded recursive decoding
+  - IDNA/Punycode normalization
+  - Unicode/confusable character analysis
+  - Path normalization
+  - Hexadecimal IP normalization
+  - Integer IP normalization
+  - Preservation of raw and canonical URL representations
+  - Configurable maximum decoding depth
 
-- Bounded recursive decoding
-- IDNA/Punycode normalization
-- Unicode/confusable character analysis
-- Path normalization
-- Hexadecimal IP normalization
-- Integer IP normalization
-- Preservation of raw and canonical URL representations
-- Configurable maximum decoding depth
+- **Privacy Controls**
+  - Local-only detection mode
+  - Optional external threat intelligence
+  - Telemetry disabled by default
+  - User-controlled feedback submission
 
+- **Model Explainability (XAI)**
+  - SHAP-based feature attribution
+  - Human-readable explanations of model contributions
+  - Feature-level evidence can be surfaced to users
+  - Designed to improve transparency rather than treating the ML model as an opaque authority
 
-#### Privacy Controls
+- **Brand Impersonation Detection**
+  - Fuzzy matching
+  - Levenshtein-distance-based similarity
+  - Detection against commonly targeted brands
 
-- Local-only detection mode
-- Optional external threat intelligence
-- Telemetry disabled by default
-- User-controlled feedback submission
+- **User Feedback Pipeline**
+  - False-positive feedback
+  - False-negative feedback
+  - Optional URL privacy protection through hashing
 
+- **Risk & Policy Engine**
+  - Combines ML predictions and non-ML security signals
+  - Produces a normalized 0–100 risk score
+  - Maps risk levels to policy actions such as ALLOW, WARN, or BLOCK
 
-#### Model Explainability (XAI)
+- **Hardened API**
+  - Versioned `/api/v1/` endpoints
+  - Configurable request/resource limits
+  - Request validation
+  - Explicit error handling
+  - Production-oriented WSGI deployment support
 
-- SHAP-based feature attribution
-- Human-readable explanations of model contributions
-- Feature-level evidence can be surfaced to users
-- Designed to improve transparency rather than treating the ML model as an opaque authority
-
-
-#### Brand Impersonation Detection
-
-- Fuzzy matching
-- Levenshtein-distance-based similarity
-- Detection against commonly targeted brands
-
-
-#### User Feedback Pipeline
-
-- False-positive feedback
-- False-negative feedback
-- Optional URL privacy protection through hashing
-
-
-#### Risk & Policy Engine
-
-- Combines ML predictions and non-ML security signals
-- Produces a normalized 0–100 risk score
-- Maps risk levels to policy actions such as ALLOW, WARN, or BLOCK
-
-
-#### Hardened API
-
-- Versioned `/api/v1/` endpoints
-- Configurable request/resource limits
-- Request validation
-- Explicit error handling
-- Production-oriented WSGI deployment support
-
-
-#### CI/CD Integration
-
-- Automated unit and integration testing
-- Dependency checks
-- Chrome extension manifest validation
-- GitHub Actions integration
-
+- **CI/CD Integration**
+  - Automated unit and integration testing
+  - Dependency checks
+  - Chrome extension manifest validation
+  - GitHub Actions integration
 
 ### Experimental Functionality
 
-#### DOM Signal Processing
-
-- The Chrome extension can extract page-level signals such as forms and iframes.
-- These signals are currently treated as experimental and are not yet part of the primary ML feature set.
-- Future versions may incorporate DOM signals into the detection and risk engines.
-
+- **DOM Signal Processing**
+  - The Chrome extension can extract page-level signals such as forms and iframes.
+  - These signals are currently treated as experimental and are not yet part of the primary ML feature set.
+  - Future versions may incorporate DOM signals into the detection and risk engines.
 
 ### Optional Functionality
 
-#### Threat Intelligence
+- **Threat Intelligence**
+  - PhishTank integration
+  - VirusTotal integration
+  - Requires corresponding API keys
+  - Disabled when operating in Local Only mode
 
-- PhishTank integration
-- VirusTotal integration
-- Requires corresponding API keys
-- Disabled when operating in Local Only mode
-
-
-#### Optional Telemetry
-
-- Disabled by default
-- Can be explicitly enabled by the operator
-- Intended for improving detection and system monitoring
-
+- **Telemetry**
+  - Disabled by default
+  - Can be explicitly enabled by the operator
+  - Intended for improving detection and system monitoring
 
 ---
 
@@ -469,12 +447,27 @@ They represent areas for future research rather than hidden limitations.
 
 ## 9. Chrome Extension Installation
 
-- Open Chrome and navigate to `chrome://extensions/`
-- Enable **Developer mode**.
-- Click **Load unpacked**.
-- Select the `extension/` directory from this repository.
-- Click the PhishGuard icon and open the **Options** page.
-- Configure the backend URL to `http://127.0.0.1:5000`
+1. Open Chrome and navigate to:
+
+```text
+chrome://extensions/
+```
+
+2. Enable **Developer mode**.
+
+3. Click **Load unpacked**.
+
+4. Select the `extension/` directory from this repository.
+
+5. Click the PhishGuard icon.
+
+6. Open the **Options** page.
+
+7. Configure the backend URL, for example:
+
+```text
+http://127.0.0.1:5000
+```
 
 The extension is currently intended primarily for development and personal deployment.
 
@@ -593,7 +586,7 @@ When Local Only mode is enabled:
 - Browsing URLs are not sent to external intelligence providers.
 - Detection continues using locally available detection mechanisms.
 
-### Telemetry Policy
+### Telemetry
 
 Telemetry is disabled by default.
 

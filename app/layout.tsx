@@ -86,10 +86,12 @@ export default function RootLayout({
                   doc.setAttribute('data-mode', stored);
 
                   // Synchronous bootloader gating to eliminate Flash of Unbooted Content (FOUC)
+                  var pathname = window.location.pathname;
+                  var isKeystatic = pathname.startsWith('/keystat');
                   var urlParams = new URLSearchParams(window.location.search);
                   var forceBoot = urlParams.get('boot') === 'true' || urlParams.get('reboot') === 'true';
                   var alreadyBooted = sessionStorage.getItem('r41n_booted');
-                  if (forceBoot || !alreadyBooted) {
+                  if ((forceBoot || !alreadyBooted) && !isKeystatic) {
                     doc.classList.add('booting-active');
                   }
                 } catch (e) {}

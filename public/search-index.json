@@ -124,48 +124,34 @@
   {
     "id": "project-0xraiven",
     "title": "0xraiven",
-    "description": "Operator GitHub profile repository featuring live security telemetry streams, dynamic SVG widgets, and active research overview.",
+    "description": "0xraiven security engineering artifact.",
     "url": "/projects/0xraiven",
     "kind": "project",
-    "category": "detection-engineering",
-    "tags": [
-      "Markdown",
-      "SVG",
-      "GitHub Actions",
-      "Telemetry Stream",
-      "Automation"
-    ]
+    "category": "red-team-tooling",
+    "tags": []
   },
   {
     "id": "project-0xraiven-github-io",
     "title": "0xraiven.github.io",
-    "description": "Personal cybersecurity research portfolio, knowledge base, and interactive terminal system built with Next.js and Keystatic CMS.",
+    "description": "Public offensive security portfolio, red teaming repository, and technical knowledge base maintained by @0xraiven.",
     "url": "/projects/0xraiven-github-io",
     "kind": "project",
     "category": "red-team-tooling",
     "tags": [
       "TypeScript",
-      "Next.js",
-      "React",
-      "Tailwind CSS",
-      "Keystatic CMS",
-      "Markdoc"
+      "Roff",
+      "CSS",
+      "JavaScript"
     ]
   },
   {
     "id": "project-aenexz",
     "title": "Aenexz",
-    "description": "SecureCorp project security assessment documentation, audit reports, reconstructed terminal transcripts, and working evidence.",
+    "description": "assignment reports",
     "url": "/projects/aenexz",
     "kind": "project",
-    "category": "lab-environment",
-    "tags": [
-      "Documentation",
-      "Security Audit",
-      "Evidence Analysis",
-      "Terminal Transcripts",
-      "Master Reporting"
-    ]
+    "category": "red-team-tooling",
+    "tags": []
   },
   {
     "id": "project-gameoptimizer",
@@ -289,7 +275,8 @@
       "blockchain-technology",
       "icp",
       "internet-computer",
-      "motoko-lang"
+      "motoko-lang",
+      "on-chain"
     ]
   },
   {
@@ -306,7 +293,10 @@
       "css",
       "html",
       "js",
-      "open-street-map"
+      "open-street-map",
+      "openweathermap-api",
+      "weather-app",
+      "wttrin"
     ]
   }
 ]

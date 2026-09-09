@@ -1,5 +1,5 @@
 {
-  "title": "PhishGuard",
+  "title": "Phish Guard",
   "description": "Privacy-first ML-powered phishing detection engine with Chrome extension, URL canonicalization, explainable risk scoring, and threat intelligence.",
   "status": "active",
   "category": "browser-security",

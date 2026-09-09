@@ -104,6 +104,15 @@ export function SystemMatrixBootLoader() {
   // Check session storage on mount + support URL force boot (?boot=true or ?reboot=true)
   useEffect(() => {
     try {
+      if (typeof window !== "undefined" && window.location.pathname.startsWith("/keystat")) {
+        setIsVisible(false);
+        if (typeof document !== "undefined") {
+          document.documentElement.classList.remove("booting-active");
+          document.body.classList.remove("booting-active");
+        }
+        return;
+      }
+
       const urlParams = new URLSearchParams(window.location.search);
       const forceBoot = urlParams.get("boot") === "true" || urlParams.get("reboot") === "true";
       const alreadyBooted = sessionStorage.getItem(BOOT_STORAGE_KEY);

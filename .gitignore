@@ -43,3 +43,5 @@ next-env.d.ts
 # repository specific
 r41n-architecture-final.md
 node_modules
+
+.env.development

@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
+const isProd = process.env.NODE_ENV === "production";
+
 const nextConfig: NextConfig = {
-  output: process.env.NODE_ENV === "production" ? "export" : undefined,
+  output: isProd ? "export" : undefined,
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -15,6 +17,19 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  ...(!isProd
+    ? {
+        async redirects() {
+          return [
+            {
+              source: "/keystat",
+              destination: "/keystatic",
+              permanent: false,
+            },
+          ];
+        },
+      }
+    : {}),
 };
 
 export default nextConfig;

@@ -1,15 +1,9 @@
 {
   "title": "0xraiven",
-  "description": "Operator GitHub profile repository featuring live security telemetry streams, dynamic SVG widgets, and active research overview.",
+  "description": "0xraiven security engineering artifact.",
   "status": "active",
-  "category": "detection-engineering",
-  "technologies": [
-    "Markdown",
-    "SVG",
-    "GitHub Actions",
-    "Telemetry Stream",
-    "Automation"
-  ],
+  "category": "red-team-tooling",
+  "technologies": [],
   "githubUrl": "https://github.com/0xraiven/0xraiven",
   "screenshots": [],
   "relatedWriteupSlugs": []
