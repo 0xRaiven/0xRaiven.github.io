@@ -165,8 +165,7 @@
       "batch-script",
       "gaming",
       "low-end-pc",
-      "performance-optimization",
-      "windows"
+      "performance-optimization"
     ]
   },
   {
@@ -198,8 +197,7 @@
       "css3",
       "framer-motion",
       "reactjs",
-      "typescipt",
-      "vercel-deployment"
+      "typescipt"
     ]
   },
   {
@@ -227,10 +225,7 @@
       "linux",
       "persistent-storage",
       "python3",
-      "security-audit",
-      "security-tools",
-      "shell",
-      "vulernability-scanner"
+      "security-audit"
     ]
   },
   {
@@ -248,15 +243,7 @@
       "chrome-extensions",
       "cybersecurity",
       "cybersecurity-tools",
-      "flask",
-      "machine-learning",
-      "phishing-detector",
-      "phishing-protection",
-      "python",
-      "security",
-      "shap",
-      "threat-detection",
-      "xai"
+      "flask"
     ]
   },
   {
@@ -275,8 +262,7 @@
       "blockchain-technology",
       "icp",
       "internet-computer",
-      "motoko-lang",
-      "on-chain"
+      "motoko-lang"
     ]
   },
   {
@@ -293,10 +279,7 @@
       "css",
       "html",
       "js",
-      "open-street-map",
-      "openweathermap-api",
-      "weather-app",
-      "wttrin"
+      "open-street-map"
     ]
   }
 ]
