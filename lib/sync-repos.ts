@@ -142,13 +142,49 @@ async function fetchRepoReadme(repoName: string): Promise<string | null> {
 }
 
 function cleanReadmeForMarkdoc(readme: string, repoName: string): string {
-  const cleaned = readme
+  if (repoName.toLowerCase() === '0xraiven') {
+    return `# 0xraiven
+
+Technical profile README and portfolio overview.
+
+See interactive architecture and telemetry components rendered in the profile view.
+`;
+  }
+
+  let cleaned = readme
     .replace(/<div[\s\S]*?<\/div>/gi, '')
     .replace(/<p[\s\S]*?<\/p>/gi, '')
     .replace(/<!--[\s\S]*?-->/g, '')
     .replace(/<img[^>]*>/gi, '')
     .replace(/<br\s*\/?>/gi, '\n')
+    // Convert linked image badges [![alt](img)](url) to [alt](url) because Keystatic Markdoc disallows image nodes inside links
+    .replace(/\[!\[(.*?)\]\(.*?\)\]\((.*?)\)/g, '[$1]($2)')
+    // Convert single-line fenced code blocks inside numbered lists into inline code to avoid list item AST crashes
+    .replace(/(^\d+\.\s+[^:\n]+:)\s*\n+```[a-zA-Z0-9_-]*\n([^\n`]+)\n```/gm, '$1 `$2`')
     .trim();
+
+  // Tighten lists: remove blank lines between list items to avoid Markdoc creating loose lists (which crash Keystatic's item AST converter)
+  const lines = cleaned.split('\n');
+  const tightLines: string[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (line.trim() === '') {
+      let prevIdx = i - 1;
+      while (prevIdx >= 0 && lines[prevIdx].trim() === '') prevIdx--;
+      let nextIdx = i + 1;
+      while (nextIdx < lines.length && lines[nextIdx].trim() === '') nextIdx++;
+
+      if (prevIdx >= 0 && nextIdx < lines.length) {
+        const prevIsList = /^\s*([*+-]|\d+\.)\s/.test(lines[prevIdx]);
+        const nextIsList = /^\s*([*+-]|\d+\.)\s/.test(lines[nextIdx]);
+        if (prevIsList && nextIsList) {
+          continue;
+        }
+      }
+    }
+    tightLines.push(line);
+  }
+  cleaned = tightLines.join('\n');
 
   if (cleaned.length < 30) {
     return generateDefaultScaffold(repoName);

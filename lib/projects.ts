@@ -76,19 +76,40 @@ export async function getProjects(): Promise<EnrichedProject[]> {
 }
 
 export async function getProjectBySlug(slug: string): Promise<EnrichedProject | null> {
+  const normalizedSlug = slug.toLowerCase();
   try {
+    let targetSlug = slug;
     let item = await reader.collections.projects.read(slug);
+    if (!item && slug !== normalizedSlug) {
+      item = await reader.collections.projects.read(normalizedSlug);
+      if (item) targetSlug = normalizedSlug;
+    }
     if (!item) {
-      const synced = await ensureProjectFromGitHub(slug);
+      // Fallback: check case-insensitively against all available slugs
+      const allSlugs = await reader.collections.projects.list();
+      const match = allSlugs.find(
+        (s) => s.toLowerCase() === normalizedSlug || s.toLowerCase() === slug.toLowerCase()
+      );
+      if (match) {
+        item = await reader.collections.projects.read(match);
+        if (item) targetSlug = match;
+      }
+    }
+    if (!item) {
+      const synced = await ensureProjectFromGitHub(targetSlug);
       if (synced) {
-        item = await reader.collections.projects.read(slug);
+        item = await reader.collections.projects.read(targetSlug);
       }
     }
     if (!item) return null;
 
     let githubData: GitHubRepoMetadata | null = null;
     if (item.githubUrl) {
-      githubData = await getGitHubRepoData(item.githubUrl);
+      try {
+        githubData = await getGitHubRepoData(item.githubUrl);
+      } catch (err) {
+        console.warn(`[projects] Could not fetch GitHub metadata for ${targetSlug}:`, err);
+      }
     }
 
     const techSet = new Set<string>(
@@ -103,7 +124,12 @@ export async function getProjectBySlug(slug: string): Promise<EnrichedProject | 
     }
 
     const description = item.description || (githubData?.description ?? "");
-    const body = await item.body();
+    let body: unknown = undefined;
+    try {
+      body = await item.body();
+    } catch (bodyErr) {
+      console.error(`[projects] Failed to parse markdown body for ${targetSlug}:`, bodyErr);
+    }
 
     const screenshots = item.screenshots
       ? item.screenshots.filter((s): s is string => typeof s === "string")
@@ -114,7 +140,7 @@ export async function getProjectBySlug(slug: string): Promise<EnrichedProject | 
       : [];
 
     return {
-      slug,
+      slug: targetSlug,
       title: item.title,
       description,
       status: item.status as ProjectStatus,
@@ -126,7 +152,8 @@ export async function getProjectBySlug(slug: string): Promise<EnrichedProject | 
       githubData,
       body,
     };
-  } catch {
+  } catch (err) {
+    console.error(`[projects] Unexpected error loading project ${slug}:`, err);
     return null;
   }
 }

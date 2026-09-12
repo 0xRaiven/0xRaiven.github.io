@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="52" viewBox="0 0 440 52" fill="none" role="img" aria-label="Profile Ingress Telemetry — Visitor Monitor">
+  <title>Profile Ingress Telemetry Monitor</title>
+
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B0B0E" />
+      <stop offset="50%" stop-color="#120D12" />
+      <stop offset="100%" stop-color="#1A0A13" />
+    </linearGradient>
+
+    <!-- Digital Display Well Gradient -->
+    <linearGradient id="wellBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#070709" />
+      <stop offset="100%" stop-color="#0E080C" />
+    </linearGradient>
+
+    <!-- Crimson Glow Filter -->
+    <filter id="crimsonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <style>
+      @keyframes beaconPing {
+        0% { r: 3px; opacity: 1; stroke-width: 1px; }
+        70% { r: 8px; opacity: 0; stroke-width: 1.5px; }
+        100% { r: 8px; opacity: 0; }
+      }
+      @keyframes liveBlink {
+        0%, 49% { opacity: 1; }
+        50%, 100% { opacity: 0.25; }
+      }
+      @keyframes barPulse1 {
+        0%, 100% { height: 4px; y: 14px; }
+        50% { height: 12px; y: 6px; }
+      }
+      @keyframes barPulse2 {
+        0%, 100% { height: 10px; y: 8px; }
+        50% { height: 5px; y: 13px; }
+      }
+      @keyframes barPulse3 {
+        0%, 100% { height: 14px; y: 4px; }
+        50% { height: 8px; y: 10px; }
+      }
+
+      .beacon-core { animation: liveBlink 1.8s infinite ease-in-out; }
+      .beacon-ring { animation: beaconPing 2.2s cubic-bezier(0.2, 0.8, 0.4, 1) infinite; }
+      .bar-1 { animation: barPulse1 1.4s ease-in-out infinite; }
+      .bar-2 { animation: barPulse2 1.8s ease-in-out infinite; }
+      .bar-3 { animation: barPulse3 1.6s ease-in-out infinite; }
+      .mono-font { font-family: ui-monospace, 'SF Mono', Consolas, Menlo, monospace; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .beacon-core, .beacon-ring, .bar-1, .bar-2, .bar-3 { animation: none !important; }
+      }
+    </style>
+  </defs>
+
+  <!-- Outer Card Frame -->
+  <rect x="0.5" y="0.5" width="439" height="51" rx="4" fill="url(#cardBg)" stroke="#3E1522" stroke-width="1" />
+
+  <!-- Corner Accent Ticks -->
+  <path d="M 1 6 L 1 1 L 6 1" stroke="#8B1E3F" stroke-width="1.2" fill="none" />
+  <path d="M 434 1 L 439 1 L 439 6" stroke="#8B1E3F" stroke-width="1.2" fill="none" />
+  <path d="M 1 46 L 1 51 L 6 51" stroke="#8B1E3F" stroke-width="1.2" fill="none" />
+  <path d="M 434 51 L 439 51 L 439 46" stroke="#8B1E3F" stroke-width="1.2" fill="none" />
+
+  <!-- Left: Ingress Telemetry Beacon -->
+  <g transform="translate(14, 16)">
+    <circle cx="10" cy="10" r="3" fill="#B8325A" class="beacon-core" filter="url(#crimsonGlow)" />
+    <circle cx="10" cy="10" r="3" fill="none" stroke="#B8325A" class="beacon-ring" />
+    <text x="24" y="8" class="mono-font" font-size="8.5" font-weight="700" letter-spacing="1.2" fill="#B8325A">INGRESS_MONITOR</text>
+    <text x="24" y="19" class="mono-font" font-size="7.5" font-weight="500" letter-spacing="0.6" fill="#8E8A90">PROFILE TELEMETRY</text>
+  </g>
+
+  <!-- Vertical Divider 1 -->
+  <line x1="168" y1="10" x2="168" y2="42" stroke="#2B101C" stroke-width="1" />
+
+  <!-- Center: Recessed Counter Display Well -->
+  <g transform="translate(180, 10)">
+    <!-- Well Box -->
+    <rect width="144" height="32" rx="3" fill="url(#wellBg)" stroke="#33121E" stroke-width="1" />
+    
+    <!-- Micro grid dots inside well -->
+    <circle cx="8" cy="8" r="0.8" fill="#5C1029" opacity="0.6" />
+    <circle cx="136" cy="8" r="0.8" fill="#5C1029" opacity="0.6" />
+    <circle cx="8" cy="24" r="0.8" fill="#5C1029" opacity="0.6" />
+    <circle cx="136" cy="24" r="0.8" fill="#5C1029" opacity="0.6" />
+
+    <!-- Label above digits -->
+    <text x="12" y="12" class="mono-font" font-size="6.5" font-weight="600" letter-spacing="1" fill="#716C75">TOTAL PROFILE VIEWS</text>
+    
+    <!-- Digital Counter Readout (Actual Profile Count) -->
+    <text id="profile-views-count" x="14" y="25" class="mono-font" font-size="12.5" font-weight="700" letter-spacing="3" fill="#E8E6E8"><tspan fill="#5C1029">00,0</tspan><tspan fill="#E8E6E8">71</tspan> <tspan font-size="8" font-weight="600" letter-spacing="1" fill="#8B1E3F">HITS</tspan></text>
+  </g>
+
+  <!-- Vertical Divider 2 -->
+  <line x1="336" y1="10" x2="336" y2="42" stroke="#2B101C" stroke-width="1" />
+
+  <!-- Right: Telemetry Carrier Status & Signal Bars -->
+  <g transform="translate(348, 14)">
+    <text x="0" y="10" class="mono-font" font-size="7.5" font-weight="700" letter-spacing="0.8" fill="#E8E6E8">LIVE <tspan fill="#B8325A">●</tspan> 200</text>
+    <text x="0" y="21" class="mono-font" font-size="7" font-weight="500" letter-spacing="0.4" fill="#716C75">CARRIER: TLS</text>
+
+    <!-- Animated RF / Packet Reception Bars -->
+    <g transform="translate(62, 4)">
+      <rect x="0" y="14" width="3" height="4" rx="1" fill="#8B1E3F" class="bar-1" />
+      <rect x="6" y="8" width="3" height="10" rx="1" fill="#B8325A" class="bar-2" />
+      <rect x="12" y="4" width="3" height="14" rx="1" fill="#D6566D" class="bar-3" />
+    </g>
+  </g>
+</svg>

@@ -124,11 +124,16 @@
   {
     "id": "project-0xraiven",
     "title": "0xraiven",
-    "description": "0xraiven security engineering artifact.",
+    "description": "0xraiven GitHub profile README and operational security portfolio overview.",
     "url": "/projects/0xraiven",
     "kind": "project",
     "category": "red-team-tooling",
-    "tags": []
+    "tags": [
+      "Python",
+      "Bash",
+      "Linux",
+      "Machine Learning"
+    ]
   },
   {
     "id": "project-0xraiven-github-io",

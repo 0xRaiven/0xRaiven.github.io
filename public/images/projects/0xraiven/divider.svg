@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 24" width="900" height="24" fill="none" role="presentation">
+  <defs>
+    <linearGradient id="divFade" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#09090B" stop-opacity="0"/>
+      <stop offset="25%" stop-color="#292329" stop-opacity="0.8"/>
+      <stop offset="42%" stop-color="#8B1E3F" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#B8325A" stop-opacity="1"/>
+      <stop offset="58%" stop-color="#8B1E3F" stop-opacity="0.9"/>
+      <stop offset="75%" stop-color="#292329" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#09090B" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- Hairline Rule -->
+  <line x1="20" y1="12" x2="880" y2="12" stroke="url(#divFade)" stroke-width="1"/>
+  <!-- Central Terminal Tag -->
+  <rect x="405" y="4" width="90" height="16" rx="2" fill="#111114" stroke="#8B1E3F" stroke-width="1"/>
+  <text x="450" y="15.5" text-anchor="middle" font-family="'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace" font-size="9" letter-spacing="2" fill="#E8E6E8">0xRAIVEN</text>
+  <!-- Side Micro Crosshairs -->
+  <path d="M375 9 V15 M372 12 H378" stroke="#8B1E3F" stroke-width="1"/>
+  <path d="M525 9 V15 M522 12 H528" stroke="#8B1E3F" stroke-width="1"/>
+</svg>

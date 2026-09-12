@@ -127,41 +127,34 @@ This allows individual detection components to evolve independently without coup
   - Integer IP normalization
   - Preservation of raw and canonical URL representations
   - Configurable maximum decoding depth
-
 - **Privacy Controls**
   - Local-only detection mode
   - Optional external threat intelligence
   - Telemetry disabled by default
   - User-controlled feedback submission
-
 - **Model Explainability (XAI)**
   - SHAP-based feature attribution
   - Human-readable explanations of model contributions
   - Feature-level evidence can be surfaced to users
   - Designed to improve transparency rather than treating the ML model as an opaque authority
-
 - **Brand Impersonation Detection**
   - Fuzzy matching
   - Levenshtein-distance-based similarity
   - Detection against commonly targeted brands
-
 - **User Feedback Pipeline**
   - False-positive feedback
   - False-negative feedback
   - Optional URL privacy protection through hashing
-
 - **Risk & Policy Engine**
   - Combines ML predictions and non-ML security signals
   - Produces a normalized 0–100 risk score
   - Maps risk levels to policy actions such as ALLOW, WARN, or BLOCK
-
 - **Hardened API**
   - Versioned `/api/v1/` endpoints
   - Configurable request/resource limits
   - Request validation
   - Explicit error handling
   - Production-oriented WSGI deployment support
-
 - **CI/CD Integration**
   - Automated unit and integration testing
   - Dependency checks
@@ -182,7 +175,6 @@ This allows individual detection components to evolve independently without coup
   - VirusTotal integration
   - Requires corresponding API keys
   - Disabled when operating in Local Only mode
-
 - **Telemetry**
   - Disabled by default
   - Can be explicitly enabled by the operator
@@ -447,27 +439,13 @@ They represent areas for future research rather than hidden limitations.
 
 ## 9. Chrome Extension Installation
 
-1. Open Chrome and navigate to:
-
-```text
-chrome://extensions/
-```
-
+1. Open Chrome and navigate to `chrome://extensions/`.
 2. Enable **Developer mode**.
-
 3. Click **Load unpacked**.
-
 4. Select the `extension/` directory from this repository.
-
 5. Click the PhishGuard icon.
-
 6. Open the **Options** page.
-
-7. Configure the backend URL, for example:
-
-```text
-http://127.0.0.1:5000
-```
+7. Configure the backend URL, for example: `http://127.0.0.1:5000`.
 
 The extension is currently intended primarily for development and personal deployment.
 

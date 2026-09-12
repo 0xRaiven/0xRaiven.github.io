@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="158" height="20" viewBox="0 0 158 20" fill="none">
+  <defs>
+    <linearGradient id="bgGradH" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0E0E12" />
+      <stop offset="50%" stop-color="#14141A" />
+      <stop offset="100%" stop-color="#240B14" />
+    </linearGradient>
+  </defs>
+  <rect x="0.5" y="0.5" width="157" height="19" rx="3" fill="url(#bgGradH)" stroke="#3E1522" stroke-width="1" />
+  <circle cx="8" cy="10" r="2.5" fill="#B8325A" />
+  <circle cx="8" cy="10" r="4.5" fill="#B8325A" opacity="0.3" />
+  <text x="16" y="13.5" fill="#E8E6E8" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" font-weight="600" letter-spacing="0.5">Stage 1</text>
+  <line x1="66" y1="3" x2="66" y2="17" stroke="#3E1522" stroke-width="1" />
+  <text x="75" y="13.5" fill="#B8325A" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" font-weight="600" letter-spacing="0.5">Active Engine</text>
+</svg>

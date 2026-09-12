@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="415" height="24" viewBox="0 0 415 24" fill="none">
+  <style>
+    .tag-rect { fill: #101014; stroke: #2E121E; stroke-width: 1; rx: 3; }
+    .tag-dot { fill: #B8325A; }
+    .tag-text { fill: #D6D4D8; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.3px; }
+  </style>
+
+  <!-- Tag 1: Python 3 -->
+  <g transform="translate(0, 1)">
+    <rect width="76" height="22" class="tag-rect" />
+    <circle cx="9" cy="11" r="2" class="tag-dot" />
+    <text x="17" y="14.5" class="tag-text">Python 3</text>
+  </g>
+
+  <!-- Tag 2: Linux Internals -->
+  <g transform="translate(82, 1)">
+    <rect width="112" height="22" class="tag-rect" />
+    <circle cx="9" cy="11" r="2" class="tag-dot" />
+    <text x="17" y="14.5" class="tag-text">Linux Internals</text>
+  </g>
+
+  <!-- Tag 3: Host Telemetry -->
+  <g transform="translate(200, 1)">
+    <rect width="108" height="22" class="tag-rect" />
+    <circle cx="9" cy="11" r="2" class="tag-dot" />
+    <text x="17" y="14.5" class="tag-text">Host Telemetry</text>
+  </g>
+
+  <!-- Tag 4: Audit Engine -->
+  <g transform="translate(314, 1)">
+    <rect width="98" height="22" class="tag-rect" />
+    <circle cx="9" cy="11" r="2" class="tag-dot" />
+    <text x="17" y="14.5" class="tag-text">Audit Engine</text>
+  </g>
+</svg>

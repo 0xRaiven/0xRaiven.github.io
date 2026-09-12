@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { KnowledgeBaseLayout } from '@/components/layout/KnowledgeBaseLayout';
 import { DocumentContent } from '@/components/content/DocumentRenderer';
 import { StayTuned } from '@/components/content/StayTuned';
+import { ProfileReadmeView } from '@/components/content/ProfileReadmeView';
 import { getProjectBySlug, getProjects } from '@/lib/projects';
 import {
   FolderGit2,
@@ -39,7 +40,19 @@ export const dynamicParams = false;
 
 export async function generateStaticParams() {
   const projects = await getProjects();
-  return projects.map((p) => ({ slug: p.slug }));
+  const slugSet = new Set<string>();
+
+  for (const p of projects) {
+    slugSet.add(p.slug);
+    slugSet.add(p.slug.toLowerCase());
+    slugSet.add(p.title.replace(/\s+/g, ''));
+    if (p.githubData?.name) {
+      slugSet.add(p.githubData.name);
+      slugSet.add(p.githubData.name.toLowerCase());
+    }
+  }
+
+  return Array.from(slugSet).map((slug) => ({ slug }));
 }
 
 export default async function ProjectDetailPage({ params }: ProjectPageProps) {
@@ -156,9 +169,11 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           </div>
         </header>
 
-        {/* Document Content Rendered from body.mdoc */}
+        {/* Document Content Rendered from body.mdoc or rich profile readme */}
         <div className="pt-2">
-          {project.body ? (
+          {project.slug === '0xraiven' ? (
+            <ProfileReadmeView />
+          ) : project.body ? (
             <DocumentContent document={project.body as unknown as Parameters<typeof DocumentContent>[0]['document']} />
           ) : (
             <StayTuned

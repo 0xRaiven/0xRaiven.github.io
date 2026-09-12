@@ -155,8 +155,23 @@ export function DocumentContent({ document }: DocumentContentProps) {
             },
             paragraph: ({ children }) => <ParagraphBlock>{children}</ParagraphBlock>,
             code: ({ children, language }) => <CodeBlock language={language} code={children} />,
-            blockquote: ({ children }) => <QuoteBlock>{children}</QuoteBlock>,
             divider: () => <DividerBlock />,
+            image: ({ src, alt, title }: { src: string; alt?: string; title?: string }) => (
+              <figure className="my-4 max-w-full">
+                <img
+                  src={src}
+                  alt={alt || ''}
+                  title={title}
+                  className="rounded max-w-full h-auto object-contain"
+                  loading="lazy"
+                />
+                {title && (
+                  <figcaption className="text-center text-xs text-text-secondary mt-1 font-mono">
+                    {title}
+                  </figcaption>
+                )}
+              </figure>
+            ),
             list: ({ type, children }) => {
               const ListComponent = type === 'ordered' ? OrderedListBlock : UnorderedListBlock;
               return (

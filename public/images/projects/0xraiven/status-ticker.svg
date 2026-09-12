@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 44" width="900" height="44" fill="none" role="img" aria-label="System Telemetry Stream — Real-time telemetry monitor">
+  <title>Security Telemetry Stream</title>
+
+  <defs>
+    <linearGradient id="tickerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#111114"/>
+      <stop offset="50%" stop-color="#15151A"/>
+      <stop offset="100%" stop-color="#111114"/>
+    </linearGradient>
+
+    <linearGradient id="laserLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8B1E3F" stop-opacity="0.2"/>
+      <stop offset="30%" stop-color="#B8325A" stop-opacity="1"/>
+      <stop offset="70%" stop-color="#8B1E3F" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#8B1E3F" stop-opacity="0.2"/>
+    </linearGradient>
+
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <style>
+      @keyframes radarPing {
+        0% { r: 3.5px; opacity: 1; }
+        60% { r: 10px; opacity: 0; stroke-width: 1.5px; }
+        100% { r: 10px; opacity: 0; }
+      }
+      @keyframes signalSweep {
+        0% { stroke-dashoffset: 320; }
+        100% { stroke-dashoffset: 0; }
+      }
+      @keyframes blinkPip {
+        0%, 49% { opacity: 1; }
+        50%, 100% { opacity: 0.2; }
+      }
+
+      .radar-core {
+        animation: blinkPip 2s infinite ease-in-out;
+      }
+      .radar-ring {
+        transform-origin: 26px 22px;
+        animation: radarPing 2.4s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+      }
+      .waveform {
+        stroke-dasharray: 80 240;
+        animation: signalSweep 3.5s linear infinite;
+      }
+      .mono-text {
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .radar-ring, .waveform, .radar-core { animation: none !important; }
+      }
+    </style>
+  </defs>
+
+  <!-- Container Box -->
+  <rect x="1" y="1" width="898" height="42" rx="4" fill="url(#tickerGrad)" stroke="#292329" stroke-width="1"/>
+
+  <!-- Left: Live Telemetry Indicator -->
+  <g transform="translate(4, 0)">
+    <circle cx="26" cy="22" r="3.5" fill="#B8325A" class="radar-core" filter="url(#glow)"/>
+    <circle cx="26" cy="22" r="3.5" fill="none" stroke="#B8325A" class="radar-ring"/>
+    <text x="42" y="26" class="mono-text" font-size="10.5" font-weight="700" letter-spacing="2" fill="#B8325A">
+      TELEMETRY_STREAM
+    </text>
+  </g>
+
+  <!-- Vertical Divider -->
+  <line x1="216" y1="12" x2="216" y2="32" stroke="#292329" stroke-width="1.2"/>
+
+  <!-- Center: System Metrics -->
+  <g transform="translate(230, 0)">
+    <text x="0" y="26" class="mono-text" font-size="10" letter-spacing="1.2" fill="#8E8A90">
+      CORE: <tspan fill="#E8E6E8">x86_64</tspan> <tspan fill="#5C1029">│</tspan>
+      ENGINE: <tspan fill="#B8325A">ACTIVE</tspan> <tspan fill="#5C1029">│</tspan>
+      CADENCE: <tspan fill="#E8E6E8">BUILD ──▶ OBSERVE</tspan>
+    </text>
+  </g>
+
+  <!-- Right: Live Oscilloscope / ECG Waveform Scan -->
+  <g transform="translate(0, 0)">
+    <!-- Baseline track -->
+    <line x1="620" y1="22" x2="880" y2="22" stroke="#292329" stroke-width="1" stroke-dasharray="2 4"/>
+    
+    <!-- Dynamic Pulsing ECG / Packet Wave -->
+    <path d="M 620 22 L 670 22 L 678 14 L 684 30 L 690 10 L 696 28 L 702 22 L 760 22 L 768 12 L 774 32 L 780 8 L 786 34 L 792 22 L 880 22" 
+          fill="none" 
+          stroke="url(#laserLine)" 
+          stroke-width="1.8" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"
+          class="waveform"
+          filter="url(#glow)"/>
+  </g>
+</svg>

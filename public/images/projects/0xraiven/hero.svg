@@ -1,0 +1,204 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 370" width="1200" height="370" fill="none" role="img" aria-label="r41n // 0xraiven — Offensive Security, Security Engineering, Cloud Security. Build. Break. Observe. Understand.">
+  <title>r41n // 0xraiven — Terminal Interface · Security Engineering</title>
+
+  <defs>
+    <!-- Deep Wine Background Gradients -->
+    <radialGradient id="wineGlow" cx="82%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#B8325A" stop-opacity="0.32"/>
+      <stop offset="35%" stop-color="#8B1E3F" stop-opacity="0.18"/>
+      <stop offset="65%" stop-color="#5C1029" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#09090B" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="subtleAmbient" cx="15%" cy="85%" r="45%">
+      <stop offset="0%" stop-color="#5C1029" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#09090B" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="wineLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8B1E3F" stop-opacity="0.9"/>
+      <stop offset="30%" stop-color="#B8325A" stop-opacity="1"/>
+      <stop offset="70%" stop-color="#8B1E3F" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#292329" stop-opacity="0.2"/>
+    </linearGradient>
+
+    <linearGradient id="badgeBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B1E3F" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#292329" stop-opacity="0.4"/>
+    </linearGradient>
+
+    <!-- Subtle Dot Grid Matrix -->
+    <pattern id="gridDots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#292329" opacity="0.35"/>
+    </pattern>
+
+    <!-- Gaussian Blur Filters -->
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28"/>
+    </filter>
+
+    <filter id="laserGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <style>
+      @keyframes pulseGlow {
+        0%, 100% { opacity: 0.75; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.04); }
+      }
+      @keyframes scanDash {
+        to { stroke-dashoffset: -120; }
+      }
+      @keyframes blinkCursor {
+        0%, 49% { opacity: 1; }
+        50%, 100% { opacity: 0; }
+      }
+
+      .glow-layer {
+        transform-origin: 82% 45%;
+        animation: pulseGlow 7s ease-in-out infinite;
+      }
+      .mono-term {
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+      }
+      .telemetry-tag {
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 9.5px;
+        letter-spacing: 1.2px;
+        fill: #8E8A90;
+      }
+      .cursor-blink {
+        animation: blinkCursor 1.2s infinite;
+      }
+      .scan-track {
+        stroke-dasharray: 6 6;
+        animation: scanDash 12s linear infinite;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .glow-layer { animation: none !important; }
+        .cursor-blink { opacity: 1 !important; animation: none !important; }
+        .scan-track { animation: none !important; }
+      }
+    </style>
+  </defs>
+
+  <!-- Deep Obsidian Background -->
+  <rect width="1200" height="370" fill="#09090B"/>
+
+  <!-- Tactical Grid Matrix -->
+  <rect width="1200" height="370" fill="url(#gridDots)"/>
+
+  <!-- Atmospheric Ambient Glows -->
+  <rect width="1200" height="370" fill="url(#subtleAmbient)"/>
+  <g class="glow-layer">
+    <ellipse cx="980" cy="185" rx="260" ry="170" fill="url(#wineGlow)" filter="url(#softGlow)"/>
+  </g>
+
+  <!-- Outer Terminal Window Frame -->
+  <rect x="24" y="20" width="1152" height="330" rx="6" fill="none" stroke="#292329" stroke-width="1.2"/>
+
+  <!-- Terminal Window Titlebar Band -->
+  <path d="M 24 48 L 1176 48" stroke="#292329" stroke-width="1"/>
+
+  <!-- Window Controls [ ● ] [ ○ ] [ × ] in Wine-Red Palette -->
+  <circle cx="44" cy="34" r="4.5" fill="#8B1E3F"/>
+  <circle cx="58" cy="34" r="4.5" fill="#5C1029"/>
+  <circle cx="72" cy="34" r="4.5" fill="#292329"/>
+
+  <text x="96" y="38" class="mono-term" font-size="10" letter-spacing="1.8" fill="#8E8A90">
+    TERM://pts/0 [r41n@0xraiven:~] <tspan fill="#5C1029">──</tspan> <tspan fill="#B8325A">0xRAIVEN</tspan>
+  </text>
+
+  <!-- Top Right System Telemetry Box -->
+  <g transform="translate(740, 26)">
+    <rect x="0" y="0" width="416" height="22" rx="3" fill="#111114" stroke="url(#badgeBorder)" stroke-width="1"/>
+    <!-- Status LED Indicator on Left -->
+    <circle cx="15" cy="11" r="3" fill="#B8325A" class="cursor-blink"/>
+    <circle cx="15" cy="11" r="5.5" fill="none" stroke="#B8325A" stroke-width="0.6" opacity="0.5"/>
+    <!-- Status Telemetry String -->
+    <text x="28" y="14.5" class="telemetry-tag">
+      SYS_ID: <tspan fill="#E8E6E8">0x7234316E</tspan> <tspan fill="#5C1029">│</tspan> LINUX_X86 <tspan fill="#5C1029">│</tspan> STATE: <tspan fill="#B8325A">ONLINE</tspan>
+    </text>
+  </g>
+
+  <!-- Corner Brackets & Box Drawing Accents -->
+  <path d="M20 20 H34 M24 16 V30" stroke="#8B1E3F" stroke-width="1.2"/>
+  <path d="M1166 20 H1180 M1176 16 V30" stroke="#8B1E3F" stroke-width="1.2"/>
+  <path d="M20 350 H34 M24 340 V354" stroke="#8B1E3F" stroke-width="1.2"/>
+  <path d="M1166 350 H1180 M1176 340 V354" stroke="#8B1E3F" stroke-width="1.2"/>
+
+  <!-- Command Prompt Line -->
+  <g transform="translate(56, 80)">
+    <text x="0" y="0" class="mono-term" font-size="12" font-weight="600" letter-spacing="1.2" fill="#B8325A">
+      r41n@0xraiven:~$ <tspan fill="#E8E6E8">./init_operator --profile=0xraiven --verbose</tspan>
+    </text>
+  </g>
+
+  <!-- Central Right Visual Anchor: Monogram Hex Sigil with ASCII Crosshairs -->
+  <g transform="translate(940, 115)">
+    <!-- Tactical Tech Circle Backing -->
+    <circle cx="90" cy="80" r="74" fill="#111114" stroke="#292329" stroke-width="1"/>
+    <circle cx="90" cy="80" r="74" fill="none" stroke="#8B1E3F" stroke-width="1.5" class="scan-track" opacity="0.6"/>
+    <circle cx="90" cy="80" r="62" fill="none" stroke="#5C1029" stroke-width="0.8" opacity="0.4"/>
+
+    <!-- Stylized Hex Shield -->
+    <polygon points="90,30 134,55 134,105 90,130 46,105 46,55" fill="#18181D" stroke="#8B1E3F" stroke-width="1.5"/>
+    <polygon points="90,38 126,59 126,101 90,122 54,101 54,59" fill="none" stroke="#B8325A" stroke-width="0.8" opacity="0.5"/>
+
+    <!-- Raven Cipher Sigil -->
+    <path d="M72 70 L90 52 L108 70 L90 108 Z" fill="none" stroke="#E8E6E8" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M78 76 L90 64 L102 76" fill="none" stroke="#B8325A" stroke-width="1.8"/>
+    <circle cx="90" cy="84" r="2.5" fill="#B8325A" filter="url(#laserGlow)"/>
+
+    <!-- Coordinate Tag Below Badge -->
+    <text x="90" y="166" text-anchor="middle" class="mono-term" font-size="9" letter-spacing="3" fill="#8E8A90">
+      SEC_ENG // LEVEL 2
+    </text>
+  </g>
+
+  <!-- Primary Identity Wordmark -->
+  <g transform="translate(56, 160)">
+    <text x="0" y="0" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="68" font-weight="800" letter-spacing="-1.5" fill="#E8E6E8">
+      r41n
+    </text>
+
+    <!-- Monospace Alias Tag -->
+    <rect x="172" y="-46" width="108" height="26" rx="3" fill="#18181D" stroke="#8B1E3F" stroke-width="1"/>
+    <text x="226" y="-29" text-anchor="middle" class="mono-term" font-size="12" font-weight="600" letter-spacing="1.5" fill="#E8E6E8">
+      0xraiven
+    </text>
+
+    <!-- Cursor Block -->
+    <rect x="290" y="-46" width="4" height="26" fill="#B8325A" class="cursor-blink"/>
+  </g>
+
+  <!-- Technical Specialization Subtitle -->
+  <g transform="translate(56, 202)">
+    <text x="0" y="0" class="mono-term" font-size="14.5" font-weight="600" letter-spacing="3.2" fill="#E8E6E8">
+      OFFENSIVE SECURITY <tspan fill="#B8325A">·</tspan> SECURITY ENGINEERING <tspan fill="#B8325A">·</tspan> CLOUD
+    </text>
+  </g>
+
+  <!-- Precision Wine-Red Hairline Divider -->
+  <path d="M56 228 L780 228" stroke="url(#wineLine)" stroke-width="1.8"/>
+  <rect x="56" y="226.5" width="28" height="3" fill="#B8325A" filter="url(#laserGlow)"/>
+
+  <!-- Methodology Axiom & Box Drawing Label -->
+  <g transform="translate(56, 266)">
+    <text x="0" y="0" class="mono-term" font-size="12.5" font-weight="500" letter-spacing="2.6" fill="#8E8A90">
+      BUILD <tspan fill="#B8325A">──▶</tspan> BREAK <tspan fill="#B8325A">──▶</tspan> OBSERVE <tspan fill="#B8325A">──▶</tspan> UNDERSTAND
+    </text>
+  </g>
+
+  <!-- Micro Technical Annotation Bar (Bottom) -->
+  <g transform="translate(56, 312)">
+    <text x="0" y="0" class="mono-term" font-size="10" letter-spacing="1.8" fill="#5C1029">
+      [VECTOR: LINUX_PERSISTENCE // ML/AI INSECURITY // SECURITY TOOLING &amp; RESEARCH // CLOUD]
+    </text>
+  </g>
+</svg>
