@@ -2,7 +2,7 @@
   "title": "Weather App",
   "description": "A simple weather app built using html,css,js",
   "status": "active",
-  "category": "red-team-tooling",
+  "category": "basic-utility",
   "technologies": [
     "JavaScript",
     "HTML",

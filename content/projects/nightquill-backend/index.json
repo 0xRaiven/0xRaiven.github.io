@@ -2,7 +2,7 @@
   "title": "Nightquill Backend",
   "description": "Backend mongodb-atlas supported service for the nightquill-frontend ",
   "status": "active",
-  "category": "red-team-tooling",
+  "category": "backend-services",
   "technologies": [
     "JavaScript",
     "mern",

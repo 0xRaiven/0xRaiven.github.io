@@ -2,7 +2,7 @@
   "title": "Game Optimizer",
   "description": "A simple program built using windows batch script to optimize the games on low end devices",
   "status": "active",
-  "category": "red-team-tooling",
+  "category": "basic-utility",
   "technologies": [
     "Batchfile",
     "batch-script",

@@ -2,7 +2,7 @@
   "title": "Nightquill Frontend",
   "description": "frontend repository for the \"nightquill\" => a dedicated blogging platform",
   "status": "active",
-  "category": "red-team-tooling",
+  "category": "clientside-interface",
   "technologies": [
     "TypeScript",
     "HTML",
