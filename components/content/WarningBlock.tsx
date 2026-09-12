@@ -14,6 +14,8 @@ export function WarningBlock({
   children,
   className = '',
 }: WarningBlockProps) {
+  const content = children ?? text;
+
   return (
     <aside
       role="alert"
@@ -23,8 +25,8 @@ export function WarningBlock({
         <AlertTriangle className="w-4 h-4 shrink-0" />
         <span>{title}</span>
       </div>
-      <div className="text-text-secondary leading-relaxed pl-6">
-        {children || text}
+      <div className="text-text-secondary leading-relaxed pl-6 whitespace-pre-wrap">
+        {content}
       </div>
     </aside>
   );

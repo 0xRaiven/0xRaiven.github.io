@@ -1,0 +1,47 @@
+---
+title: Linux Process Enumeration
+description: >-
+  Quick notes on enumerating Linux processes and identifying unusual or
+  privileged execution.
+kind: note
+category: linux
+tags:
+  - linux
+  - processes
+  - enumeration
+  - privilage-escalation
+  - red-team
+date: 2026-09-12
+published: true
+relatedSlugs:
+  - linux-persistence-fundamentals
+  - suid-sgid
+  - systemd-persistence
+  - persisthunt
+---
+{% note
+   text="Processes show what is currently running on a Linux system.\n\nDuring enumeration, unusual processes can reveal privileged applications, unexpected services, scripts, or activity associated with persistence or post-exploitation." /%}
+
+### Basic Enumeration
+
+{% terminal
+   title="process enumeration"
+   commands=[{cmd: "ps aux"}, {cmd: "ps -ef"}, {cmd: "top"}, {cmd: "pgrep -a -u root"}] /%}
+
+{% finding
+   severity="informational"
+   text="Look for:\n\n• Unknown processes\n• Processes running as root unexpectedly\n• Executables from unusual directories\n• Scripts running in the background\n• Suspicious command-line arguments\n• Processes associated with unknown services" /%}
+
+{% terminal
+   title="inspect a process"
+   commands=[{cmd: "ps -fp <PID>"}, {cmd: "readlink -f /proc/<PID>/exe"}, {cmd: "tr '\\0' ' ' < /proc/<PID>/cmdline"}] /%}
+
+{% warning
+   text="A process list is only a snapshot.\n\nShort-lived processes may disappear before they can be observed, so process enumeration works best when combined with logs, service configuration, and filesystem evidence." /%}
+
+{% tip
+   text="When you find an interesting process, identify the executable behind it and inspect its location, ownership, permissions, and parent process." /%}
+
+### Takeaway
+
+Process enumeration gives you a snapshot of active execution. Focus on unusual processes and follow them back to the files, services, or users responsible for starting them.

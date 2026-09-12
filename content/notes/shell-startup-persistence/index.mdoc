@@ -1,0 +1,54 @@
+---
+title: Shell Startup Persistence
+description: >-
+  Quick notes on Linux shell startup files and how they can be abused for
+  persistence.
+kind: note
+category: linux
+tags:
+  - linux
+  - shell
+  - persistence
+  - bash
+  - enumeration
+  - red-team
+date: 2026-09-12
+published: true
+relatedSlugs:
+  - linux-persistence-fundamentals
+  - cron-persistence
+  - systemd-persistence
+  - ssh-persistence
+  - suid-sgid
+  - persisthunt
+---
+{% note
+   text="Shell startup files are configuration files that are read when a shell starts.\n\nBecause some of them can execute commands, modifying them can provide persistence whenever the affected user starts a shell." /%}
+
+### Common Startup Files
+
+{% twoColumn
+   left="Common Bash files:\n\n~/.bashrc\n~/.bash_profile\n~/.profile\n\nOther shells may use files such as:\n\n~/.zshrc"
+   right="System-wide configuration can include:\n\n/etc/profile\n/etc/profile.d/\n/etc/bash.bashrc\n\nThese can affect multiple users." /%}
+
+{% terminal
+   title="shell startup enumeration"
+   commands=[{cmd: "ls -la ~/{.bashrc,.bash_profile,.profile,.zshrc} 2>/dev/null"}, {cmd: "grep -nE 'curl|wget|nc|bash|python|sh ' ~/.bashrc ~/.profile 2>/dev/null"}, {cmd: "ls -la /etc/profile.d/"}] /%}
+
+{% finding
+   severity="informational"
+   text="Look for:\n\n• Unknown commands\n• Scripts from unusual locations\n• Commands connecting to remote hosts\n• Obfuscated or encoded commands\n• Recently modified startup files\n• Startup files writable by unexpected users" /%}
+
+{% warning
+   text="Commands such as curl, wget, Python, and Bash are commonly used in legitimate startup scripts.\n\nInvestigate the complete command, referenced files, ownership, and purpose before flagging it." /%}
+
+{% tip
+   text="Check Modification Times\n\nCompare the file's modification time with other evidence from the system.\nA recently modified startup file can be useful when investigating when persistence was introduced." /%}
+
+{% terminal
+   title="file inspection"
+   commands=[{cmd: "stat ~/.bashrc"}, {cmd: "ls -l ~/.bashrc"}] /%}
+
+### Takeaway
+
+When investigating shell persistence, inspect both user and system-wide startup files and follow suspicious commands to whatever they execute.

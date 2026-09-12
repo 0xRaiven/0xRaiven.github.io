@@ -16,6 +16,8 @@ export function MitigationBlock({
   children,
   className = '',
 }: MitigationBlockProps) {
+  const content = children ?? text;
+
   return (
     <div className={`my-4 p-4 rounded border border-emerald-500/40 bg-emerald-500/10 text-xs font-mono space-y-2.5 ${className}`}>
       <div className="flex items-center justify-between border-b border-emerald-500/20 pb-2">
@@ -28,8 +30,8 @@ export function MitigationBlock({
         </span>
       </div>
 
-      <div className="text-text-secondary leading-relaxed pt-1">
-        {children || text}
+      <div className="text-text-secondary leading-relaxed pt-1 whitespace-pre-wrap">
+        {content}
       </div>
     </div>
   );

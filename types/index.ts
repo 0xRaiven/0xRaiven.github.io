@@ -56,7 +56,7 @@ export type ContentBlock =
   | { type: "note"; text: string }
   | { type: "tip"; text: string }
   | { type: "lab"; target: string; difficulty: "easy" | "medium" | "hard"; objective: string }
-  | { type: "finding"; text: string }
+  | { type: "finding"; text: string; severity?: string }
   | { type: "mitigation"; text: string }
   | { type: "code"; language: string; code: string; filename?: string }
   | { type: "terminal"; title?: string; commands: { cmd: string; output?: string }[] }

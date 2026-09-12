@@ -1,0 +1,51 @@
+---
+title: SSH Persistence
+description: Quick notes on SSH keys, authorized_keys, and detecting persistent SSH access.
+kind: note
+category: linux
+tags:
+  - linux
+  - ssh
+  - persistence
+  - authentication
+  - enumeration
+  - red-team
+date: 2026-09-12
+published: true
+relatedSlugs:
+  - linux-persistence-fundamentals
+  - cron-persistence
+  - systemd-persistence
+  - shell-startup-persistence
+  - persisthunt
+---
+{% note
+   text="SSH keys are a legitimate way to authenticate without entering a password every time.\n\nAn attacker who adds their own public key to a user's authorized_keys file may be able to regain SSH access later." /%}
+
+### SSH Key Locations
+
+{% twoColumn
+   left="Common location:\n\n~/.ssh/authorized_keys\n\nEach line normally contains a public key authorized to access that account."
+   right="Useful configuration:\n\n/etc/ssh/sshd_config\n/etc/ssh/sshd_config.d/\n\nThese files can affect how SSH authentication and access are handled." /%}
+
+{% terminal
+   title="ssh enumeration"
+   commands=[{cmd: "ls -la ~/.ssh/"}, {cmd: "cat ~/.ssh/authorized_keys"}, {cmd: "sudo grep -v '^#' /etc/ssh/sshd_config"}] /%}
+
+{% finding
+   severity="informational"
+   text="Suspicious SSH Access\n\nLook for:\n• Unknown public keys\n• Keys belonging to unexpected users\n• Recently modified authorized_keys files\n• Suspicious key options\n• SSH configuration changes\n• Unexpected accounts with SSH access" /%}
+
+{% warning
+   text="Unknown Doesn't Mean Malicious\n\nAn unfamiliar SSH key may belong to an administrator, automation system, or legitimate service.\nVerify ownership and activity before removing it." /%}
+
+{% tip
+   text="When investigating authorized_keys, check who owns the file and when it was last modified.\n\nThe key itself is only one part of the investigation." /%}
+
+{% terminal
+   title="file inspection"
+   commands=[{cmd: "stat ~/.ssh/authorized_keys"}, {cmd: "ls -l ~/.ssh/authorized_keys"}] /%}
+
+### Takeaway
+
+SSH keys can provide quiet, long-term access. During a persistence assessment, always check authorized_keys and the SSH configuration of important accounts.

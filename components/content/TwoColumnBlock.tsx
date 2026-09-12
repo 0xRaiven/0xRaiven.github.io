@@ -33,10 +33,10 @@ export function TwoColumnBlock({
 
   return (
     <div className={`my-4 grid grid-cols-1 md:grid-cols-2 gap-4 ${className}`}>
-      <div className="p-3.5 rounded border border-border bg-surface text-xs font-mono min-w-0">
+      <div className="p-3.5 rounded border border-border bg-surface text-xs font-mono min-w-0 whitespace-pre-wrap leading-relaxed">
         {renderSide(left)}
       </div>
-      <div className="p-3.5 rounded border border-border bg-surface text-xs font-mono min-w-0">
+      <div className="p-3.5 rounded border border-border bg-surface text-xs font-mono min-w-0 whitespace-pre-wrap leading-relaxed">
         {renderSide(right)}
       </div>
     </div>

@@ -79,16 +79,45 @@ export const labBlock = component({
 });
 
 export const findingBlock = component({
-  preview: (props) => (
-    <div className="p-3 my-2 border-l-4 border-rose-500 bg-rose-950/20 text-rose-200 text-xs font-mono rounded-r">
-      <div className="font-bold uppercase tracking-wider text-[10px] mb-1">
-        Security Finding
+  preview: (props) => {
+    const sev = props.fields.severity?.value || "none";
+    const sevColors: Record<string, string> = {
+      critical: "border-rose-500 bg-rose-950/20 text-rose-200",
+      high: "border-orange-500 bg-orange-950/20 text-orange-200",
+      medium: "border-amber-500 bg-amber-950/20 text-amber-200",
+      low: "border-blue-500 bg-blue-950/20 text-blue-200",
+      informational: "border-slate-500 bg-slate-950/20 text-slate-200",
+      none: "border-orange-500 bg-orange-950/20 text-orange-200",
+    };
+    const color = sevColors[sev] || sevColors.none;
+    return (
+      <div className={`p-3 my-2 border-l-4 ${color} text-xs font-mono rounded-r`}>
+        <div className="flex items-center justify-between font-bold uppercase tracking-wider text-[10px] mb-1">
+          <span>Findings</span>
+          {sev && sev !== "none" && (
+            <span className="px-1.5 py-0.5 rounded text-[9px] uppercase font-bold border border-current">
+              {sev}
+            </span>
+          )}
+        </div>
+        <NotEditable>{props.fields.text.value || "Finding details..."}</NotEditable>
       </div>
-      <NotEditable>{props.fields.text.value || "Finding details..."}</NotEditable>
-    </div>
-  ),
-  label: "Finding",
+    );
+  },
+  label: "Findings",
   schema: {
+    severity: fields.select({
+      label: "Severity",
+      options: [
+        { label: "None (General)", value: "none" },
+        { label: "Critical", value: "critical" },
+        { label: "High", value: "high" },
+        { label: "Medium", value: "medium" },
+        { label: "Low", value: "low" },
+        { label: "Informational", value: "informational" },
+      ],
+      defaultValue: "none",
+    }),
     text: fields.text({ label: "Finding Details", multiline: true }),
   },
 });

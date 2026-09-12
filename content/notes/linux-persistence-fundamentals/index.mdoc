@@ -1,0 +1,48 @@
+---
+title: Linux Persistence Fundamentals
+description: Quick notes on common Linux persistence mechanisms and where to look for them.
+kind: note
+category: linux
+tags:
+  - linux
+  - persistence
+  - red-team
+  - enumeration
+date: 2026-09-12
+published: true
+relatedSlugs:
+  - cron-persistence
+  - systemd-persistence
+  - ssh-persistence
+  - shell-persistence
+  - suid-sgid
+---
+{% note
+   text="Linux persistence is the process of maintaining access to a system after the initial compromise, logout, reboot, or process termination.\n\nLinux has many legitimate mechanisms that can be abused for persistence." /%}
+
+### Common Persistence Mechanisms
+
+{% twoColumn
+   left="Cron can execute commands automatically on a schedule.\n\nCommon locations:\n/etc/crontab\n/etc/cron.d/\n/etc/cron.hourly/\n/etc/cron.daily/\n/etc/cron.weekly/\n/etc/cron.monthly/\n\nUser crontabs can also be used for persistence."
+   right="Systemd services and timers can execute programs during boot or at scheduled times.\n\nUseful areas to inspect:\n/etc/systemd/system/\n/usr/lib/systemd/system/\n\nPay attention to unusual ExecStart paths." /%}
+
+{% twoColumn
+   left="SSH public keys can provide persistent remote access.\n\nCommon location:\n\n~/.ssh/authorized_keys\n\nUnknown keys or unusual key options should be investigated."
+   right="Shell startup files can execute commands when a user starts a shell.\n\nExamples:\n\n~/.bashrc\n~/.profile\n~/.bash_profile\n~/.zshrc\n/etc/profile" /%}
+
+{% terminal
+   title="persistence enumeration"
+   commands=[{cmd: "crontab -l"}, {cmd: "sudo crontab -l"}, {cmd: "systemctl list-unit-files --type=service"}, {cmd: "systemctl list-timers --all"}, {cmd: "cat ~/.ssh/authorized_keys"}, {cmd: "find / -perm -4000 -type f 2>/dev/null"}] /%}
+
+{% finding
+   severity="informational"
+   text="Look for:\n\n• Unexpected scheduled jobs\n• Unknown systemd services or timers\n• Unrecognized SSH keys\n• Suspicious commands in shell startup files\n• Unusual SUID/SGID binaries\n• Unexpected privileged accounts\n• Executables running from unusual locations" /%}
+
+{% warning
+   text="A suspicious command or file does not automatically mean malicious persistence.\n\nCheck ownership, permissions, execution context, and whether the configuration is expected on the system." /%}
+
+{% tip
+   text="Instead of asking \"Does this file look malicious?\", ask:\n\n\"What causes this to execute?\"\n\nFinding the execution mechanism usually makes the rest of the investigation much easier." /%}
+
+{% callout
+   text="PersistHunt turns these persistence surfaces into separate detectors and normalizes their observations into standardized findings for analysis and risk scoring." /%}

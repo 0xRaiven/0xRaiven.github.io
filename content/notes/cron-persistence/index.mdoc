@@ -1,0 +1,58 @@
+---
+title: Cron Persistence
+description: >-
+  Quick notes on using cron for persistence, common locations, and what to look
+  for during enumeration.
+kind: note
+category: linux
+tags:
+  - linux
+  - persistence
+  - cron
+  - enumneration
+  - red-team
+date: 2026-09-12
+published: true
+relatedSlugs:
+  - linux-persistence-fundamentals
+  - systemd-persistence
+  - shell-startup-pesistence
+  - persisthunt
+---
+{% note
+   text="Cron is a Linux job scheduler used to execute commands at specific times or intervals.\n\nBecause cron can execute commands automatically, attackers can abuse it to maintain recurring execution after gaining access to a system." /%}
+
+### Cron Locations
+
+{% twoColumn
+   left="User crontabs are associated with individual accounts.\n\ncrontab -l\n\nDepending on the system, they are commonly stored under:\n\n/var/spool/cron/\n/var/spool/cron/crontabs/"
+   right="System-wide cron jobs can be found in:\n\n/etc/crontab\n/etc/cron.d/\n/etc/cron.hourly/\n/etc/cron.daily/\n/etc/cron.weekly/\n/etc/cron.monthly/" /%}
+
+{% terminal
+   title="cron enumeration"
+   commands=[{cmd: "crontab -l"}, {cmd: "sudo crontab -l"}, {cmd: "ls -la /etc/cron.d/"}, {cmd: "cat /etc/crontab"}] /%}
+
+{% finding
+   severity="informational"
+   text="Suspicious Cron Jobs :\n\nLook for:\n• Jobs you don't recognize\n• Scripts stored in unusual locations\n• Commands running from /tmp or user-writable directories\n• Unexpected network commands\n• Jobs running with elevated privileges\n• Recently modified cron files\n" /%}
+
+{% warning
+   text="Don't Flag Cron Blindly\n\nCron is heavily used by legitimate system software.\nA scheduled job becomes interesting when its command, location, ownership, permissions, or execution context doesn't make sense for the system." /%}
+
+{% tip
+   text="Follow the Command\n\nFinding a suspicious cron entry is only the first step.\nFollow the command to the script or executable it launches, then inspect its ownership and permissions." /%}
+
+{% callout
+   text="PersistHunt\nCron is one of PersistHunt's persistence detection surfaces. The goal is to identify unusual scheduled execution and provide enough context for further investigation." /%}
+
+### Example
+
+{% terminal
+   title="example cron entry"
+   commands=[{cmd: "cat /etc/cron.d/example", output: "*/5 * * * * user /opt/scripts/backup.sh"}] /%}
+
+This entry executes a script every five minutes. The schedule itself isn't malicious, so the next step is to inspect the referenced script, its ownership, permissions, and whether the job is expected.
+
+### Takeaway
+
+Cron persistence is simple but easy to overlook. During Linux enumeration, always check both user and system-wide scheduled jobs.

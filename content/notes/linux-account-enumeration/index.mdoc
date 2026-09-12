@@ -1,0 +1,53 @@
+---
+title: Linux Account Enumeration
+description: >-
+  Quick notes on enumerating Linux users, groups, shells, and privileged
+  accounts.
+kind: note
+category: linux
+tags:
+  - linux
+  - users
+  - groups
+  - enumertion
+  - privilage-escalation
+  - red-team
+date: 2026-09-12
+published: true
+relatedSlugs:
+  - linux-persistence-fundamentals
+  - linux-process-enumeration
+  - suid-sgid
+  - ssh-persistence
+  - persisthunt
+---
+{% note
+   text="User and group information can reveal privileged accounts, service accounts, unusual login shells, and potential paths for further investigation.\n\nOn a compromised Linux host, start by understanding who exists and what privileges they have." /%}
+
+### User Enumeration
+
+{% terminal
+   title="user enumeration"
+   commands=[{cmd: "cat /etc/passwd"}, {cmd: "getent passwd"}, {cmd: "who"}, {cmd: "w"}] /%}
+
+{% twoColumn
+   left="Check:\n\n• Username\n• UID\n• Home directory\n• Login shell\n\nUID 0 accounts are especially important because they have root-level privileges."
+   right="Check group memberships for privileged groups such as:\n\nsudo\nwheel\ndocker\n\nGroup membership can grant significant access without directly being root." /%}
+
+{% terminal
+   title="privilege enumeration"
+   commands=[{cmd: "id"}, {cmd: "groups"}, {cmd: "getent group sudo"}, {cmd: "getent group wheel"}] /%}
+
+{% finding
+   severity="informational"
+   text="Look for:\n\n• Unexpected UID 0 accounts\n• Users with privileged group memberships\n• Service accounts with login shells\n• Unusual home directories\n• Recently created accounts\n• Accounts with unexpected SSH access" /%}
+
+{% warning
+   text="Many system accounts are intentionally created without interactive login access.\n\nAn unusual account is an investigation lead, not automatically evidence of compromise." /%}
+
+{% tip
+   text="A service account with an interactive shell can be more interesting than one configured with a non-login shell.\n\nCompare the account's purpose with its configured shell and privileges." /%}
+
+### Takeaway
+
+Start Linux account enumeration with users, UIDs, groups, shells, and active sessions. Privilege and access should always be considered together.

@@ -1,0 +1,51 @@
+---
+title: Systemd Persistence
+description: Quick notes on systemd services and timers as Linux persistence mechanisms.
+kind: note
+category: linux
+tags:
+  - linux
+  - persistence
+  - systemd
+  - services
+  - enumeration
+  - red-team
+date: 2026-09-12
+published: true
+relatedSlugs:
+  - linux-persistnce-fundamentals
+  - cron-persistence
+  - ssh-persistence
+  - shell-startup-persistence
+  - persisthunt
+---
+{% note
+   text="Systemd manages services and other background processes on modern Linux systems.\n\nAttackers can abuse systemd services or timers to execute commands automatically, including during system startup." /%}
+
+## Systemd Persistence Locations
+
+{% twoColumn
+   left="Common locations:\n\n/etc/systemd/system/\n/usr/lib/systemd/system/\n/lib/systemd/system/\n\nCustom services under /etc/systemd/system/ deserve attention."
+   right="Systemd timers can trigger services at scheduled intervals.\n\nUseful commands:\n\nsystemctl list-timers --all\nsystemctl list-unit-files --type=service" /%}
+
+{% terminal
+   title="systemd enumeration"
+   commands=[{cmd: "systemctl list-unit-files --type=service"}, {cmd: "systemctl list-timers --all"}, {cmd: "systemctl --type=service --state=running"}, {cmd: "ls -la /etc/systemd/system/"}] /%}
+
+{% finding
+   severity="informational"
+   text="Suspicious Services\n\nLook for:\n• Unknown services\n• Services pointing to unusual paths\n• Executables under /tmp or user-writable directories\n• Unexpected services running as root\n• Recently created or modified unit files\n• Suspicious ExecStart commands" /%}
+
+{% warning
+   text="Services Aren't Automatically Malicious\n\nLinux systems can contain many legitimate custom services.\nCheck the service description, executable path, owner, permissions, and whether the service is expected before treating it as suspicious." /%}
+
+{% tip
+   text="Follow ExecStart\n\nWhen you find an interesting service, inspect its ExecStart value first.\nThen follow that path and investigate the referenced script or executable." /%}
+
+{% terminal
+   title="inspect a service"
+   commands=[{cmd: "systemctl cat <service-name>"}, {cmd: "systemctl show <service-name> -p ExecStart -p User"}] /%}
+
+### Takeaway
+
+When investigating Linux persistence, don't just list running services. Inspect how they start, what they execute, where the executable lives, and which user runs it.

@@ -54,14 +54,14 @@ export function LabBlock({
           <div className="text-[11px] font-semibold text-accent uppercase tracking-wider">
             Objective:
           </div>
-          <p className="text-text-secondary leading-relaxed pl-2 border-l border-accent/30">
+          <p className="text-text-secondary leading-relaxed pl-2 border-l border-accent/30 whitespace-pre-wrap">
             {objective}
           </p>
         </div>
       )}
 
       {children && (
-        <div className="pt-2 text-text-secondary leading-relaxed">
+        <div className="pt-2 text-text-secondary leading-relaxed whitespace-pre-wrap">
           {children}
         </div>
       )}

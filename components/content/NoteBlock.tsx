@@ -14,6 +14,8 @@ export function NoteBlock({
   children,
   className = '',
 }: NoteBlockProps) {
+  const content = children ?? text;
+
   return (
     <aside
       role="note"
@@ -23,8 +25,8 @@ export function NoteBlock({
         <Info className="w-4 h-4 shrink-0" />
         <span>{title}</span>
       </div>
-      <div className="text-text-secondary leading-relaxed pl-6">
-        {children || text}
+      <div className="text-text-secondary leading-relaxed pl-6 whitespace-pre-wrap">
+        {content}
       </div>
     </aside>
   );

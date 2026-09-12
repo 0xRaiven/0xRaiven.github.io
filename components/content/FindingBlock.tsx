@@ -3,7 +3,7 @@ import { ShieldAlert } from 'lucide-react';
 
 export interface FindingBlockProps {
   text?: string;
-  severity?: 'critical' | 'high' | 'medium' | 'low' | 'informational' | string;
+  severity?: 'critical' | 'high' | 'medium' | 'low' | 'informational' | 'none' | string;
   cvss?: string;
   title?: string;
   children?: React.ReactNode;
@@ -12,13 +12,13 @@ export interface FindingBlockProps {
 
 export function FindingBlock({
   text,
-  severity = 'high',
+  severity = 'none',
   cvss,
-  title,
+  title = 'Findings',
   children,
   className = '',
 }: FindingBlockProps) {
-  const normSeverity = severity.toLowerCase();
+  const normSeverity = (severity || 'none').toLowerCase();
 
   const sevStyles: Record<string, string> = {
     critical: 'border-rose-500/50 bg-rose-500/10 text-rose-300',
@@ -26,6 +26,7 @@ export function FindingBlock({
     medium: 'border-amber-500/50 bg-amber-500/10 text-amber-300',
     low: 'border-blue-500/50 bg-blue-500/10 text-blue-300',
     informational: 'border-slate-500/50 bg-slate-500/10 text-slate-300',
+    none: 'border-orange-500/40 bg-orange-500/10 text-orange-300',
   };
 
   const pillStyles: Record<string, string> = {
@@ -36,15 +37,17 @@ export function FindingBlock({
     informational: 'bg-slate-950/60 border-slate-500/40 text-slate-300',
   };
 
-  const containerStyle = sevStyles[normSeverity] || sevStyles.high;
-  const pillStyle = pillStyles[normSeverity] || pillStyles.high;
+  const containerStyle = sevStyles[normSeverity] || sevStyles.none;
+  const showBadge = normSeverity !== 'none' && Boolean(pillStyles[normSeverity]);
+  const pillStyle = pillStyles[normSeverity];
+  const content = children ?? text;
 
   return (
     <div className={`my-4 p-4 rounded border text-xs font-mono space-y-2.5 ${containerStyle} ${className}`}>
       <div className="flex items-center justify-between border-b border-border/40 pb-2">
         <div className="flex items-center gap-2 font-semibold tracking-wide uppercase text-[11px]">
           <ShieldAlert className="w-4 h-4 shrink-0" />
-          <span>{title || 'Security Finding'}</span>
+          <span>{title}</span>
         </div>
         <div className="flex items-center gap-2">
           {cvss && (
@@ -52,14 +55,16 @@ export function FindingBlock({
               CVSS {cvss}
             </span>
           )}
-          <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border font-bold ${pillStyle}`}>
-            {severity}
-          </span>
+          {showBadge && (
+            <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border font-bold ${pillStyle}`}>
+              {normSeverity === 'informational' ? 'INFO' : normSeverity}
+            </span>
+          )}
         </div>
       </div>
 
-      <div className="text-text-secondary leading-relaxed pt-1">
-        {children || text}
+      <div className="text-text-secondary leading-relaxed pt-1 whitespace-pre-wrap">
+        {content}
       </div>
     </div>
   );

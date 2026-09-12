@@ -78,7 +78,7 @@ export function ContentRenderer({ blocks, depth = 0, className = '' }: ContentRe
             );
 
           case 'finding':
-            return <FindingBlock key={key} text={block.text} />;
+            return <FindingBlock key={key} text={block.text} severity={block.severity} />;
 
           case 'mitigation':
             return <MitigationBlock key={key} text={block.text} />;

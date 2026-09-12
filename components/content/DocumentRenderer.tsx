@@ -26,48 +26,124 @@ import { TwoColumnBlock } from './TwoColumnBlock';
 
 // Custom Component Blocks mapping delegating to modular blocks
 const componentBlocks = {
-  warning: ({ title, content }: { title?: string; content: React.ReactNode }) => (
-    <WarningBlock title={title}>{content}</WarningBlock>
+  warning: ({
+    title,
+    content,
+    text,
+    children,
+  }: {
+    title?: string;
+    content?: React.ReactNode;
+    text?: string;
+    children?: React.ReactNode;
+  }) => (
+    <WarningBlock title={title} text={text}>
+      {children ?? text ?? content}
+    </WarningBlock>
   ),
 
-  note: ({ title, content }: { title?: string; content: React.ReactNode }) => (
-    <NoteBlock title={title}>{content}</NoteBlock>
+  note: ({
+    title,
+    content,
+    text,
+    children,
+  }: {
+    title?: string;
+    content?: React.ReactNode;
+    text?: string;
+    children?: React.ReactNode;
+  }) => (
+    <NoteBlock title={title} text={text}>
+      {children ?? text ?? content}
+    </NoteBlock>
   ),
 
-  tip: ({ title, content }: { title?: string; content: React.ReactNode }) => (
-    <TipBlock title={title}>{content}</TipBlock>
+  tip: ({
+    title,
+    content,
+    text,
+    children,
+  }: {
+    title?: string;
+    content?: React.ReactNode;
+    text?: string;
+    children?: React.ReactNode;
+  }) => (
+    <TipBlock title={title} text={text}>
+      {children ?? text ?? content}
+    </TipBlock>
   ),
 
   lab: ({
     environment,
     target,
+    difficulty,
+    objective,
     content,
+    children,
   }: {
     environment?: string;
     target?: string;
-    content: React.ReactNode;
+    difficulty?: 'easy' | 'medium' | 'hard';
+    objective?: string;
+    content?: React.ReactNode;
+    children?: React.ReactNode;
   }) => (
-    <LabBlock target={target || 'Local Lab'} difficulty="medium" environment={environment}>
-      {content}
+    <LabBlock
+      target={target || 'Local Lab'}
+      difficulty={difficulty || 'medium'}
+      environment={environment}
+      objective={objective || (typeof content === 'string' ? content : undefined)}
+    >
+      {children ?? content}
     </LabBlock>
   ),
 
   finding: ({
     severity,
     cvss,
+    title,
     content,
+    text,
+    children,
   }: {
-    severity: string;
+    severity?: string;
     cvss?: string;
-    content: React.ReactNode;
+    title?: string;
+    content?: React.ReactNode;
+    text?: string;
+    children?: React.ReactNode;
   }) => (
-    <FindingBlock severity={severity} cvss={cvss}>
-      {content}
+    <FindingBlock
+      severity={severity || 'none'}
+      cvss={cvss}
+      title={title}
+      text={text}
+    >
+      {children ?? text ?? content}
     </FindingBlock>
   ),
 
-  mitigation: ({ status, content }: { status: string; content: React.ReactNode }) => (
-    <MitigationBlock status={status}>{content}</MitigationBlock>
+  mitigation: ({
+    status,
+    title,
+    content,
+    text,
+    children,
+  }: {
+    status?: string;
+    title?: string;
+    content?: React.ReactNode;
+    text?: string;
+    children?: React.ReactNode;
+  }) => (
+    <MitigationBlock
+      status={status || 'Remediation'}
+      title={title}
+      text={text}
+    >
+      {children ?? text ?? content}
+    </MitigationBlock>
   ),
 
   terminal: ({
@@ -101,8 +177,16 @@ const componentBlocks = {
 
   fileTree: ({ tree }: { tree: string }) => <FileTreeBlock tree={tree} />,
 
-  callout: ({ content }: { content: React.ReactNode }) => (
-    <CalloutBlock>{content}</CalloutBlock>
+  callout: ({
+    content,
+    text,
+    children,
+  }: {
+    content?: React.ReactNode;
+    text?: string;
+    children?: React.ReactNode;
+  }) => (
+    <CalloutBlock text={text}>{children ?? text ?? content}</CalloutBlock>
   ),
 
   twoColumn: ({
