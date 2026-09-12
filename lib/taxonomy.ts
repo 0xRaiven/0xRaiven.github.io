@@ -23,6 +23,13 @@ export const PROJECT_CATEGORY_OPTIONS = [
   { label: "Detection Engineering", value: "detection-engineering" },
   { label: "Lab Environment", value: "lab-environment" },
   { label: "Cloud Security", value: "cloud-security" },
+  { label: "Basic Utility", value: "basic-utility" },
+  { label: "Backend Services", value: "backend-services" },
+  { label: "GitHub Pages", value: "github-pages" },
+  { label: "Profile README", value: "profile-readme" },
+  { label: "Assignment Repo", value: "assignment-repo" },
+  { label: "Client-side Interface", value: "clientside-interface" },
+  { label: "Blockchain Technology", value: "blockchain-technology" },
 ] as const;
 
 export type ProjectCategory = (typeof PROJECT_CATEGORY_OPTIONS)[number]["value"];

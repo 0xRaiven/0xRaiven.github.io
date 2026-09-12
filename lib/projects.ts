@@ -23,50 +23,54 @@ export async function getProjects(): Promise<EnrichedProject[]> {
     const projects: EnrichedProject[] = [];
 
     for (const slug of slugs) {
-      const item = await reader.collections.projects.read(slug);
-      if (!item) continue;
+      try {
+        const item = await reader.collections.projects.read(slug);
+        if (!item) continue;
 
-      let githubData: GitHubRepoMetadata | null = null;
-      if (item.githubUrl) {
-        githubData = await getGitHubRepoData(item.githubUrl);
+        let githubData: GitHubRepoMetadata | null = null;
+        if (item.githubUrl) {
+          githubData = await getGitHubRepoData(item.githubUrl);
+        }
+
+        // Merge technologies with GitHub languages and topics if available
+        const techSet = new Set<string>(
+          item.technologies
+            ? item.technologies.filter((t): t is string => typeof t === "string")
+            : []
+        );
+
+        if (githubData) {
+          githubData.languageStack.forEach((lang) => techSet.add(lang));
+          githubData.topics.forEach((topic) => techSet.add(topic));
+        }
+
+        // Use GitHub repo description if local description is empty
+        const description =
+          item.description || (githubData?.description ?? "");
+
+        const screenshots = item.screenshots
+          ? item.screenshots.filter((s): s is string => typeof s === "string")
+          : [];
+
+        const relatedWriteupSlugs = item.relatedWriteupSlugs
+          ? item.relatedWriteupSlugs.filter((s): s is string => typeof s === "string")
+          : [];
+
+        projects.push({
+          slug,
+          title: item.title,
+          description,
+          status: item.status as ProjectStatus,
+          category: item.category as ProjectCategory,
+          technologies: Array.from(techSet),
+          githubUrl: item.githubUrl || undefined,
+          screenshots,
+          relatedWriteupSlugs,
+          githubData,
+        });
+      } catch (err) {
+        console.error(`[projects] Error loading project "${slug}":`, err);
       }
-
-      // Merge technologies with GitHub languages and topics if available
-      const techSet = new Set<string>(
-        item.technologies
-          ? item.technologies.filter((t): t is string => typeof t === "string")
-          : []
-      );
-
-      if (githubData) {
-        githubData.languageStack.forEach((lang) => techSet.add(lang));
-        githubData.topics.forEach((topic) => techSet.add(topic));
-      }
-
-      // Use GitHub repo description if local description is empty
-      const description =
-        item.description || (githubData?.description ?? "");
-
-      const screenshots = item.screenshots
-        ? item.screenshots.filter((s): s is string => typeof s === "string")
-        : [];
-
-      const relatedWriteupSlugs = item.relatedWriteupSlugs
-        ? item.relatedWriteupSlugs.filter((s): s is string => typeof s === "string")
-        : [];
-
-      projects.push({
-        slug,
-        title: item.title,
-        description,
-        status: item.status as ProjectStatus,
-        category: item.category as ProjectCategory,
-        technologies: Array.from(techSet),
-        githubUrl: item.githubUrl || undefined,
-        screenshots,
-        relatedWriteupSlugs,
-        githubData,
-      });
     }
 
     return projects;

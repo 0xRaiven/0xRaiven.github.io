@@ -127,7 +127,7 @@
     "description": "0xraiven GitHub profile README and operational security portfolio overview.",
     "url": "/projects/0xraiven",
     "kind": "project",
-    "category": "red-team-tooling",
+    "category": "profile-readme",
     "tags": [
       "Python",
       "Bash",
@@ -141,7 +141,7 @@
     "description": "Public offensive security portfolio, red teaming repository, and technical knowledge base maintained by @0xraiven.",
     "url": "/projects/0xraiven-github-io",
     "kind": "project",
-    "category": "red-team-tooling",
+    "category": "github-pages",
     "tags": [
       "TypeScript",
       "Roff",
@@ -155,7 +155,7 @@
     "description": "assignment reports",
     "url": "/projects/aenexz",
     "kind": "project",
-    "category": "red-team-tooling",
+    "category": "assignment-repo",
     "tags": []
   },
   {
@@ -164,7 +164,7 @@
     "description": "A simple program built using windows batch script to optimize the games on low end devices",
     "url": "/projects/gameoptimizer",
     "kind": "project",
-    "category": "red-team-tooling",
+    "category": "basic-utility",
     "tags": [
       "Batchfile",
       "batch-script",
@@ -179,7 +179,7 @@
     "description": "Backend mongodb-atlas supported service for the nightquill-frontend ",
     "url": "/projects/nightquill-backend",
     "kind": "project",
-    "category": "red-team-tooling",
+    "category": "backend-services",
     "tags": [
       "JavaScript",
       "mern",
@@ -194,7 +194,7 @@
     "description": "frontend repository for the \"nightquill\" => a dedicated blogging platform",
     "url": "/projects/nightquill-frontend",
     "kind": "project",
-    "category": "red-team-tooling",
+    "category": "clientside-interface",
     "tags": [
       "TypeScript",
       "HTML",
@@ -257,7 +257,7 @@
     "description": "A community platfrom built on ICP network which is built for students by students",
     "url": "/projects/studysphere",
     "kind": "project",
-    "category": "cloud-security",
+    "category": "blockchain-technology",
     "tags": [
       "TypeScript",
       "Motoko",
@@ -276,7 +276,7 @@
     "description": "A simple weather app built using html,css,js",
     "url": "/projects/weatherapp",
     "kind": "project",
-    "category": "red-team-tooling",
+    "category": "basic-utility",
     "tags": [
       "JavaScript",
       "HTML",
@@ -285,6 +285,130 @@
       "html",
       "js",
       "open-street-map"
+    ]
+  },
+  {
+    "id": "note-cron-persistence",
+    "title": "Cron Persistence",
+    "description": "Quick notes on using cron for persistence, common locations, and what to look for during enumeration.",
+    "url": "/notes/cron-persistence",
+    "kind": "note",
+    "category": "linux",
+    "tags": [
+      "linux",
+      "persistence",
+      "cron",
+      "enumneration",
+      "red-team"
+    ]
+  },
+  {
+    "id": "note-linux-account-enumeration",
+    "title": "Linux Account Enumeration",
+    "description": "Quick notes on enumerating Linux users, groups, shells, and privileged accounts.",
+    "url": "/notes/linux-account-enumeration",
+    "kind": "note",
+    "category": "linux",
+    "tags": [
+      "linux",
+      "users",
+      "groups",
+      "enumertion",
+      "privilage-escalation",
+      "red-team"
+    ]
+  },
+  {
+    "id": "note-linux-persistence-fundamentals",
+    "title": "Linux Persistence Fundamentals",
+    "description": "Quick notes on common Linux persistence mechanisms and where to look for them.",
+    "url": "/notes/linux-persistence-fundamentals",
+    "kind": "note",
+    "category": "linux",
+    "tags": [
+      "linux",
+      "persistence",
+      "red-team",
+      "enumeration"
+    ]
+  },
+  {
+    "id": "note-linux-process-enumeration",
+    "title": "Linux Process Enumeration",
+    "description": "Quick notes on enumerating Linux processes and identifying unusual or privileged execution.",
+    "url": "/notes/linux-process-enumeration",
+    "kind": "note",
+    "category": "linux",
+    "tags": [
+      "linux",
+      "processes",
+      "enumeration",
+      "privilage-escalation",
+      "red-team"
+    ]
+  },
+  {
+    "id": "note-shell-startup-persistence",
+    "title": "Shell Startup Persistence",
+    "description": "Quick notes on Linux shell startup files and how they can be abused for persistence.",
+    "url": "/notes/shell-startup-persistence",
+    "kind": "note",
+    "category": "linux",
+    "tags": [
+      "linux",
+      "shell",
+      "persistence",
+      "bash",
+      "enumeration",
+      "red-team"
+    ]
+  },
+  {
+    "id": "note-ssh-persistence",
+    "title": "SSH Persistence",
+    "description": "Quick notes on SSH keys, authorized_keys, and detecting persistent SSH access.",
+    "url": "/notes/ssh-persistence",
+    "kind": "note",
+    "category": "linux",
+    "tags": [
+      "linux",
+      "ssh",
+      "persistence",
+      "authentication",
+      "enumeration",
+      "red-team"
+    ]
+  },
+  {
+    "id": "note-suid-sgid",
+    "title": "SUID & SGID",
+    "description": "Quick notes on SUID and SGID permissions, enumeration, and why unusual privileged binaries matter.",
+    "url": "/notes/suid-sgid",
+    "kind": "note",
+    "category": "linux",
+    "tags": [
+      "linux",
+      "suid",
+      "sgid",
+      "privilage-escalation",
+      "enumeration",
+      "red-team"
+    ]
+  },
+  {
+    "id": "note-systemd-persistence",
+    "title": "Systemd Persistence",
+    "description": "Quick notes on systemd services and timers as Linux persistence mechanisms.",
+    "url": "/notes/systemd-persistence",
+    "kind": "note",
+    "category": "linux",
+    "tags": [
+      "linux",
+      "persistence",
+      "systemd",
+      "services",
+      "enumeration",
+      "red-team"
     ]
   }
 ]

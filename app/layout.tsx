@@ -54,6 +54,7 @@ export const metadata: Metadata = {
   },
 };
 
+import Script from "next/script";
 import { Providers } from "@/providers";
 import { AsciiBootLoader } from "@/components/animation/AsciiBootLoader";
 
@@ -68,8 +69,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Geist+Pixel&display=swap" rel="stylesheet" />
-        <script
-          suppressHydrationWarning
+      </head>
+      <body className="h-full overflow-hidden bg-bg text-text-primary antialiased font-sans">
+        <Script
+          id="theme-boot-init"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
@@ -99,8 +103,6 @@ export default function RootLayout({
             `,
           }}
         />
-      </head>
-      <body className="h-full overflow-hidden bg-bg text-text-primary antialiased font-sans">
         <Providers>
           <AsciiBootLoader />
           <div id="page-content-wrapper" className="h-full w-full">
