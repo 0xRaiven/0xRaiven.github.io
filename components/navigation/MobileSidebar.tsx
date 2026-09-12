@@ -280,6 +280,16 @@ export function MobileSidebar({ isOpen, onClose, onOpenSearch }: MobileSidebarPr
               onClick={onClose}
               className="flex items-center gap-2 font-mono text-sm tracking-tight"
             >
+              <div className="relative w-5 h-5 rounded overflow-hidden border border-border/80 shrink-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/icon.svg"
+                  alt="Logo"
+                  width={20}
+                  height={20}
+                  className="w-full h-full object-contain"
+                />
+              </div>
               <span className="font-bold text-text-primary">r41n</span>
               <span className="text-text-secondary text-xs">•</span>
               <span className="text-xs text-text-secondary">Knowledge Base</span>

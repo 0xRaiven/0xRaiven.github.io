@@ -1,40 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <defs>
-    <linearGradient id="crimson" x1="0%" y1="0%" x2="100%" y2="100%">
+    <!-- Background Obsidian Gradient -->
+    <linearGradient id="tileBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#151319"/>
+      <stop offset="100%" stop-color="#09080c"/>
+    </linearGradient>
+
+    <!-- Vibrant Crimson Diagonal Accent -->
+    <linearGradient id="crimsonAccent" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#ff3b5c"/>
       <stop offset="100%" stop-color="#d12c4b"/>
     </linearGradient>
-    <linearGradient id="shieldFill" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#18161f"/>
-      <stop offset="100%" stop-color="#0e0d12"/>
+
+    <!-- Crisp Platinum/Metallic Pillars -->
+    <linearGradient id="pillarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e4e4e7"/>
     </linearGradient>
-    <linearGradient id="tileBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#141318"/>
-      <stop offset="100%" stop-color="#0b0b0e"/>
-    </linearGradient>
+
+    <!-- Ambient Crimson Glow -->
+    <radialGradient id="ambientGlow" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#ff3b5c" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#ff3b5c" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 
-  <!-- Base Obsidian Rounded Tile -->
-  <rect x="1.5" y="1.5" width="61" height="61" rx="14" fill="url(#tileBg)" stroke="#d12c4b" stroke-width="1.5" stroke-opacity="0.35"/>
+  <!-- Obsidian Squircle Base -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#tileBg)" stroke="#d12c4b" stroke-width="1.5" stroke-opacity="0.4"/>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#ambientGlow)"/>
 
-  <!-- Cyber Defense Shield (Red Accent Silhouette) -->
-  <path d="M32 9.5 L50 17 V32 C50 44.5 32 54.5 32 54.5 C32 54.5 14 44.5 14 32 V17 Z" 
-        fill="url(#shieldFill)" 
-        stroke="url(#crimson)" 
-        stroke-width="3" 
-        stroke-linejoin="round"/>
+  <!-- Geometric Designer Monogram "R" -->
+  <!-- Left Stem -->
+  <path d="M16 16 H24.5 V48 H16 Z" fill="url(#pillarGrad)"/>
 
-  <!-- Terminal Command Chevron (High-contrast cyber white) -->
-  <path d="M26 23 L35.5 31.5 L26 40" 
-        fill="none" 
-        stroke="#f2eeea" 
-        stroke-width="3.5" 
-        stroke-linecap="round" 
-        stroke-linejoin="round"/>
+  <!-- Loop & Diagonal Leg (Integrated) -->
+  <path d="M24.5 16 H36.5 C43 16 47 19.8 47 25.5 C47 29.8 44.5 33 40.5 34.2 L47.5 48 H38.5 L32.2 34.5 H24.5 V16 Z M24.5 22.2 V28.3 H35.5 C38 28.3 39.5 27.2 39.5 25.3 C39.5 23.4 38 22.2 35.5 22.2 H24.5 Z" fill="url(#pillarGrad)"/>
 
-  <!-- Red Team Terminal Pulse / Cursor Bar -->
-  <line x1="39" y1="39" x2="43.5" y2="39" 
-        stroke="url(#crimson)" 
-        stroke-width="3.5" 
-        stroke-linecap="round"/>
+  <!-- Precision Crimson Blade Accent on the Leg -->
+  <path d="M33 34.5 H40.5 L47.5 48 H40 Z" fill="url(#crimsonAccent)"/>
 </svg>

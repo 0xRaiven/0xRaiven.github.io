@@ -97,14 +97,14 @@ export function TopBar({
             href="/"
             className="flex items-center gap-2 text-sm tracking-tight focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent rounded px-1 py-0.5 group"
           >
-            <div className="relative w-6 h-6 rounded-full overflow-hidden border border-border group-hover:border-accent/60 transition-colors shrink-0 bg-surface-2">
+            <div className="relative w-6 h-6 rounded-md overflow-hidden border border-border/80 group-hover:border-accent/60 transition-colors shrink-0 shadow-sm">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://github.com/0xraiven.png"
-                alt="0xraiven"
+                src="/icon.svg"
+                alt="Logo"
                 width={24}
                 height={24}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </div>
             <span className="font-mono font-bold text-text-primary group-hover:text-accent tracking-wide transition-colors">
