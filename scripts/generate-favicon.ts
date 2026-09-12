@@ -2,47 +2,68 @@ import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
 
-// SVG definition
-const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+// SVG definition: "0x Hex NetCore" (100% Transparent background, Network nodes + Git Branch + 0x Hex notation)
+const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
   <defs>
-    <!-- Background Obsidian Gradient -->
-    <linearGradient id="tileBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#151319"/>
-      <stop offset="100%" stop-color="#09080c"/>
+    <!-- Vibrant Electric Crimson Gradient -->
+    <linearGradient id="neonCrimson" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff3b69"/>
+      <stop offset="60%" stop-color="#e11d48"/>
+      <stop offset="100%" stop-color="#be123c"/>
     </linearGradient>
 
-    <!-- Vibrant Crimson Diagonal Accent -->
-    <linearGradient id="crimsonAccent" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ff3b5c"/>
-      <stop offset="100%" stop-color="#d12c4b"/>
-    </linearGradient>
-
-    <!-- Crisp Platinum/Metallic Pillars -->
-    <linearGradient id="pillarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+    <!-- Pure Platinum Chrome Gradient -->
+    <linearGradient id="chromePillar" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#e4e4e7"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
     </linearGradient>
 
-    <!-- Ambient Crimson Glow -->
-    <radialGradient id="ambientGlow" cx="50%" cy="50%" r="55%">
-      <stop offset="0%" stop-color="#ff3b5c" stop-opacity="0.25"/>
-      <stop offset="100%" stop-color="#ff3b5c" stop-opacity="0"/>
-    </radialGradient>
+    <!-- Obsidian Core Shadow for universal contrast across both dark & light backgrounds -->
+    <filter id="cyberGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
   </defs>
 
-  <!-- Obsidian Squircle Base -->
-  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#tileBg)" stroke="#d12c4b" stroke-width="1.5" stroke-opacity="0.4"/>
-  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#ambientGlow)"/>
+  <!-- Dark Contour Underlay: Ensures crisp visibility across light and dark themes -->
+  <g opacity="0.9" filter="url(#cyberGlow)">
+    <polygon points="32,5 57,19.5 57,44.5 32,59 7,44.5 7,19.5" 
+             stroke="#0b0a10" stroke-width="7" stroke-linejoin="round"/>
+    <line x1="17" y1="21" x2="47" y2="43" stroke="#0b0a10" stroke-width="6.5" stroke-linecap="round"/>
+    <line x1="17" y1="43" x2="47" y2="21" stroke="#0b0a10" stroke-width="6.5" stroke-linecap="round"/>
+  </g>
 
-  <!-- Geometric Designer Monogram "R" -->
-  <!-- Left Stem -->
-  <path d="M16 16 H24.5 V48 H16 Z" fill="url(#pillarGrad)"/>
+  <!-- Outer "0" Ring: Cybernetic Hexagon Loop (Transparent background) -->
+  <polygon points="32,5 57,19.5 57,44.5 32,59 7,44.5 7,19.5" 
+           stroke="url(#neonCrimson)" stroke-width="4.2" stroke-linejoin="round"/>
 
-  <!-- Loop & Diagonal Leg (Integrated) -->
-  <path d="M24.5 16 H36.5 C43 16 47 19.8 47 25.5 C47 29.8 44.5 33 40.5 34.2 L47.5 48 H38.5 L32.2 34.5 H24.5 V16 Z M24.5 22.2 V28.3 H35.5 C38 28.3 39.5 27.2 39.5 25.3 C39.5 23.4 38 22.2 35.5 22.2 H24.5 Z" fill="url(#pillarGrad)"/>
+  <!-- Inner "x" Cross: Git Branching & Network Data Paths -->
+  <line x1="17" y1="21" x2="47" y2="43" stroke="url(#chromePillar)" stroke-width="3.6" stroke-linecap="round"/>
+  <line x1="17" y1="43" x2="47" y2="21" stroke="url(#chromePillar)" stroke-width="3.6" stroke-linecap="round"/>
 
-  <!-- Precision Crimson Blade Accent on the Leg -->
-  <path d="M33 34.5 H40.5 L47.5 48 H40 Z" fill="url(#crimsonAccent)"/>
+  <!-- Center Hub: Central Network Router / Git Merge Point -->
+  <circle cx="32" cy="32" r="6" fill="#09080d" stroke="url(#neonCrimson)" stroke-width="2.6"/>
+  <circle cx="32" cy="32" r="2.4" fill="#ffffff"/>
+
+  <!-- 4 Terminal Commit Nodes: Distributed Network Packets -->
+  <!-- Top-Left Commit Node -->
+  <circle cx="17" cy="21" r="4.5" fill="#09080d" stroke="#ffffff" stroke-width="2.2"/>
+  <circle cx="17" cy="21" r="1.6" fill="#ff2a5f"/>
+
+  <!-- Top-Right Commit Node -->
+  <circle cx="47" cy="21" r="4.5" fill="#09080d" stroke="#ffffff" stroke-width="2.2"/>
+  <circle cx="47" cy="21" r="1.6" fill="#ff2a5f"/>
+
+  <!-- Bottom-Left Commit Node -->
+  <circle cx="17" cy="43" r="4.5" fill="#09080d" stroke="#ffffff" stroke-width="2.2"/>
+  <circle cx="17" cy="43" r="1.6" fill="#ff2a5f"/>
+
+  <!-- Bottom-Right Commit Node -->
+  <circle cx="47" cy="43" r="4.5" fill="#09080d" stroke="#ffffff" stroke-width="2.2"/>
+  <circle cx="47" cy="43" r="1.6" fill="#ff2a5f"/>
+
+  <!-- Apex Telemetry Ping Dots -->
+  <circle cx="32" cy="5" r="2.2" fill="#ffffff"/>
+  <circle cx="32" cy="59" r="2.2" fill="#ffffff"/>
 </svg>`;
 
 // Function to construct a multi-size ICO from PNG buffers

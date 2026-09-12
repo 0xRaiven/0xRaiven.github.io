@@ -280,7 +280,7 @@ export function MobileSidebar({ isOpen, onClose, onOpenSearch }: MobileSidebarPr
               onClick={onClose}
               className="flex items-center gap-2 font-mono text-sm tracking-tight"
             >
-              <div className="relative w-5 h-5 rounded overflow-hidden border border-border/80 shrink-0">
+              <div className="relative w-5 h-5 shrink-0 flex items-center justify-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/icon.svg"

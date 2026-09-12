@@ -97,7 +97,7 @@ export function TopBar({
             href="/"
             className="flex items-center gap-2 text-sm tracking-tight focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent rounded px-1 py-0.5 group"
           >
-            <div className="relative w-6 h-6 rounded-md overflow-hidden border border-border/80 group-hover:border-accent/60 transition-colors shrink-0 shadow-sm">
+            <div className="relative w-6 h-6 shrink-0 flex items-center justify-center transition-transform duration-200 group-hover:scale-105">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/icon.svg"

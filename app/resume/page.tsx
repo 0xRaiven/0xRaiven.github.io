@@ -12,23 +12,26 @@ import {
   Layers,
   Cpu,
   Server,
-  GraduationCap,
-  Briefcase,
   GitBranch,
   ExternalLink,
   Code2,
-  CheckCircle2,
 } from "lucide-react";
 import { ScrambleText } from "@/components/animation/ScrambleText";
 
 export const metadata: Metadata = {
   title: "Resume // r41n",
-  description: "Curriculum vitae, technical competencies, practical security work, and engineering projects.",
+  description: "Curriculum vitae, technical competencies, and security engineering profile.",
 };
 
 export default async function ResumePage() {
   const resumeData = await reader.singletons.resume.read();
   const summary = resumeData ? await resumeData.summary() : null;
+
+  const pdfHref = resumeData?.pdfFile
+    ? (resumeData.pdfFile.startsWith("/")
+      ? resumeData.pdfFile
+      : `/resume/${resumeData.pdfFile}`)
+    : "/resume/resume.pdf";
 
   const competencies = [
     {
@@ -74,57 +77,6 @@ export default async function ResumePage() {
         "Chrome Extension APIs (MV3)",
         "Git & GitHub Version Control Workflows",
       ],
-    },
-  ];
-
-  const practicalTraining = [
-    {
-      title: "OverTheWire — Bandit",
-      badge: "Levels 0 → 33 Completed",
-      status: "Completed",
-      description:
-        "Practical foundational training covering Linux CLI navigation, multi-tier filesystem permissions, SSH configurations, shell pipes and redirection, process inspection, text processing, and command-line security problem solving.",
-    },
-    {
-      title: "PortSwigger Web Security Academy",
-      badge: "Hands-on Labs Completed",
-      status: "Active Practice",
-      description:
-        "Practiced manual vulnerability exploitation including Path Traversal, Unprotected Admin Functionality, Cookie Tampering, Horizontal and Vertical Privilege Escalation, Authentication Vulnerabilities, and Server-Side Request Forgery (SSRF against local loopback services).",
-    },
-    {
-      title: "DVWA (Damn Vulnerable Web Application)",
-      badge: "Manual OWASP Top 10 Exploitation",
-      status: "Completed Labs",
-      description:
-        "Executed controlled manual exploitation against intentionally vulnerable web application behaviors: SQL Injection, Cross-Site Scripting (XSS), Cross-Site Request Forgery (CSRF), Command Injection, File Inclusion, File Upload, and Broken Authentication.",
-    },
-  ];
-
-  const projects = [
-    {
-      name: "Persistence Hunter",
-      type: "Endpoint Security Tooling",
-      status: "In Progress",
-      desc: "Security tool development project focused on identifying and auditing endpoint persistence mechanisms across operating systems.",
-      tech: ["Python", "Endpoint Telemetry", "Persistence Analysis"],
-      githubUrl: "https://github.com/0xraiven/persistHunt",
-    },
-    {
-      name: "PhishGuard",
-      type: "Open Source // Browser Security",
-      status: "In Progress",
-      desc: "Privacy-first machine-learning phishing detection platform and browser extension (Chrome MV3, Edge) with a decoupled Flask backend evaluating Random Forest and CNN models with explainability. Licensed under Apache 2.0.",
-      tech: ["Python", "Flask", "Chrome MV3", "Machine Learning", "Render"],
-      githubUrl: "https://github.com/0xraiven/phishGuard",
-    },
-    {
-      name: "OWT Bandit",
-      type: "Linux Security Fundamentals",
-      status: "Active",
-      desc: "Hands-on Linux command-line security exercises, shell scripting, permission escalation analysis, and terminal problem solving.",
-      tech: ["Linux", "Bash", "SSH", "Security Primitives"],
-      githubUrl: "https://github.com/0xraiven/OWT-bandit",
     },
   ];
 
@@ -210,27 +162,15 @@ export default async function ResumePage() {
                 <ExternalLink className="w-3.5 h-3.5 text-accent" />
                 <span>X (@0xraiven)</span>
               </a>
-              {resumeData?.pdfFile ? (
-                <a
-                  href={resumeData.pdfFile}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-accent text-bg text-xs font-mono font-semibold hover:bg-accent/90 transition-colors shadow-sm"
-                >
-                  <FileDown className="w-3.5 h-3.5" />
-                  <span>Download PDF</span>
-                </a>
-              ) : (
-                <a
-                  href="https://github.com/0xraiven"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-border bg-surface-2 hover:bg-surface text-text-primary text-xs font-mono transition-colors"
-                >
-                  <ExternalLink className="w-3.5 h-3.5 text-accent" />
-                  <span>GitHub</span>
-                </a>
-              )}
+              <a
+                href={pdfHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-accent text-bg text-xs font-mono font-semibold hover:bg-accent-hover transition-colors shadow-sm"
+              >
+                <FileDown className="w-3.5 h-3.5" />
+                <span>Download PDF</span>
+              </a>
             </div>
           </div>
 
@@ -262,90 +202,35 @@ export default async function ResumePage() {
           )}
         </header>
 
-        {/* Education & Academic Discipline */}
-        <section className="space-y-4">
-          <div className="flex items-center justify-between border-b border-border/60 pb-2">
-            <div className="flex items-center gap-2">
-              <GraduationCap className="w-4 h-4 text-accent" />
-              <h2 className="text-xs font-semibold tracking-wider text-text-primary font-mono uppercase">
-                <ScrambleText text="Education" as="span" />
-              </h2>
-            </div>
-            <span className="text-[10px] font-mono text-text-secondary">Academic Foundation</span>
-          </div>
-
-          <div className="p-4 rounded border border-border bg-surface space-y-3">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-border/40 pb-2">
-              <div>
-                <h3 className="text-xs font-bold text-text-primary font-mono">
-                  Computer Science Engineering
-                </h3>
-                <span className="text-[11px] font-mono text-text-secondary">
-                  Undergraduate Engineering Student
+        {/* HR & Recruiter Direct Access Box */}
+        <section className="relative overflow-hidden rounded border border-accent/40 bg-surface-2/70 p-4 sm:p-5 transition-all hover:border-accent/60">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2">
+                <span className="flex h-2 w-2 rounded-full bg-accent animate-pulse" />
+                <span className="text-[11px] font-mono uppercase tracking-wider text-accent font-semibold">
+                  HR &amp; Technical Recruiters
                 </span>
               </div>
-              <span className="text-[10px] font-mono text-accent px-2 py-0.5 rounded bg-accent/10 border border-accent/20 self-start sm:self-auto">
-                In Progress
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono text-text-secondary pt-1">
-              <div className="flex items-center gap-2">
-                <span className="text-accent">›</span>
-                <span>Operating Systems &amp; Linux Internals</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-accent">›</span>
-                <span>Computer Network Protocols &amp; Architecture</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-accent">›</span>
-                <span>Applied Cryptography &amp; Information Security</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-accent">›</span>
-                <span>Web Technologies &amp; Distributed Systems</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Practical Security Training & Proof of Work */}
-        <section className="space-y-4">
-          <div className="flex items-center justify-between border-b border-border/60 pb-2">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-accent" />
-              <h2 className="text-xs font-semibold tracking-wider text-text-primary font-mono uppercase">
-                <ScrambleText text="Practical Security Work & Labs" as="span" />
+              <h2 className="text-sm sm:text-base font-bold text-text-primary font-mono tracking-tight">
+                Recruiting or Reviewing Candidates? Here is the Resume
               </h2>
+              <p className="text-xs text-text-secondary font-mono leading-relaxed max-w-xl">
+                If you are an HR recruiter or hiring manager reviewing qualifications for offensive security, detection engineering, or systems engineering roles, access the complete, printable curriculum vitae in PDF .
+              </p>
             </div>
-            <span className="text-[10px] font-mono text-text-secondary">Hands-On Practice</span>
-          </div>
 
-          <div className="space-y-3">
-            {practicalTraining.map((train) => (
-              <div
-                key={train.title}
-                className="p-4 rounded border border-border bg-surface space-y-2"
+            <div className="shrink-0">
+              <a
+                href={pdfHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded bg-accent text-bg hover:bg-accent-hover font-mono text-xs font-bold transition-all shadow-sm hover:shadow-accent/20 hover:scale-[1.02] active:scale-[0.98]"
               >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-xs font-bold text-text-primary font-mono">
-                      {train.title}
-                    </h3>
-                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-2 border border-border/60 text-accent font-semibold">
-                      {train.badge}
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-mono text-emerald-400 self-start sm:self-auto">
-                    {train.status}
-                  </span>
-                </div>
-                <p className="text-xs text-text-secondary font-mono leading-relaxed">
-                  {train.description}
-                </p>
-              </div>
-            ))}
+                <FileDown className="w-4 h-4" />
+                <span>Download Resume (PDF)</span>
+              </a>
+            </div>
           </div>
         </section>
 
@@ -387,73 +272,6 @@ export default async function ResumePage() {
                 </div>
               );
             })}
-          </div>
-        </section>
-
-        {/* Selected Projects */}
-        <section className="space-y-4">
-          <div className="flex items-center justify-between border-b border-border/60 pb-2">
-            <div className="flex items-center gap-2">
-              <Briefcase className="w-4 h-4 text-accent" />
-              <h2 className="text-xs font-semibold tracking-wider text-text-primary font-mono uppercase">
-                <ScrambleText text="Selected Projects" as="span" />
-              </h2>
-            </div>
-            <span className="text-[10px] font-mono text-text-secondary">Open Source Repositories</span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {projects.map((proj) => (
-              <div
-                key={proj.name}
-                className="p-4 rounded border border-border bg-surface space-y-2.5 flex flex-col justify-between"
-              >
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-xs font-bold text-text-primary font-mono">
-                      {proj.name}
-                    </h3>
-                    <span
-                      className={`text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded border ${proj.status === "Active"
-                          ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-400"
-                          : "border-amber-500/30 bg-amber-500/10 text-amber-400"
-                        }`}
-                    >
-                      {proj.status}
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-mono text-accent block">
-                    {proj.type}
-                  </span>
-                  <p className="text-xs text-text-secondary font-mono leading-relaxed">
-                    {proj.desc}
-                  </p>
-                </div>
-
-                <div className="space-y-2 pt-2 border-t border-border/40">
-                  <div className="flex flex-wrap gap-1">
-                    {proj.tech.map((t) => (
-                      <span
-                        key={t}
-                        className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-2 border border-border/60 text-text-secondary"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  <a
-                    href={proj.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[11px] font-mono text-accent hover:underline pt-1"
-                  >
-                    <span>Inspect Repository</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
-              </div>
-            ))}
           </div>
         </section>
 

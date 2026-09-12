@@ -222,6 +222,7 @@ export default config({
         pdfFile: fields.file({
           label: "Resume PDF",
           directory: "public/resume",
+          publicPath: "/resume",
         }),
         summary: fields.document({
           label: "Summary",
