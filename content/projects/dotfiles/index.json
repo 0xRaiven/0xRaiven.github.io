@@ -1,0 +1,15 @@
+{
+  "title": "Dotfiles",
+  "description": "my custom hyprland dotfiles config (this is still under development so expect breaking changes)",
+  "status": "active",
+  "category": "red-team-tooling",
+  "technologies": [
+    "QML",
+    "Shell",
+    "Lua",
+    "CSS"
+  ],
+  "githubUrl": "https://github.com/0xRaiven/dotfiles",
+  "screenshots": [],
+  "relatedWriteupSlugs": []
+}

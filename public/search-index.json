@@ -159,6 +159,20 @@
     "tags": []
   },
   {
+    "id": "project-dotfiles",
+    "title": "Dotfiles",
+    "description": "my custom hyprland dotfiles config (this is still under development so expect breaking changes)",
+    "url": "/projects/dotfiles",
+    "kind": "project",
+    "category": "red-team-tooling",
+    "tags": [
+      "QML",
+      "Shell",
+      "Lua",
+      "CSS"
+    ]
+  },
+  {
     "id": "project-gameoptimizer",
     "title": "Game Optimizer",
     "description": "A simple program built using windows batch script to optimize the games on low end devices",
@@ -202,8 +216,7 @@
       "css3",
       "framer-motion",
       "reactjs",
-      "typescipt",
-      "vercel-deployment"
+      "typescipt"
     ]
   },
   {
@@ -231,10 +244,7 @@
       "linux",
       "persistent-storage",
       "python3",
-      "security-audit",
-      "security-tools",
-      "shell",
-      "vulernability-scanner"
+      "security-audit"
     ]
   },
   {
@@ -252,15 +262,7 @@
       "chrome-extensions",
       "cybersecurity",
       "cybersecurity-tools",
-      "flask",
-      "machine-learning",
-      "phishing-detector",
-      "phishing-protection",
-      "python",
-      "security",
-      "shap",
-      "threat-detection",
-      "xai"
+      "flask"
     ]
   },
   {
@@ -279,8 +281,7 @@
       "blockchain-technology",
       "icp",
       "internet-computer",
-      "motoko-lang",
-      "on-chain"
+      "motoko-lang"
     ]
   },
   {
@@ -297,10 +298,7 @@
       "css",
       "html",
       "js",
-      "open-street-map",
-      "openweathermap-api",
-      "weather-app",
-      "wttrin"
+      "open-street-map"
     ]
   },
   {
