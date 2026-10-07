@@ -44,48 +44,48 @@ status      :: building
   },
   {
     label: "neofetch",
-    cmd: "neofetch --telemetry",
+    cmd: "neofetch",
     output: `  /\\_/\\       r41n@0xraiven
  ( o.o )      ----------------
   > ^ <       OS: Arch Linux x86_64
-0xraiven::ops Host: Proxmox VE 8.2 (Homelab)
+0xraiven::lab Host: Proxmox VE 8.2 (Homelab)
               Kernel: 6.10.10-hardened
               Uptime: 42d, 13h, 37m
               Shell: zsh 5.9 (x86_64)
               Terminal: alacritty + tmux
               Editor: Neovim (lua)
-              Focus: OffSec // Red Team Tooling
+              Focus: OffSec // Tooling
               Status: Active Research (AD & Cloud)
               Memory: 3.4GiB / 64.0GiB (5%)`,
   },
   {
-    label: "arsenal",
-    cmd: "cat /etc/security/arsenal.conf",
-    output: `[+] OFFENSIVE TOOLING  :: Burp Suite Pro, Metasploit, Impacket, BloodHound, CrackMapExec, Chisel
+    label: "tools",
+    cmd: "cat /etc/security/tools.conf",
+    output: `[+] SECURITY TOOLING   :: Burp Suite Pro, Metasploit, Impacket, BloodHound, CrackMapExec, Chisel
 [+] CLOUD & INFRA      :: AWS IAM Scoping, Terraform, Docker, Podman, Proxmox, WireGuard
-[+] DETECTION & BLUE   :: Wazuh SIEM, auditd, Sysmon, Zeek, Suricata, Sigma Rules
+[+] DETECTION & LOGS   :: Wazuh SIEM, auditd, Sysmon, Zeek, Suricata, Sigma Rules
 [+] SYSTEMS & LANGS    :: Python, Go, Bash, TypeScript, C/C++ (Linux Internals)`,
   },
   {
     label: "whoami",
-    cmd: "whoami --all",
-    output: `uid=1000(r41n) gid=1000(offensive-sec) groups=1000(offensive-sec),27(sudo),998(wheel),999(docker),1001(redteam)
+    cmd: "whoami",
+    output: `uid=1000(r41n) gid=1000(security) groups=1000(security),27(sudo),998(wheel),999(docker)
 identity   :: r41n (Neil)
 profile    :: https://github.com/0xraiven
 pgp-id     :: 0x4A1F9B3C2D8E00FA
-clearance  :: LEVEL-4 RESEARCH OPERATOR`,
+role       :: Security Engineering & Research`,
   },
   {
     label: "help",
     cmd: "help",
     output: `Available commands:
-  cat /etc/profile      - View operator configuration & technical focus
-  neofetch              - Display system specs, homelab & telemetry
-  cat /etc/arsenal      - View security toolchain & technical arsenal
-  whoami                - Display active user identity & clearance
+  cat /etc/profile      - View profile configuration & technical focus
+  neofetch              - Display system specs & homelab info
+  cat /etc/tools        - View security toolchain & software stack
+  whoami                - Display user identity & role
   ls                    - List directories & files
   uptime                - Print homelab cluster uptime
-  reboot                - Reboot hardware matrix & reinitialize system
+  reboot                - Replay intro animation
   clear                 - Reset terminal session
   help                  - Show this manual`,
   },
@@ -194,9 +194,9 @@ export function TerminalBlock({
       output = p ? p.output : DEFAULT_PRESETS[1].output;
       setActivePreset("neofetch");
     } else if (lower.includes("arsenal") || lower.includes("tools") || lower.includes("stack")) {
-      const p = activePresets.find((x) => x.label === "arsenal");
+      const p = activePresets.find((x) => x.label === "tools" || x.label === "arsenal");
       output = p ? p.output : DEFAULT_PRESETS[2].output;
-      setActivePreset("arsenal");
+      setActivePreset(p ? p.label : "tools");
     } else if (lower.includes("whoami") || lower.includes("id")) {
       const p = activePresets.find((x) => x.label === "whoami");
       output = p ? p.output : DEFAULT_PRESETS[3].output;
@@ -213,12 +213,10 @@ drwxr-xr-x  r41n  staff   4096 Sep 04 23:40 research/
       output = `23:45:00 up 42 days, 13:37,  1 user,  load average: 0.08, 0.04, 0.01`;
       setActivePreset("");
     } else if (lower.includes("uname")) {
-      output = `Linux cyber-range 6.10.10-hardened-x86_64 #1 SMP PREEMPT_DYNAMIC GNU/Linux`;
+      output = `Linux homelab 6.10.10-hardened-x86_64 #1 SMP PREEMPT_DYNAMIC GNU/Linux`;
       setActivePreset("");
-    } else if (lower === "reboot" || lower === "reboot system" || lower === "systemctl reboot") {
-      output = `[+] INITIATING SYSTEM HARDWARE REBOOT SEQUENCE...
-[+] FLUSHING TELEMETRY REGISTERS & CACHE...
-[+] RESTARTING SYSTEM CORE...`;
+    } else if (lower === "reboot" || lower === "reboot system" || lower === "restart" || lower === "systemctl reboot") {
+      output = `[+] Restarting session and playing intro animation...`;
       setActivePreset("");
       setTimeout(() => {
         try {
@@ -233,7 +231,7 @@ drwxr-xr-x  r41n  staff   4096 Sep 04 23:40 research/
       output = p ? p.output : DEFAULT_PRESETS[4].output;
       setActivePreset("help");
     } else {
-      output = `zsh: command not found: ${cmd}\nType 'help' to inspect available system commands.`;
+      output = `zsh: command not found: ${cmd}\nType 'help' to see available commands.`;
       setActivePreset("");
     }
 

@@ -26,14 +26,14 @@ export async function generateMetadata({ params }: ResearchPageProps): Promise<M
   if (article) {
     return {
       title: `${article.meta.title} // r41n`,
-      description: article.meta.description || "Security research, vulnerability advisory, and whitepaper.",
+      description: article.meta.description || "Security research and analysis.",
     };
   }
 
   const label = formatCategoryLabel(slug);
   return {
     title: `${label} // Security Research // r41n`,
-    description: `Vulnerability assessments and whitepapers for ${label}.`,
+    description: `Security research and technical papers for ${label}.`,
   };
 }
 
@@ -132,7 +132,7 @@ export default async function ResearchDetailPage({ params }: ResearchPageProps) 
               <DocumentContent document={article.body as unknown as Parameters<typeof DocumentContent>[0]["document"]} />
             ) : (
               <StayTuned
-                sector={`Security Research // ${article.meta.title}`}
+                sector={`Research // ${article.meta.title}`}
                 category={article.meta.category}
                 returnUrl="/research"
                 returnLabel="Back to Research"
@@ -147,10 +147,10 @@ export default async function ResearchDetailPage({ params }: ResearchPageProps) 
               className="text-text-secondary hover:text-accent flex items-center gap-1.5 shrink-0"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back to Research Directory</span>
+              <span>Back to Research</span>
             </Link>
             <span className="text-text-secondary text-[11px] font-mono">
-              artifact: {article.meta.slug}
+              research: {article.meta.slug}
             </span>
           </div>
         </article>
@@ -182,18 +182,18 @@ export default async function ResearchDetailPage({ params }: ResearchPageProps) 
                 <span className="truncate">{label}</span>
               </h1>
               <span className="text-xs text-text-secondary whitespace-nowrap shrink-0">
-                [{allResearch.length} papers]
+                [{allResearch.length} articles]
               </span>
             </div>
           </header>
 
           {allResearch.length === 0 ? (
             <StayTuned
-              sector={`Security Research // ${label}`}
+              sector={`Research // ${label}`}
               category={slug}
-              description="Security vulnerability research, exploit primitives, and protocol analysis are actively undergoing validation and peer review."
+              description="Security vulnerability research, protocol analysis, and lab studies are currently undergoing validation and review."
               returnUrl="/research"
-              returnLabel="Research Directory"
+              returnLabel="Back to Research"
             />
           ) : (
             <div className="space-y-3">

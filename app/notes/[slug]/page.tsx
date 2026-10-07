@@ -26,14 +26,14 @@ export async function generateMetadata({ params }: NotePageProps): Promise<Metad
   if (article) {
     return {
       title: `${article.meta.title} // r41n`,
-      description: article.meta.description || "Operational note and technical reference.",
+      description: article.meta.description || "Technical note and reference.",
     };
   }
 
   const categoryLabel = formatCategoryLabel(slug);
   return {
     title: `${categoryLabel} Notes // r41n`,
-    description: `Tactical runbooks, operational notes, and command references for ${categoryLabel}.`,
+    description: `Technical guides, notes, and command references for ${categoryLabel}.`,
   };
 }
 
@@ -156,10 +156,10 @@ export default async function NoteDetailPage({ params }: NotePageProps) {
               className="text-text-secondary hover:text-accent flex items-center gap-1.5 shrink-0"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back to Notes Directory</span>
+              <span>Back to Notes</span>
             </Link>
             <span className="text-text-secondary text-[11px] font-mono">
-              artifact: {article.meta.slug}
+              note: {article.meta.slug}
             </span>
           </div>
         </article>
@@ -200,9 +200,9 @@ export default async function NoteDetailPage({ params }: NotePageProps) {
           <StayTuned
             sector={`Notes // ${categoryLabel}`}
             category={slug}
-            description={`No operational notes or cheat sheets currently exist in the ${categoryLabel} sector. Host commands, syntax references, and audit playbooks are actively being curated.`}
+            description={`No notes or cheat sheets are currently published in the ${categoryLabel} section. Content is actively being curated.`}
             returnUrl="/notes"
-            returnLabel="Browse Notes Directory"
+            returnLabel="Back to Notes"
           />
         ) : (
           <div className="space-y-3">

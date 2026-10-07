@@ -42,7 +42,7 @@ const TIER_META: Record<
     colorClass: "text-amber-400",
     icon: Zap,
     description:
-      "Multi-stage attack surfaces, custom web vulnerabilities, lateral network pivoting, and Active Directory initial domain access.",
+      "Multi-step attack paths, web application vulnerabilities, network pivoting, and Active Directory initial footholds.",
   },
   hard: {
     title: "Hard Difficulty",
@@ -51,7 +51,7 @@ const TIER_META: Record<
     colorClass: "text-rose-400",
     icon: Terminal,
     description:
-      "Custom binary reverse engineering, complex exploit chaining, source code auditing, and domain privilege escalation.",
+      "Chained exploits, source code review, binary reverse engineering, and domain privilege escalation.",
   },
   insane: {
     title: "Insane Difficulty",
@@ -60,7 +60,7 @@ const TIER_META: Record<
     colorClass: "text-purple-400",
     icon: Skull,
     description:
-      "Advanced custom cryptography, zero-day research emulation, hardened kernel exploitation, and multi-forest enterprise domain domination.",
+      "Complex cryptography, advanced exploitation techniques, and multi-forest Active Directory environments.",
   },
 };
 
@@ -178,7 +178,7 @@ export default async function HTBDifficultyPage({ params }: DifficultyPageProps)
           <StayTuned
             sector={`Writeups // HTB ${tier.title}`}
             category={`htb-${difficulty}`}
-            description={`No published writeups currently exist in the ${tier.title} HTB tier. Machine breakdowns and tactical attack chain documentation are actively being prepared following retired machine disclosure guidelines.`}
+            description={`No published writeups currently exist in the ${tier.title} HTB tier. Machine walkthroughs are actively being prepared following retired machine disclosure guidelines.`}
             returnUrl="/writeups/htb"
             returnLabel="Back to All HTB Tiers"
           />

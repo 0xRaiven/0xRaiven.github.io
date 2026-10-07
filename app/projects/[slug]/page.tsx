@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
   return {
     title: `${project.title} // r41n`,
-    description: project.description || `Technical documentation and architecture for ${project.title}.`,
+    description: project.description || `Documentation and details for ${project.title}.`,
   };
 }
 
@@ -122,7 +122,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                 className="text-xs font-mono text-accent hover:underline flex items-center gap-1 shrink-0"
               >
                 <FolderGit2 className="w-3.5 h-3.5" />
-                <span>Source Repository</span>
+                <span>GitHub Repository</span>
                 <ExternalLink className="w-3 h-3" />
               </a>
             )}
@@ -132,7 +132,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             {project.description}
           </p>
 
-          {/* Telemetry Bar */}
+          {/* Project Stats */}
           <div className="flex flex-wrap items-center gap-4 text-xs text-text-secondary pt-2 border-t border-border/60">
             {project.githubData && (
               <>
@@ -177,9 +177,9 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             <DocumentContent document={project.body as unknown as Parameters<typeof DocumentContent>[0]['document']} />
           ) : (
             <StayTuned
-              title="Project Architecture Documentation In Progress"
-              category="documentation-pending"
-              description="This project repository has been synchronized. Deep architecture notes, benchmark data, and exploit demonstrations are being compiled for publication."
+              title="Project Documentation In Progress"
+              category="in-progress"
+              description="Documentation, architecture notes, and usage guides for this project are currently being prepared."
               returnUrl="/projects"
               returnLabel="All Projects"
             />
@@ -193,10 +193,10 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             className="text-text-secondary hover:text-accent flex items-center gap-1.5 shrink-0"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to Projects Directory</span>
+            <span>Back to Projects</span>
           </Link>
           <span className="text-text-secondary text-[11px] font-mono">
-            artifact: {project.slug}
+            project: {project.slug}
           </span>
         </div>
       </article>

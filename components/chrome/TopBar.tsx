@@ -219,8 +219,8 @@ export function TopBar({
                   }}
                   className="w-full text-left px-3 py-1.5 text-text-secondary hover:text-accent hover:bg-surface-2 flex items-center justify-between font-mono"
                 >
-                  <span>Reboot System</span>
-                  <span className="text-[10px] text-accent font-bold">[BOOT]</span>
+                  <span>Replay Intro</span>
+                  <span className="text-[10px] text-accent font-bold">[PLAY]</span>
                 </button>
 
                 {/* Theme Selector in Mobile Overflow */}

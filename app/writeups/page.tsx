@@ -8,7 +8,7 @@ import { ScrambleText } from '@/components/animation/ScrambleText';
 
 export const metadata: Metadata = {
   title: 'Writeups // r41n',
-  description: 'In-depth attack path walkthroughs, machine exploitation notes, and security lab analyses.',
+  description: 'Walkthroughs, CTF challenges, machine writeups, and security lab guides.',
 };
 
 export default async function WriteupsPage() {
@@ -32,16 +32,16 @@ export default async function WriteupsPage() {
           </div>
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <ScrambleText
-              text="Security Writeups & Lab Walkthroughs"
+              text="Security Writeups & Walkthroughs"
               as="h1"
               className="text-xl font-bold tracking-tight text-text-primary uppercase"
             />
             <span className="text-xs text-text-secondary">
-              [{writeups.length} documents published]
+              [{writeups.length} writeups published]
             </span>
           </div>
           <p className="text-xs text-text-secondary leading-relaxed">
-            Detailed vulnerability investigations, proof-of-concept walkthroughs, and adversary emulation reports.
+            Detailed walkthroughs, challenge solutions, and security analysis.
           </p>
         </header>
 

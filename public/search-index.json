@@ -1,26 +1,26 @@
 [
   {
     "id": "page-readme",
-    "title": "README",
-    "description": "System architecture, operator configuration, technical profile, and active security focus areas.",
+    "title": "Home",
+    "description": "Portfolio overview, background, technical focus areas, and featured projects.",
     "url": "/",
     "kind": "page",
-    "category": "system",
+    "category": "home",
     "tags": [
       "profile",
-      "configuration",
-      "overview"
+      "overview",
+      "home"
     ]
   },
   {
     "id": "page-projects",
-    "title": "Projects Directory",
-    "description": "Browse all security tooling, machine learning detectors, lab environments, and proof-of-work repositories.",
+    "title": "Projects",
+    "description": "Open-source security tools, detection systems, personal software, and GitHub repositories.",
     "url": "/projects",
     "kind": "page",
     "category": "projects",
     "tags": [
-      "directory",
+      "projects",
       "tools",
       "repositories"
     ]
@@ -28,23 +28,23 @@
   {
     "id": "page-writeups",
     "title": "Writeups",
-    "description": "Technical post-mortems, exploit analysis, vulnerable lab walkthroughs, and vulnerability reports.",
+    "description": "Security writeups, challenge solutions, walkthroughs, and lab notes.",
     "url": "/writeups",
     "kind": "page",
-    "category": "field-reports",
+    "category": "writeups",
     "tags": [
       "writeups",
-      "analysis",
-      "reports"
+      "walkthroughs",
+      "security"
     ]
   },
   {
     "id": "page-writeups-htb",
     "title": "Hack The Box Writeups",
-    "description": "Hack The Box machine walkthroughs, exploit chains, privilege escalation techniques, and difficulty tiers.",
+    "description": "Hack The Box machine walkthroughs, initial access footholds, and privilege escalation notes across all tiers.",
     "url": "/writeups/htb",
     "kind": "writeup",
-    "category": "htb",
+    "category": "writeups",
     "tags": [
       "htb",
       "hackthebox",
@@ -55,11 +55,11 @@
   },
   {
     "id": "page-notes",
-    "title": "Notes & References",
-    "description": "Operational notes, cheat sheets, command references, and defensive & offensive security runbooks.",
+    "title": "Notes & Cheatsheets",
+    "description": "Technical notes, syntax cheat sheets, command references, and practical guides.",
     "url": "/notes",
     "kind": "page",
-    "category": "knowledge-base",
+    "category": "notes",
     "tags": [
       "notes",
       "cheatsheets",
@@ -69,7 +69,7 @@
   {
     "id": "page-research",
     "title": "Security Research",
-    "description": "In-depth vulnerability research, protocol audits, whitepapers, and target lab evaluations.",
+    "description": "Security research, vulnerability analysis, technical papers, and lab experiments.",
     "url": "/research",
     "kind": "page",
     "category": "research",
@@ -81,24 +81,24 @@
   },
   {
     "id": "page-about",
-    "title": "About Operator",
-    "description": "Operator profile, defensive & offensive philosophy, security methodology, and contact details.",
+    "title": "About",
+    "description": "Background, technical focus, homelab infrastructure, and engineering approach.",
     "url": "/about",
     "kind": "page",
-    "category": "operator",
+    "category": "profile",
     "tags": [
       "bio",
-      "contact",
-      "philosophy"
+      "about",
+      "skills"
     ]
   },
   {
     "id": "page-resume",
-    "title": "Resume & Profile",
-    "description": "Curriculum vitae, technical competencies, security credentials, and engineering experience.",
+    "title": "Resume",
+    "description": "Resume, technical competencies, skills, and background.",
     "url": "/resume",
     "kind": "page",
-    "category": "operator",
+    "category": "profile",
     "tags": [
       "resume",
       "experience",
@@ -107,18 +107,17 @@
   },
   {
     "id": "page-contact",
-    "title": "Contact & Communications",
-    "description": "Verified social coordinates, PGP encryption keys, and direct operator communication channels.",
+    "title": "Contact",
+    "description": "Email, social profiles, and communication channels.",
     "url": "/contact",
     "kind": "page",
-    "category": "operator",
+    "category": "contact",
     "tags": [
       "contact",
       "socials",
       "email",
       "pgp",
-      "discord",
-      "channels"
+      "discord"
     ]
   },
   {
@@ -169,7 +168,8 @@
       "QML",
       "Shell",
       "Lua",
-      "CSS"
+      "CSS",
+      "Python"
     ]
   },
   {
@@ -184,7 +184,8 @@
       "batch-script",
       "gaming",
       "low-end-pc",
-      "performance-optimization"
+      "performance-optimization",
+      "windows"
     ]
   },
   {
@@ -216,7 +217,8 @@
       "css3",
       "framer-motion",
       "reactjs",
-      "typescipt"
+      "typescipt",
+      "vercel-deployment"
     ]
   },
   {
@@ -244,7 +246,10 @@
       "linux",
       "persistent-storage",
       "python3",
-      "security-audit"
+      "security-audit",
+      "security-tools",
+      "shell",
+      "vulernability-scanner"
     ]
   },
   {
@@ -262,7 +267,15 @@
       "chrome-extensions",
       "cybersecurity",
       "cybersecurity-tools",
-      "flask"
+      "flask",
+      "machine-learning",
+      "phishing-detector",
+      "phishing-protection",
+      "python",
+      "security",
+      "shap",
+      "threat-detection",
+      "xai"
     ]
   },
   {
@@ -281,7 +294,8 @@
       "blockchain-technology",
       "icp",
       "internet-computer",
-      "motoko-lang"
+      "motoko-lang",
+      "on-chain"
     ]
   },
   {
@@ -298,7 +312,10 @@
       "css",
       "html",
       "js",
-      "open-street-map"
+      "open-street-map",
+      "openweathermap-api",
+      "weather-app",
+      "wttrin"
     ]
   },
   {

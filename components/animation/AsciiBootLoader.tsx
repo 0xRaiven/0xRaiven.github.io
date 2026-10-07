@@ -31,8 +31,8 @@ export const BOOT_SEQUENCE_PHASES: BootPhaseConfig[] = [
   {
     id: 0,
     tag: "( 01 )",
-    name: "RADAR_SWEEP",
-    status: "INITIALIZING RADAR KERNEL & SECTOR TELEMETRY...",
+    name: "ENVIRONMENT",
+    status: "INITIALIZING ENVIRONMENT...",
     startProgress: 0,
     endProgress: 28,
     durationMs: 1000,
@@ -40,8 +40,8 @@ export const BOOT_SEQUENCE_PHASES: BootPhaseConfig[] = [
   {
     id: 1,
     tag: "( 02 )",
-    name: "SPECTRUM_EQ",
-    status: "CALIBRATING 25-CH SPECTRUM HARMONICS & ASSET PIPELINE...",
+    name: "STYLES",
+    status: "LOADING DESIGN TOKENS & TYPOGRAPHY...",
     startProgress: 29,
     endProgress: 60,
     durationMs: 1000,
@@ -49,8 +49,8 @@ export const BOOT_SEQUENCE_PHASES: BootPhaseConfig[] = [
   {
     id: 2,
     tag: "( 03 )",
-    name: "ORBITAL_LOCK",
-    status: "SYNCHRONIZING ORBITAL REGISTERS & PERIMETER MESH...",
+    name: "INDEX",
+    status: "INDEXING WORKSPACE & ENTRIES...",
     startProgress: 61,
     endProgress: 88,
     durationMs: 1000,
@@ -58,8 +58,8 @@ export const BOOT_SEQUENCE_PHASES: BootPhaseConfig[] = [
   {
     id: 3,
     tag: "( 04 )",
-    name: "SYSTEM_READY",
-    status: "ALL SUBSYSTEMS AUTHENTICATED & LOCKED [100%]",
+    name: "READY",
+    status: "READY [100%]",
     startProgress: 89,
     endProgress: 100,
     durationMs: 1000,
@@ -75,7 +75,7 @@ export function SystemMatrixBootLoader() {
 
   // Asset loading telemetry
   const [isAssetsLoaded, setIsAssetsLoaded] = useState(false);
-  const [assetStatus, setAssetStatus] = useState("INITIALIZING SYSTEM CORE...");
+  const [assetStatus, setAssetStatus] = useState("PREPARING WORKSPACE...");
 
   const startTimeRef = useRef<number>(Date.now());
   const hasAutoDismissedRef = useRef(false);
@@ -176,7 +176,7 @@ export function SystemMatrixBootLoader() {
     async function monitorPageAssets() {
       // 1. Wait for document ready
       if (typeof document !== "undefined" && document.readyState !== "complete") {
-        setAssetStatus("AWAITING DOM READY STATE...");
+        setAssetStatus("LOADING PAGE CONTENT...");
         await new Promise<void>((resolve) => {
           const onComplete = () => {
             window.removeEventListener("load", onComplete);
@@ -188,7 +188,7 @@ export function SystemMatrixBootLoader() {
       if (cancelled) return;
 
       // 2. Wait for fonts
-      setAssetStatus("VERIFYING SYSTEM FONTS [INTER + JETBRAINS]...");
+      setAssetStatus("LOADING SYSTEM FONTS [INTER + JETBRAINS]...");
       if (typeof document !== "undefined" && document.fonts) {
         try {
           await document.fonts.ready;
@@ -244,7 +244,7 @@ export function SystemMatrixBootLoader() {
       ]);
 
       if (!cancelled) {
-        setAssetStatus("ALL PAGE ASSETS DECODED & LOCKED");
+        setAssetStatus("ALL PAGE ASSETS READY");
         setIsAssetsLoaded(true);
       }
     }
@@ -478,7 +478,7 @@ export function SystemMatrixBootLoader() {
   const currentPhase = BOOT_SEQUENCE_PHASES[phaseIndex] || BOOT_SEQUENCE_PHASES[0];
   const currentStatus =
     isAssetsLoaded && phaseIndex === 3
-      ? "ALL SUBSYSTEMS AUTHENTICATED & LOCKED [100%]"
+      ? "READY [100%]"
       : currentPhase.status;
 
   // Segmented 16-bar progress indicator
@@ -517,7 +517,7 @@ export function SystemMatrixBootLoader() {
           <div className="flex items-center gap-2.5">
             <span className="font-pixel text-xs text-accent tracking-widest">{currentPhase.tag}</span>
             <span className="font-mono font-bold tracking-widest text-text-primary text-[11px] uppercase">
-              SYSTEM // {currentPhase.name}
+              WORKSPACE // {currentPhase.name}
             </span>
           </div>
 
@@ -595,11 +595,11 @@ export function SystemMatrixBootLoader() {
             <span className="flex items-center gap-1.5">
               <span className={`w-1.5 h-1.5 rounded-full ${phaseIndex === 3 ? "bg-emerald-400" : "bg-accent animate-pulse"}`} />
               <span className="font-mono uppercase tracking-wider">
-                PIPELINE: {phaseIndex === 3 ? "READY" : `SEQUENCE 0${phaseIndex + 1}/04`}
+                STATUS: {phaseIndex === 3 ? "READY" : `SEQUENCE 0${phaseIndex + 1}/04`}
               </span>
             </span>
             <span className="font-pixel text-[10px] text-text-secondary tracking-wider">
-              {progress >= 100 ? "LOCKED" : "CALIBRATING"}
+              {progress >= 100 ? "READY" : "LOADING"}
             </span>
           </div>
 
@@ -635,13 +635,13 @@ export function SystemMatrixBootLoader() {
 
         {/* Footer Technical Bar */}
         <div className="flex items-center justify-between pt-2 border-t border-white/5 text-[10px] text-text-secondary">
-          <span className="font-pixel uppercase tracking-widest text-white/40">SYSTEM // MATRIX</span>
+          <span className="font-pixel uppercase tracking-widest text-white/40">WORKSPACE // R41N</span>
           <button
             type="button"
             onClick={dismiss}
             className="flex items-center gap-1 text-accent hover:text-accent-hover font-semibold transition-colors font-mono"
           >
-            <span>{progress >= 100 ? "ENTER SYSTEM >>" : "SKIP [ESC]"}</span>
+            <span>{progress >= 100 ? "ENTER >>" : "SKIP [ESC]"}</span>
             <ArrowRight className="w-3 h-3" />
           </button>
         </div>

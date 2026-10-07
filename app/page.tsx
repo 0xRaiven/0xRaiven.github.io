@@ -95,7 +95,7 @@ export default async function Home() {
 
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded border border-border bg-surface text-text-secondary">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-              <span>telemetry :: active</span>
+              <span>Available</span>
             </span>
           </div>
         </header>
@@ -104,11 +104,11 @@ export default async function Home() {
         <section id="technical-profile" className="space-y-3">
           <h2 id="technical-profile" className="text-base font-semibold tracking-tight font-mono text-text-primary flex items-center gap-2 border-b border-border pb-2">
             <Terminal className="w-4 h-4 text-accent" />
-            <ScrambleText text="Technical Profile" as="span" />
+            <ScrambleText text="Background & Focus" as="span" />
           </h2>
 
           <p className="text-xs text-text-secondary font-mono">
-            Host configuration and active research domains:
+            System configuration and primary focus areas:
           </p>
 
           <TerminalBlock
@@ -121,19 +121,19 @@ export default async function Home() {
         <section id="repository-index" className="space-y-4">
           <h2 className="text-base font-semibold tracking-tight font-mono text-text-primary flex items-center gap-2 border-b border-border pb-2">
             <FolderGit2 className="w-4 h-4 text-accent" />
-            <ScrambleText text="Repository Index" as="span" />
+            <ScrambleText text="Site Index" as="span" />
           </h2>
 
           <p className="text-xs text-text-secondary font-mono">
-            Navigation taxonomy for technical writeups, source repositories, and research notes:
+            Overview of writeups, repositories, notes, and research:
           </p>
 
           <div className="overflow-x-auto">
             <table className="w-full text-xs font-mono border border-border rounded">
               <thead>
                 <tr className="bg-surface-2 border-b border-border text-text-secondary text-left">
-                  <th className="py-2 px-3 font-semibold">Directory</th>
-                  <th className="py-2 px-3 font-semibold">Classification</th>
+                  <th className="py-2 px-3 font-semibold">Section</th>
+                  <th className="py-2 px-3 font-semibold">Category</th>
                   <th className="py-2 px-3 font-semibold">Description</th>
                 </tr>
               </thead>
@@ -146,7 +146,7 @@ export default async function Home() {
                   </td>
                   <td className="py-2 px-3 text-text-secondary">Engineering</td>
                   <td className="py-2 px-3 text-text-primary">
-                    Security tools, defensive telemetry sensors, and lab architectures
+                    Security tools, defensive monitoring, and lab architectures
                   </td>
                 </tr>
                 <tr className="hover:bg-surface-2/60 transition-colors">
@@ -168,7 +168,7 @@ export default async function Home() {
                   </td>
                   <td className="py-2 px-3 text-text-secondary">Reference</td>
                   <td className="py-2 px-3 text-text-primary">
-                    Concise command cheatsheets, syntax references, and incident runbooks
+                    Concise command cheatsheets, syntax references, and runbooks
                   </td>
                 </tr>
                 <tr className="hover:bg-surface-2/60 transition-colors">
@@ -177,7 +177,7 @@ export default async function Home() {
                       /research
                     </Link>
                   </td>
-                  <td className="py-2 px-3 text-text-secondary">Laboratory</td>
+                  <td className="py-2 px-3 text-text-secondary">Research</td>
                   <td className="py-2 px-3 text-text-primary">
                     Security vulnerability research, threat modeling, and exploit analysis
                   </td>
@@ -190,7 +190,7 @@ export default async function Home() {
                   </td>
                   <td className="py-2 px-3 text-text-secondary">Profile</td>
                   <td className="py-2 px-3 text-text-primary">
-                    Operator scope, background overview, and system specifications
+                    Background overview, technical focus, and experience
                   </td>
                 </tr>
                 <tr className="hover:bg-surface-2/60 transition-colors">
@@ -199,9 +199,9 @@ export default async function Home() {
                       /contact
                     </Link>
                   </td>
-                  <td className="py-2 px-3 text-text-secondary">Dispatch</td>
+                  <td className="py-2 px-3 text-text-secondary">Contact</td>
                   <td className="py-2 px-3 text-text-primary">
-                    Verified communication handles, E2EE ProtonMail coordinates, and direct transmission
+                    Email, verified social links, and secure communication channels
                   </td>
                 </tr>
               </tbody>
@@ -209,12 +209,12 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* Section 3: Pinned Proof-of-Work */}
-        <section id="pinned-proof-of-work" className="space-y-4">
+        {/* Section 3: Featured Projects */}
+        <section id="featured-projects" className="space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border pb-2">
             <h2 className="text-base font-semibold tracking-tight font-mono text-text-primary flex items-center gap-2">
               <Layers className="w-4 h-4 text-accent shrink-0" />
-              <ScrambleText text="Pinned Proof-of-Work" as="span" />
+              <ScrambleText text="Featured Projects" as="span" />
             </h2>
             <Link
               href="/projects"
@@ -226,7 +226,7 @@ export default async function Home() {
           </div>
 
           <p className="text-xs text-text-secondary font-mono">
-            Security engineering repositories, machine learning models, and telemetry artifacts:
+            Featured security tools, engineering projects, and software repositories:
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-mono">
@@ -279,7 +279,7 @@ export default async function Home() {
         <section id="operational-philosophy" className="space-y-4">
           <h2 className="text-base font-semibold tracking-tight font-mono text-text-primary flex items-center gap-2 border-b border-border pb-2">
             <Shield className="w-4 h-4 text-accent" />
-            <ScrambleText text="Operational Philosophy" as="span" />
+            <ScrambleText text="Guiding Principles" as="span" />
           </h2>
 
           <div className="space-y-2 text-xs font-mono text-text-secondary leading-relaxed">
@@ -291,7 +291,7 @@ export default async function Home() {
             </div>
 
             <div className="p-3 rounded border border-border bg-surface space-y-1">
-              <div className="text-text-primary font-semibold">2. Documentation-First Unix Architecture</div>
+              <div className="text-text-primary font-semibold">2. Documentation-First Architecture</div>
               <p>
                 Designed as a high-density, fast-loading personal wiki and notebook. Clean typography, dark mode by default, keyboard-friendly navigation, and zero marketing clutter.
               </p>

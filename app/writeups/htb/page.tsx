@@ -9,7 +9,7 @@ import { ScrambleText } from "@/components/animation/ScrambleText";
 
 export const metadata: Metadata = {
   title: "Hack The Box Writeups // r41n",
-  description: "Hack The Box machine walkthroughs, exploit chains, and privilege escalation methodologies across Low, Medium, Hard, and Insane tiers.",
+  description: "Hack The Box machine walkthroughs, initial access footholds, and privilege escalation notes across all difficulty tiers.",
 };
 
 interface DifficultyTier {
@@ -45,7 +45,7 @@ const HTB_TIERS: DifficultyTier[] = [
     borderClass: "border-amber-500/30 hover:border-amber-500/60 bg-amber-500/5",
     badgeClass: "bg-amber-500/15 border-amber-500/30 text-amber-400",
     icon: Zap,
-    description: "Multi-vector attack paths, custom web app exploits, internal network pivoting, and Active Directory initial footholds.",
+    description: "Multi-step attack paths, custom web app exploits, network pivoting, and Active Directory initial footholds.",
   },
   {
     id: "hard",
@@ -56,7 +56,7 @@ const HTB_TIERS: DifficultyTier[] = [
     borderClass: "border-rose-500/30 hover:border-rose-500/60 bg-rose-500/5",
     badgeClass: "bg-rose-500/15 border-rose-500/30 text-rose-400",
     icon: Terminal,
-    description: "Complex exploit chaining, source code audits, custom binary reverse engineering, and domain privilege escalation.",
+    description: "Chained exploits, source code review, binary reverse engineering, and domain privilege escalation.",
   },
   {
     id: "insane",
@@ -67,7 +67,7 @@ const HTB_TIERS: DifficultyTier[] = [
     borderClass: "border-purple-500/30 hover:border-purple-500/60 bg-purple-500/5",
     badgeClass: "bg-purple-500/15 border-purple-500/30 text-purple-400",
     icon: Skull,
-    description: "Advanced custom cryptography, zero-day emulation, hardened kernel exploitation, and multi-forest enterprise domination.",
+    description: "Complex cryptography, advanced exploitation techniques, and multi-forest Active Directory environments.",
   },
 ];
 
@@ -104,15 +104,15 @@ export default async function HTBOverviewPage() {
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-text-primary uppercase flex items-center gap-2">
               <Box className="w-6 h-6 text-accent" />
-              <ScrambleText text="Hack The Box // Machine Writeups" as="span" />
+              <ScrambleText text="Hack The Box // Writeups" as="span" />
             </h1>
             <span className="text-xs text-text-secondary">
-              [{htbWriteups.length} published writeups]
+              [{htbWriteups.length} writeups published]
             </span>
           </div>
 
           <p className="text-xs text-text-secondary leading-relaxed font-sans max-w-2xl">
-            Offensive security writeups, proof-of-concept exploits, and privilege escalation breakdowns for retired Hack The Box machines categorized by difficulty tier.
+            Walkthroughs, initial access footholds, and privilege escalation notes for retired Hack The Box machines categorized by difficulty tier.
           </p>
         </header>
 
@@ -120,7 +120,7 @@ export default async function HTBOverviewPage() {
         <section className="space-y-3">
           <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-text-secondary font-semibold">
             <Layers className="w-4 h-4 text-accent" />
-            <span>Difficulty Subsections</span>
+            <span>Difficulty Tiers</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -178,7 +178,7 @@ export default async function HTBOverviewPage() {
           <StayTuned
             sector="Writeups // Hack The Box"
             category="htb-machines"
-            description="Hack The Box machine writeups (Low, Medium, Hard, Insane) are actively being prepared in accordance with HTB disclosure rules for retired machines. Check back soon for full tactical walkthroughs."
+            description="Hack The Box machine writeups are actively being prepared in accordance with HTB disclosure rules for retired machines. Check back soon for walkthroughs."
             returnUrl="/writeups"
             returnLabel="Back to All Writeups"
           />

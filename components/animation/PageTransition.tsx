@@ -20,7 +20,7 @@ function getSectorIndex(pathname: string): string {
 }
 
 function formatSectorName(pathname: string): string {
-  if (!pathname || pathname === "/") return "README // ROOT";
+  if (!pathname || pathname === "/") return "HOME";
   return pathname.replace(/^\//, "").replace(/-/g, "_").toUpperCase();
 }
 
@@ -112,7 +112,7 @@ export function PageTransition({ children }: PageTransitionProps) {
           </div>
 
           <span className="font-mono text-xs font-semibold text-text-primary tracking-wide truncate">
-            SECTOR // {sectorName}
+            {sectorName}
           </span>
         </div>
 

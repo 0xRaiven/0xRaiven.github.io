@@ -13,22 +13,22 @@ export interface StayTunedProps {
 }
 
 export function StayTuned({
-  sector = "Tactical Knowledge Sector",
+  sector = "Knowledge Base",
   title,
   category = "in-development",
   description,
   returnUrl = "/projects",
-  returnLabel = "Explore Active Repositories",
+  returnLabel = "Explore Projects",
   pipelineStages = [
-    { label: "Laboratory Verification", status: "PASSED" },
-    { label: "Redaction & Sanitization", status: "IN_PROGRESS" },
-    { label: "Public Release", status: "PENDING" },
+    { label: "Research & Outline", status: "PASSED" },
+    { label: "Drafting & Review", status: "IN_PROGRESS" },
+    { label: "Publication", status: "PENDING" },
   ],
 }: StayTunedProps) {
-  const displayTitle = title || `${sector} // Content Pending Release`;
+  const displayTitle = title || `${sector} // In Progress`;
   const displayDescription =
     description ||
-    `This sector (${sector}) has been registered in the knowledge base routing table. Operational notes, vulnerability findings, and code examples for this domain are actively being compiled, audited, and formatted for release.`;
+    `This section (${sector}) is currently being prepared. Notes, walkthroughs, and code examples are actively being written and formatted for release.`;
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -46,12 +46,12 @@ export function StayTuned({
 
   return (
     <div className="space-y-6 font-mono text-text-primary">
-      {/* ASCII Banner & Status Box */}
+      {/* Status Box */}
       <div className="p-5 sm:p-6 rounded-lg border border-border bg-surface relative overflow-hidden space-y-5 shadow-sm">
         {/* Subtle background glow */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Hardware Status Header */}
+        {/* Status Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4 border-b border-border/80 pb-3.5">
           <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
             <span className="font-pixel text-xs text-text-secondary tracking-widest whitespace-nowrap shrink-0">
@@ -70,13 +70,13 @@ export function StayTuned({
               ))}
             </div>
             <span className="font-pixel text-[10px] sm:text-[11px] uppercase tracking-wider text-text-primary whitespace-nowrap truncate">
-              RELEASE PIPELINE // MATRIX
+              STATUS // IN PROGRESS
             </span>
           </div>
 
           <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
             <span className="font-pixel text-[9px] uppercase tracking-wider text-text-secondary px-2 py-0.5 rounded bg-surface-2 border border-border whitespace-nowrap">
-              PENDING RELEASE
+              COMING SOON
             </span>
           </div>
         </div>
@@ -86,11 +86,11 @@ export function StayTuned({
           <div className="flex flex-wrap items-center gap-2 text-xs">
             <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-accent/15 border border-accent/30 text-accent font-semibold text-[10px] uppercase tracking-wider">
               <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-              <span>sector: {category}</span>
+              <span>section: {category}</span>
             </span>
 
             <span className="text-text-secondary text-[11px]">
-              telemetry :: status [compiling_artifacts]
+              status :: in progress
             </span>
           </div>
 
@@ -107,7 +107,7 @@ export function StayTuned({
         <div className="p-3.5 rounded border border-border/80 bg-surface-2/60 text-xs space-y-2.5">
           <div className="flex items-center gap-2 text-text-secondary text-[11px]">
             <Terminal className="w-3.5 h-3.5 text-accent" />
-            <span>release_pipeline.matrix // {category}</span>
+            <span>progress // {category}</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">

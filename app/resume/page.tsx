@@ -20,7 +20,7 @@ import { ScrambleText } from "@/components/animation/ScrambleText";
 
 export const metadata: Metadata = {
   title: "Resume // r41n",
-  description: "Curriculum vitae, technical competencies, and security engineering profile.",
+  description: "Resume, technical skills, and security engineering background.",
 };
 
 export default async function ResumePage() {
@@ -86,13 +86,13 @@ export default async function ResumePage() {
         {/* Navigation & Breadcrumb */}
         <div className="flex items-center justify-between text-xs text-text-secondary border-b border-border pb-3 font-mono">
           <div className="flex items-center gap-1.5">
-            <span className="text-text-secondary">operator</span>
+            <span className="text-text-secondary">profile</span>
             <span>/</span>
             <span className="text-text-primary">resume</span>
           </div>
 
           <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-surface-2 border border-border text-accent font-mono font-semibold">
-            curriculum vitae
+            resume
           </span>
         </div>
 
@@ -100,7 +100,7 @@ export default async function ResumePage() {
         <header className="p-5 rounded border border-border bg-surface space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              {/* GitHub Profile Picture - Circular Cyber Badge */}
+              {/* GitHub Profile Picture */}
               <div className="relative group shrink-0 p-1 w-fit">
                 <div className="relative p-1 rounded-full border border-border/80 bg-surface-2 transition-all duration-300 group-hover:border-accent/60 group-hover:shadow-[0_0_15px_rgba(239,68,68,0.2)]">
                   <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-accent/40 bg-surface transition-all duration-300 group-hover:border-accent shrink-0">
@@ -130,7 +130,7 @@ export default async function ResumePage() {
                     className="text-xl sm:text-2xl font-bold tracking-tight text-text-primary font-mono"
                   />
                   <span className="text-text-secondary text-xs">•</span>
-                  <span className="text-xs text-text-secondary font-mono">Curriculum Vitae</span>
+                  <span className="text-xs text-text-secondary font-mono">Resume</span>
                   <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.2 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono ml-1 whitespace-nowrap shrink-0">
                     active
                   </span>
@@ -174,7 +174,7 @@ export default async function ResumePage() {
             </div>
           </div>
 
-          {/* Quick Coordinate Badges */}
+          {/* Quick Summary Highlights */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-border/60 text-[11px] font-mono text-text-secondary">
             <div className="flex flex-col">
               <span className="text-text-muted text-[10px] uppercase">Focus</span>
@@ -189,7 +189,7 @@ export default async function ResumePage() {
               <span className="text-text-primary">KVM · Docker · Wazuh</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-text-muted text-[10px] uppercase">Workflow</span>
+              <span className="text-text-muted text-[10px] uppercase">Approach</span>
               <span className="text-text-primary">Build · Break · Detect</span>
             </div>
           </div>
@@ -202,21 +202,21 @@ export default async function ResumePage() {
           )}
         </header>
 
-        {/* HR & Recruiter Direct Access Box */}
+        {/* Recruiters & Hiring Managers Section */}
         <section className="relative overflow-hidden rounded border border-accent/40 bg-surface-2/70 p-4 sm:p-5 transition-all hover:border-accent/60">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1.5">
               <div className="flex items-center gap-2">
                 <span className="flex h-2 w-2 rounded-full bg-accent animate-pulse" />
                 <span className="text-[11px] font-mono uppercase tracking-wider text-accent font-semibold">
-                  HR &amp; Technical Recruiters
+                  Recruiters &amp; Hiring Managers
                 </span>
               </div>
               <h2 className="text-sm sm:text-base font-bold text-text-primary font-mono tracking-tight">
-                Recruiting or Reviewing Candidates? Here is the Resume
+                Looking for a copy of my resume? Download PDF
               </h2>
               <p className="text-xs text-text-secondary font-mono leading-relaxed max-w-xl">
-                If you are an HR recruiter or hiring manager reviewing qualifications for offensive security, detection engineering, or systems engineering roles, access the complete, printable curriculum vitae in PDF .
+                If you are reviewing qualifications for security engineering, detection engineering, or software roles, access the complete, printable PDF below.
               </p>
             </div>
 
@@ -234,13 +234,13 @@ export default async function ResumePage() {
           </div>
         </section>
 
-        {/* Technical Competencies Matrix */}
+        {/* Technical Skills & Competencies */}
         <section className="space-y-4">
           <div className="flex items-center justify-between border-b border-border/60 pb-2">
             <div className="flex items-center gap-2">
               <Code2 className="w-4 h-4 text-accent" />
               <h2 className="text-xs font-semibold tracking-wider text-text-primary font-mono uppercase">
-                <ScrambleText text="Technical Competencies Matrix" as="span" />
+                <ScrambleText text="Technical Skills & Competencies" as="span" />
               </h2>
             </div>
             <span className="text-[10px] font-mono text-text-secondary">4 core areas</span>
@@ -275,13 +275,13 @@ export default async function ResumePage() {
           </div>
         </section>
 
-        {/* Dedicated Homelab & Cyber Range Infrastructure */}
+        {/* Homelab & Lab Infrastructure */}
         <section className="space-y-4">
           <div className="flex items-center justify-between border-b border-border/60 pb-2">
             <div className="flex items-center gap-2">
               <Server className="w-4 h-4 text-accent" />
               <h2 className="text-xs font-semibold tracking-wider text-text-primary font-mono uppercase">
-                <ScrambleText text="Homelab & Cyber Range Infrastructure" as="span" />
+                <ScrambleText text="Homelab & Lab Infrastructure" as="span" />
               </h2>
             </div>
             <span className="text-[10px] font-mono text-text-secondary">Self-Hosted</span>
@@ -325,12 +325,12 @@ export default async function ResumePage() {
           </div>
         </section>
 
-        {/* Proof of Work Cross-Links */}
+        {/* Cross-Links */}
         <section className="p-4 rounded border border-border bg-surface-2/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
           <div>
-            <p className="font-semibold text-text-primary">Explore Proof-of-Work &amp; Technical Notes</p>
+            <p className="font-semibold text-text-primary">Explore Projects &amp; Technical Notes</p>
             <p className="text-text-secondary text-[11px] mt-0.5">
-              Inspect open-source tools, lab reports, vulnerability writeups, and technical notes.
+              Browse open-source tools, lab reports, vulnerability writeups, and technical notes.
             </p>
           </div>
           <div className="flex items-center gap-2 shrink-0">

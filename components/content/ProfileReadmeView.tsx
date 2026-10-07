@@ -11,7 +11,7 @@ export function ProfileReadmeView() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/projects/0xraiven/profile-views.svg?v=71"
-          alt="Profile Ingress Telemetry & Views"
+          alt="Profile Views"
           className="h-auto max-w-full"
         />
       </div>
@@ -31,7 +31,7 @@ export function ProfileReadmeView() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/projects/0xraiven/status-ticker.svg"
-          alt="Live Telemetry Stream"
+          alt="Activity Stream"
           className="w-full h-auto block"
         />
       </div>
@@ -45,7 +45,7 @@ export function ProfileReadmeView() {
           <strong className="text-accent font-semibold">explainable detection pipelines</strong>.
         </p>
         <p className="text-text-secondary text-xs font-sans leading-relaxed">
-          Dissecting attack surfaces down to daemon and initialization vectors to engineer inspectable, high-resilience security systems.
+          Investigating attack surfaces and defensive mechanisms to build reliable, well-documented security systems.
         </p>
       </div>
 
@@ -62,7 +62,7 @@ export function ProfileReadmeView() {
       {/* ─[ FEATURED WORK ]─ Section */}
       <section className="space-y-4">
         <h3 className="text-xs uppercase tracking-wider text-text-secondary font-mono border-b border-border/60 pb-1">
-          ─[ FEATURED WORK ]───────────────────────────────────────────────────
+          ─[ FEATURED PROJECTS ]─────────────────────────────────────────────────
         </h3>
 
         <div className="space-y-4">
@@ -105,8 +105,8 @@ export function ProfileReadmeView() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-text-primary hover:text-accent transition-colors"
               >
-                <span>VIEW CODEBASE</span>
-                <span className="text-accent">──▶</span>
+                <span>VIEW REPOSITORY</span>
+                <span className="text-accent">→</span>
               </a>
             </div>
 
@@ -116,7 +116,6 @@ export function ProfileReadmeView() {
                 <span className="text-accent group-open:rotate-90 transition-transform">▶</span>
                 <span className="text-accent">◈</span>
                 <span>PIPELINE ARCHITECTURE</span>
-                <span className="text-text-secondary text-[11px] font-normal">[INSPECT]</span>
               </summary>
               <div className="pt-3 border-t border-border/60 mt-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -168,8 +167,8 @@ export function ProfileReadmeView() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-text-primary hover:text-accent transition-colors"
               >
-                <span>VIEW CODEBASE</span>
-                <span className="text-accent">──▶</span>
+                <span>VIEW REPOSITORY</span>
+                <span className="text-accent">→</span>
               </a>
             </div>
 
@@ -179,7 +178,6 @@ export function ProfileReadmeView() {
                 <span className="text-accent group-open:rotate-90 transition-transform">▶</span>
                 <span className="text-accent">◈</span>
                 <span>DETECTION SCHEMA</span>
-                <span className="text-text-secondary text-[11px] font-normal">[INSPECT]</span>
               </summary>
               <div className="pt-3 border-t border-border/60 mt-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -194,10 +192,10 @@ export function ProfileReadmeView() {
         </div>
       </section>
 
-      {/* ─[ TELEMETRY ]─ Section */}
+      {/* ─[ GITHUB ACTIVITY ]─ Section */}
       <section className="space-y-4 pt-2">
         <h3 className="text-xs uppercase tracking-wider text-text-secondary font-mono border-b border-border/60 pb-1">
-          ─[ TELEMETRY ]───────────────────────────────────────────────────────
+          ─[ GITHUB ACTIVITY ]───────────────────────────────────────────────────
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">

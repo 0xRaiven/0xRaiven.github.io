@@ -397,14 +397,14 @@ export function Sidebar() {
                 window.dispatchEvent(new CustomEvent("r41n:boot"));
               }}
               className="w-full flex items-center justify-between px-2 py-1.5 rounded font-mono text-text-secondary hover:text-accent hover:bg-surface-2 transition-colors group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent text-left"
-              title="Reboot System [Easter Egg]"
+              title="Replay Intro Animation"
             >
               <span className="flex items-center gap-2 text-xs">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 group-hover:bg-accent transition-colors" />
-                <span className="truncate">reboot system</span>
+                <span className="truncate">replay intro</span>
               </span>
               <span className="text-[9px] font-pixel text-accent/70 group-hover:text-accent font-bold">
-                [BOOT]
+                [PLAY]
               </span>
             </button>
           </li>

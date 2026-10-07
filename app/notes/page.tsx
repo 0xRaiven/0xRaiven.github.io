@@ -9,7 +9,7 @@ import { ScrambleText } from "@/components/animation/ScrambleText";
 
 export const metadata: Metadata = {
   title: "Notes // r41n",
-  description: "Operational notes, cheat sheets, command references, and tactical runbooks.",
+  description: "Technical notes, cheat sheets, command references, and practical guides.",
 };
 
 export default async function NotesPage() {
@@ -34,25 +34,25 @@ export default async function NotesPage() {
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <h1 className="text-xl font-bold tracking-tight text-text-primary uppercase flex items-center gap-2">
               <FileText className="w-5 h-5 text-accent" />
-              <ScrambleText text="Notes & Tactical Cheat Sheets" as="span" />
+              <ScrambleText text="Notes & Cheatsheets" as="span" />
             </h1>
             <span className="text-xs text-text-secondary">
-              [{notes.length} notes recorded]
+              [{notes.length} notes available]
             </span>
           </div>
           <p className="text-xs text-text-secondary leading-relaxed font-sans">
-            Short-form operational notes, quick syntax cheat sheets, and tactical checklists across host and network security domains.
+            Short-form technical notes, syntax cheat sheets, and practical checklists across host, cloud, and network security.
           </p>
         </header>
 
         {/* Notes List */}
         {notes.length === 0 ? (
           <StayTuned
-            title="Operational Notes & Tactical Runbooks Compiling"
-            category="notes-in-progress"
-            description="Field notes, system command cheat sheets, telemetry queries, and tactical playbooks are actively being organized and prepared. Stay tuned for upcoming entries."
+            title="Notes & Cheatsheets Coming Soon"
+            category="notes"
+            description="Command cheat sheets, queries, and security notes are actively being organized. Check back soon for new entries."
             returnUrl="/projects"
-            returnLabel="Explore Active Repositories"
+            returnLabel="Explore Projects"
           />
         ) : (
           <div className="space-y-3">

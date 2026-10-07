@@ -12,12 +12,12 @@ export default function NotFound() {
           <div className="flex items-center gap-1.5 min-w-0 flex-wrap">
             <Link href="/" className="hover:text-accent flex items-center gap-1 shrink-0">
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span>base</span>
+              <span>home</span>
             </Link>
             <span className="shrink-0">/</span>
             <span className="text-rose-400 font-semibold">404</span>
             <span className="shrink-0">/</span>
-            <span className="text-text-secondary">NOT_FOUND</span>
+            <span className="text-text-secondary">PAGE_NOT_FOUND</span>
           </div>
 
           <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-rose-500/10 border border-rose-500/30 text-rose-400 font-semibold whitespace-nowrap shrink-0">
@@ -25,7 +25,7 @@ export default function NotFound() {
           </span>
         </div>
 
-        {/* ASCII Art Terminal Window */}
+        {/* Terminal Window */}
         <div className="rounded-lg border border-border bg-surface overflow-hidden shadow-lg">
           {/* Window Header */}
           <div className="flex items-center justify-between px-4 py-2.5 bg-surface-2/80 border-b border-border text-xs text-text-secondary">
@@ -35,10 +35,10 @@ export default function NotFound() {
                 <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block" />
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block" />
               </div>
-              <span className="text-[11px] text-text-secondary ml-1">terminal://0xraiven/fault-handler</span>
+              <span className="text-[11px] text-text-secondary ml-1">terminal://0xraiven/404</span>
             </div>
 
-            <span className="text-[10px] text-text-secondary">exit: 0x00000194</span>
+            <span className="text-[10px] text-text-secondary">status: 404</span>
           </div>
 
           {/* Window Body */}
@@ -59,22 +59,22 @@ export default function NotFound() {
             <div className="p-4 rounded border border-border/80 bg-surface-2/50 text-xs space-y-2">
               <div className="text-rose-400 font-semibold flex items-center gap-2">
                 <Terminal className="w-4 h-4 text-rose-400" />
-                <span>ERROR: ADDRESS_UNMAPPED_FAULT</span>
+                <span>ERROR: PAGE_NOT_FOUND</span>
               </div>
               <p className="text-text-secondary font-sans leading-relaxed">
-                The requested URL path does not exist in the routing table, was pruned, or requires updated sector clearance.
+                The requested page could not be found. It may have been moved, renamed, or does not exist.
               </p>
               <div className="pt-2 text-[11px] text-text-secondary space-y-1 border-t border-border/40 font-mono">
-                <div>trace: <span className="text-text-primary">kernel::vfs_lookup_failed</span></div>
+                <div>status: <span className="text-text-primary">404</span></div>
                 <div>host: <span className="text-accent">0xraiven.github.io</span></div>
-                <div>suggested_action: <span className="text-emerald-400">return to base or search index</span></div>
+                <div>action: <span className="text-emerald-400">return home or search site</span></div>
               </div>
             </div>
 
-            {/* Available Recovery Commands */}
+            {/* Quick Navigation */}
             <div className="space-y-3 pt-2">
               <div className="text-xs text-text-secondary font-semibold uppercase tracking-wider">
-                Available Recovery Commands:
+                Quick Navigation:
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
@@ -85,7 +85,7 @@ export default function NotFound() {
                   <Home className="w-4 h-4 text-accent group-hover:scale-105 transition-transform" />
                   <div>
                     <div className="text-text-primary font-semibold">$ cd /</div>
-                    <div className="text-[11px] text-text-secondary font-sans">Return to Homepage README</div>
+                    <div className="text-[11px] text-text-secondary font-sans">Return to homepage</div>
                   </div>
                 </Link>
 
@@ -96,7 +96,7 @@ export default function NotFound() {
                   <FolderGit2 className="w-4 h-4 text-blue-400 group-hover:scale-105 transition-transform" />
                   <div>
                     <div className="text-text-primary font-semibold">$ ls /projects</div>
-                    <div className="text-[11px] text-text-secondary font-sans">Browse Repositories &amp; Tools</div>
+                    <div className="text-[11px] text-text-secondary font-sans">Browse projects and tools</div>
                   </div>
                 </Link>
 
@@ -107,7 +107,7 @@ export default function NotFound() {
                   <ShieldAlert className="w-4 h-4 text-rose-400 group-hover:scale-105 transition-transform" />
                   <div>
                     <div className="text-text-primary font-semibold">$ cat /writeups</div>
-                    <div className="text-[11px] text-text-secondary font-sans">Read Offensive Security Writeups</div>
+                    <div className="text-[11px] text-text-secondary font-sans">Read security writeups</div>
                   </div>
                 </Link>
 
@@ -115,7 +115,7 @@ export default function NotFound() {
                   <Search className="w-4 h-4 text-accent shrink-0" />
                   <div>
                     <div className="text-text-primary font-semibold">$ ⌘K / Ctrl+K</div>
-                    <div className="text-[11px] text-text-secondary font-sans">Open Global Command Palette</div>
+                    <div className="text-[11px] text-text-secondary font-sans">Open search palette</div>
                   </div>
                 </div>
               </div>

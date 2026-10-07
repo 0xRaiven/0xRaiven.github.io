@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: WriteupPageProps): Promise<Me
   const categoryLabel = formatCategoryLabel(slug);
   return {
     title: `${categoryLabel} Writeups // r41n`,
-    description: `Offensive security writeups, exploit analysis, and field reports for ${categoryLabel}.`,
+    description: `Security writeups, challenge breakdowns, and lab notes for ${categoryLabel}.`,
   };
 }
 
@@ -157,7 +157,7 @@ export default async function WriteupDetailPage({ params }: WriteupPageProps) {
               <span>Back to Writeups</span>
             </Link>
             <span className="text-text-secondary text-[11px] font-mono">
-              artifact: {article.meta.slug}
+              writeup: {article.meta.slug}
             </span>
           </div>
         </article>
@@ -198,9 +198,9 @@ export default async function WriteupDetailPage({ params }: WriteupPageProps) {
           <StayTuned
             sector={`Writeups // ${categoryLabel}`}
             category={slug}
-            description={`No published field reports or vulnerability writeups currently exist in the ${categoryLabel} domain. Tactical post-mortems and target walkthroughs are actively being prepared.`}
+            description={`No published writeups currently exist in the ${categoryLabel} category. Walkthroughs and lab notes are actively being prepared.`}
             returnUrl="/writeups"
-            returnLabel="Browse Published Writeups"
+            returnLabel="Back to Writeups"
           />
         ) : (
           <div className="space-y-3">

@@ -13,7 +13,7 @@ import { ScrambleText } from '@/components/animation/ScrambleText';
 
 export const metadata: Metadata = {
   title: 'Projects // r41n',
-  description: 'Security engineering tooling, telemetry frameworks, and defensive/offensive artifacts.',
+  description: 'Open source tools, security software, detection frameworks, and personal projects.',
 };
 
 export default async function ProjectsPage() {
@@ -44,16 +44,16 @@ export default async function ProjectsPage() {
           </div>
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <ScrambleText
-              text="Projects & Engineering Artifacts"
+              text="Projects & Tools"
               as="h1"
               className="text-xl font-bold tracking-tight text-text-primary uppercase"
             />
             <span className="text-xs text-text-secondary">
-              [{projects.length} repositories loaded]
+              [{projects.length} projects loaded]
             </span>
           </div>
           <p className="text-xs text-text-secondary leading-relaxed">
-            Offensive tooling, persistence analyzers, machine learning security models, and telemetry collection pipelines. All artifacts are Git-backed and reproduction-ready.
+            Security tooling, persistence analyzers, detection models, and system utilities. Backed by source code on GitHub.
           </p>
         </header>
 

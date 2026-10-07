@@ -383,6 +383,8 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
   // Color-coded badge for category tags (all adhering strictly to palette)
   const getCategoryBadgeClass = (category?: string) => {
     switch (category) {
+      case "profile":
+      case "contact":
       case "operator":
       case "system":
         return "text-accent bg-accent/15 border-accent/35 font-bold";

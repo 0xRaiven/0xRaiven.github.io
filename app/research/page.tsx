@@ -9,7 +9,7 @@ import { ScrambleText } from "@/components/animation/ScrambleText";
 
 export const metadata: Metadata = {
   title: "Security Research // r41n",
-  description: "Vulnerability research, whitepapers, protocol analysis, and offensive lab evaluations.",
+  description: "Security research, vulnerability analysis, technical papers, and lab experiments.",
 };
 
 export default async function ResearchPage() {
@@ -34,25 +34,25 @@ export default async function ResearchPage() {
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <h1 className="text-xl font-bold tracking-tight text-text-primary uppercase flex items-center gap-2">
               <FlaskConical className="w-5 h-5 text-accent" />
-              <ScrambleText text="Vulnerability Research & Whitepapers" as="span" />
+              <ScrambleText text="Security Research & Analysis" as="span" />
             </h1>
             <span className="text-xs text-text-secondary">
-              [{researchItems.length} papers published]
+              [{researchItems.length} articles published]
             </span>
           </div>
           <p className="text-xs text-text-secondary leading-relaxed font-sans">
-            In-depth technical papers, vulnerability discoveries, protocol dissection, and target environment laboratory studies.
+            In-depth security analysis, vulnerability research, protocol testing, and experimental lab studies.
           </p>
         </header>
 
         {/* Research List */}
         {researchItems.length === 0 ? (
           <StayTuned
-            title="Security Research & Whitepapers Pending Release"
-            category="research-in-progress"
-            description="Novel vulnerability research, exploitation primitives, and laboratory whitepapers are actively being evaluated, peer-reviewed, and coordinated for disclosure. Stay tuned for upcoming publications."
+            title="Research Articles Coming Soon"
+            category="research"
+            description="Vulnerability analysis, protocol research, and experimental lab writeups are actively being prepared and reviewed. Check back soon for new articles."
             returnUrl="/projects"
-            returnLabel="Explore Active Repositories"
+            returnLabel="Explore Projects"
           />
         ) : (
           <div className="space-y-3">

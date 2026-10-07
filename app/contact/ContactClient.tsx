@@ -37,10 +37,10 @@ const SOCIAL_CHANNELS: SocialChannel[] = [
     handle: "@0xraiven",
     url: "https://github.com/0xraiven",
     actionType: "link",
-    badge: "CODE & REPOS",
+    badge: "PROJECTS",
     badgeClass: "border-border bg-surface-2 text-text-primary",
     category: "primary",
-    description: "Proof-of-work repositories, security tooling (persistHunt, phishGuard), malware analysis artifacts, and open-source contributions.",
+    description: "Personal projects, security tooling (persistHunt, phishGuard), malware analysis notes, and open-source contributions.",
   },
   {
     id: "x",
@@ -48,14 +48,14 @@ const SOCIAL_CHANNELS: SocialChannel[] = [
     handle: "@0xraiven",
     url: "https://x.com/0xraiven",
     actionType: "link",
-    badge: "PUBLIC FEED",
+    badge: "UPDATES",
     badgeClass: "border-accent/40 bg-accent/10 text-accent",
     category: "primary",
-    description: "Vulnerability analysis commentary, security research drops, exploit breakdowns, and technical threads.",
+    description: "Vulnerability analysis, security research notes, exploit breakdowns, and technical discussions.",
   },
   {
     id: "email",
-    name: "Email Dispatch",
+    name: "Email",
     handle: "nagasainanduri@gmail.com",
     url: "mailto:nagasainanduri@gmail.com",
     actionType: "both",
@@ -63,7 +63,7 @@ const SOCIAL_CHANNELS: SocialChannel[] = [
     badge: "DIRECT MAIL",
     badgeClass: "border-emerald-500/30 bg-emerald-500/10 text-emerald-400",
     category: "messaging",
-    description: "Primary direct communications, engineering opportunities, technical consultation, and research inquiries.",
+    description: "General inquiries, opportunities, technical discussion, and research collaboration.",
   },
   {
     id: "proton",
@@ -72,10 +72,10 @@ const SOCIAL_CHANNELS: SocialChannel[] = [
     url: "mailto:0xraiven@proton.me",
     actionType: "both",
     copyValue: "0xraiven@proton.me",
-    badge: "E2EE SECURE",
+    badge: "ENCRYPTED EMAIL",
     badgeClass: "border-accent/40 bg-accent/10 text-accent",
     category: "security",
-    description: "End-to-end encrypted channel operates same as any other email.",
+    description: "End-to-end encrypted email for secure communication or sensitive inquiries.",
   },
   {
     id: "htb",
@@ -83,10 +83,10 @@ const SOCIAL_CHANNELS: SocialChannel[] = [
     handle: "0xraiven",
     url: "/writeups/htb",
     actionType: "link",
-    badge: "HTB PLATFORM",
+    badge: "WRITEUPS",
     badgeClass: "border-emerald-500/30 bg-emerald-500/10 text-emerald-400",
     category: "security",
-    description: "Machine writeups across Low, Medium, Hard, and Insane tiers, privilege escalation notes, and CTF challenge breakdowns.",
+    description: "Machine writeups across all difficulty tiers, privilege escalation notes, and CTF challenge walkthroughs.",
   },
   {
     id: "discord",
@@ -97,7 +97,7 @@ const SOCIAL_CHANNELS: SocialChannel[] = [
     badge: "COMMUNITY",
     badgeClass: "border-border bg-surface-2 text-text-secondary",
     category: "messaging",
-    description: "Live cybersecurity discussions, CTF team coordination, and real-time community engagement.",
+    description: "Security discussions, CTF coordination, and community chat.",
   },
 ];
 
@@ -150,8 +150,8 @@ export function ContactClient() {
 
   const targetEmail =
     inquiryType === "vulnerability" ? "0xraiven@proton.me" : "nagasainanduri@gmail.com";
-  const fullSubject = `[${inquiryType.toUpperCase()}] ${subject || "Operator Inquiry"}`;
-  const fullBody = `Sender: ${senderName || "Anonymous"} (${senderEmail || "N/A"})\nPurpose: ${inquiryType}\n\nMessage Payload:\n${message}`;
+  const fullSubject = `[${inquiryType.toUpperCase()}] ${subject || "Contact Inquiry"}`;
+  const fullBody = `From: ${senderName || "Anonymous"} (${senderEmail || "N/A"})\nRegarding: ${inquiryType}\n\nMessage:\n${message}`;
 
   const mailtoUrl = `mailto:${targetEmail}?subject=${encodeURIComponent(fullSubject)}&body=${encodeURIComponent(fullBody)}`;
   const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(targetEmail)}&su=${encodeURIComponent(fullSubject)}&body=${encodeURIComponent(fullBody)}`;
@@ -172,46 +172,46 @@ export function ContactClient() {
       <header className="border-b border-border pb-6 space-y-4">
         <div className="flex items-center gap-2 text-xs text-text-secondary">
           <Globe className="w-3.5 h-3.5 text-accent" />
-          <span>~/operator/contact.md</span>
+          <span>~/contact.md</span>
         </div>
 
         <div className="space-y-2">
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-text-primary uppercase flex items-center gap-2">
               <Mail className="w-7 h-7 text-accent shrink-0" />
-              <ScrambleText text="Communication Channels // Dispatch" as="span" />
+              <ScrambleText text="Contact & Channels" as="span" />
             </h1>
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span className="text-[10px] uppercase tracking-wider text-emerald-400 font-semibold">
-                CHANNELS ACTIVE
+                AVAILABLE
               </span>
             </div>
           </div>
 
           <p className="text-xs sm:text-sm text-text-secondary leading-relaxed font-sans max-w-3xl">
-            Official communication channels, verified social coordinates, and encryption parameters for offensive security research,
-            coordinated vulnerability disclosure, and technical inquiries.
+            Communication channels, social profiles, and email details for security research,
+            coordinated vulnerability disclosure, and general inquiries.
           </p>
         </div>
 
-        {/* Telemetry Status Bar */}
+        {/* Status Bar */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-border/60 text-[11px] font-mono text-text-secondary">
           <div className="flex flex-col">
-            <span className="text-text-muted text-[10px] uppercase">Operator</span>
+            <span className="text-text-muted text-[10px] uppercase">Name</span>
             <span className="text-text-primary font-semibold">0xraiven (r41n)</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-text-muted text-[10px] uppercase">Encryption</span>
+            <span className="text-text-muted text-[10px] uppercase">Email Security</span>
             <span className="text-accent font-semibold">Proton E2EE / GPG</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-text-muted text-[10px] uppercase">Response SLA</span>
+            <span className="text-text-muted text-[10px] uppercase">Response Time</span>
             <span className="text-emerald-400 font-semibold">&lt; 24 Hours</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-text-muted text-[10px] uppercase">Operational Status</span>
-            <span className="text-text-primary font-semibold">Accepting Inquiries</span>
+            <span className="text-text-muted text-[10px] uppercase">Status</span>
+            <span className="text-text-primary font-semibold">Open to Inquiries</span>
           </div>
         </div>
       </header>
@@ -221,10 +221,10 @@ export function ContactClient() {
         <div className="flex items-center justify-between border-b border-border/70 pb-2">
           <div className="flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-text-primary">
             <Sparkles className="w-4 h-4 text-accent" />
-            <span>Verified Coordinates & Socials</span>
+            <span>Profiles & Channels</span>
           </div>
           <span className="text-[10px] text-text-secondary">
-            [{SOCIAL_CHANNELS.length} endpoints available]
+            [{SOCIAL_CHANNELS.length} channels available]
           </span>
         </div>
 
@@ -322,7 +322,7 @@ export function ContactClient() {
         <div className="flex items-center gap-2 border-b border-border/70 pb-3">
           <Lock className="w-4 h-4 text-accent" />
           <h2 className="font-bold text-sm text-text-primary uppercase tracking-wider">
-            PGP / GPG End-to-End Encryption
+            Encrypted Email & PGP
           </h2>
         </div>
 
@@ -330,9 +330,9 @@ export function ContactClient() {
         <div className="flex items-start gap-3 p-3.5 rounded bg-surface-2/60 border border-border/80 text-xs text-text-secondary font-sans leading-relaxed">
           <Shield className="w-4 h-4 text-accent shrink-0 mt-0.5" />
           <div>
-            <strong className="text-text-primary">Encrypted Communications:</strong> For automated, verified end-to-end PGP encryption, direct communications to{" "}
+            <strong className="text-text-primary">Secure Email:</strong> Messages sent to{" "}
             <a href="mailto:0xraiven@proton.me" className="text-accent underline font-mono">0xraiven@proton.me</a>{" "}
-            are handled natively via ProtonMail&apos;s Web Key Directory (WKD). If you require custom GPG signed exchanges, request my active signing key via email.
+            are automatically end-to-end encrypted via ProtonMail. If you need standard GPG keys for another email client, feel free to request them.
           </div>
         </div>
       </section>
@@ -343,11 +343,11 @@ export function ContactClient() {
           <div className="flex items-center gap-2">
             <Terminal className="w-4 h-4 text-accent" />
             <span className="font-bold text-sm text-text-primary uppercase tracking-wider">
-              Direct Transmission Dispatcher
+              Send a Message
             </span>
           </div>
           <span className="text-[10px] text-text-secondary">
-            [target: {targetEmail}]
+            [to: {targetEmail}]
           </span>
         </div>
 
@@ -355,20 +355,20 @@ export function ContactClient() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div className="space-y-1.5">
               <label className="text-xs text-text-secondary block font-mono">
-                Sender Handle / Organization
+                Your Name / Organization
               </label>
               <input
                 type="text"
                 value={senderName}
                 onChange={(e) => setSenderName(e.target.value)}
-                placeholder="e.g. sec_researcher / team"
+                placeholder="Name or handle"
                 className="w-full px-3 py-2 rounded bg-surface-2 border border-border text-xs font-mono text-text-primary placeholder:text-text-secondary/60 focus:outline-none focus:border-accent/60 focus:ring-1 focus:ring-accent/30"
               />
             </div>
 
             <div className="space-y-1.5">
               <label className="text-xs text-text-secondary block font-mono">
-                Return Coordinate (Email)
+                Your Email Address
               </label>
               <input
                 type="email"
@@ -383,29 +383,29 @@ export function ContactClient() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div className="space-y-1.5">
               <label className="text-xs text-text-secondary block font-mono">
-                Transmission Purpose
+                Reason for Message
               </label>
               <select
                 value={inquiryType}
                 onChange={(e) => setInquiryType(e.target.value)}
                 className="w-full px-3 py-2 rounded bg-surface-2 border border-border text-xs font-mono text-text-primary focus:outline-none focus:border-accent/60 focus:ring-1 focus:ring-accent/30"
               >
-                <option value="vulnerability">Coordinated Vulnerability Disclosure (Route to Proton)</option>
-                <option value="research">Security Research Collaboration (Route to Gmail)</option>
-                <option value="opportunity">Engineering & Consulting Opportunity (Route to Gmail)</option>
-                <option value="general">General Operator Inquiry (Route to Gmail)</option>
+                <option value="vulnerability">Coordinated Vulnerability Disclosure (via Proton)</option>
+                <option value="research">Security Research & Collaboration (via Gmail)</option>
+                <option value="opportunity">Work & Consulting Opportunities (via Gmail)</option>
+                <option value="general">General Inquiry (via Gmail)</option>
               </select>
             </div>
 
             <div className="space-y-1.5">
               <label className="text-xs text-text-secondary block font-mono">
-                Subject Header
+                Subject
               </label>
               <input
                 type="text"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                placeholder="Subject description"
+                placeholder="Brief subject"
                 className="w-full px-3 py-2 rounded bg-surface-2 border border-border text-xs font-mono text-text-primary placeholder:text-text-secondary/60 focus:outline-none focus:border-accent/60 focus:ring-1 focus:ring-accent/30"
               />
             </div>
@@ -413,13 +413,13 @@ export function ContactClient() {
 
           <div className="space-y-1.5">
             <label className="text-xs text-text-secondary block font-mono">
-              Message Payload
+              Message
             </label>
             <textarea
               rows={4}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="Enter vulnerability synopsis, cryptographic details, or project inquiry..."
+              placeholder="Your message, inquiry details, or project description..."
               className="w-full px-3 py-2 rounded bg-surface-2 border border-border text-xs font-mono text-text-primary placeholder:text-text-secondary/60 focus:outline-none focus:border-accent/60 focus:ring-1 focus:ring-accent/30 leading-relaxed"
             />
           </div>
@@ -460,7 +460,7 @@ export function ContactClient() {
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
             <p className="text-[11px] text-text-secondary font-sans leading-relaxed">
-              Dispatches format a pre-filled draft to <span className="font-mono text-text-primary">{targetEmail}</span> and copy the payload to your clipboard.
+              Opens a pre-filled draft to <span className="font-mono text-text-primary">{targetEmail}</span> and copies the message to your clipboard.
             </p>
 
             <button
@@ -468,7 +468,7 @@ export function ContactClient() {
               className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded bg-accent text-bg text-xs font-mono font-bold hover:bg-accent/90 transition-colors shadow-sm shrink-0"
             >
               <Send className="w-3.5 h-3.5" />
-              <span>Dispatch Transmission</span>
+              <span>Send Message</span>
             </button>
           </div>
         </form>
