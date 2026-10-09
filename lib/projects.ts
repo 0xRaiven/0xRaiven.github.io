@@ -13,8 +13,30 @@ export interface EnrichedProject {
   githubUrl?: string;
   screenshots?: string[];
   relatedWriteupSlugs?: string[];
+  hasReadme: boolean;
   githubData?: GitHubRepoMetadata | null;
   body?: unknown;
+}
+
+export function isProjectDocumentEmpty(body: unknown): boolean {
+  if (!body) return true;
+  if (!Array.isArray(body)) return false;
+  if (body.length === 0) return true;
+
+  const hasContent = body.some((node) => {
+    if (!node || typeof node !== "object") return false;
+    const typedNode = node as {
+      type?: string;
+      children?: Array<{ text?: string; children?: Array<{ text?: string }> }>;
+    };
+    if (typedNode.type === "paragraph" && Array.isArray(typedNode.children)) {
+      return typedNode.children.some((c) => Boolean(c?.text && c.text.trim().length > 0));
+    }
+    // Any non-paragraph node (headings, code, block, etc.) is real content
+    return true;
+  });
+
+  return !hasContent;
 }
 
 export async function getProjects(): Promise<EnrichedProject[]> {
@@ -56,6 +78,9 @@ export async function getProjects(): Promise<EnrichedProject[]> {
           ? item.relatedWriteupSlugs.filter((s): s is string => typeof s === "string")
           : [];
 
+        const hasReadmeField = (item as unknown as { hasReadme?: boolean }).hasReadme;
+        const hasReadme = hasReadmeField !== false;
+
         projects.push({
           slug,
           title: item.title,
@@ -66,6 +91,7 @@ export async function getProjects(): Promise<EnrichedProject[]> {
           githubUrl: item.githubUrl || undefined,
           screenshots,
           relatedWriteupSlugs,
+          hasReadme,
           githubData,
         });
       } catch (err) {
@@ -143,6 +169,10 @@ export async function getProjectBySlug(slug: string): Promise<EnrichedProject | 
       ? item.relatedWriteupSlugs.filter((s): s is string => typeof s === "string")
       : [];
 
+    const hasReadmeField = (item as unknown as { hasReadme?: boolean }).hasReadme;
+    const bodyEmpty = isProjectDocumentEmpty(body);
+    const hasReadme = hasReadmeField !== false && !bodyEmpty;
+
     return {
       slug: targetSlug,
       title: item.title,
@@ -153,6 +183,7 @@ export async function getProjectBySlug(slug: string): Promise<EnrichedProject | 
       githubUrl: item.githubUrl || undefined,
       screenshots,
       relatedWriteupSlugs,
+      hasReadme,
       githubData,
       body,
     };

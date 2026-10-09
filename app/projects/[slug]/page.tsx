@@ -6,6 +6,7 @@ import { KnowledgeBaseLayout } from '@/components/layout/KnowledgeBaseLayout';
 import { DocumentContent } from '@/components/content/DocumentRenderer';
 import { StayTuned } from '@/components/content/StayTuned';
 import { ProfileReadmeView } from '@/components/content/ProfileReadmeView';
+import { NoReadmeView } from '@/components/content/NoReadmeView';
 import { getProjectBySlug, getProjects } from '@/lib/projects';
 import {
   FolderGit2,
@@ -128,9 +129,16 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             )}
           </div>
 
-          <p className="text-sm text-text-secondary leading-relaxed">
-            {project.description}
-          </p>
+          {project.description ? (
+            <p className="text-sm text-text-secondary leading-relaxed">
+              {project.description}
+            </p>
+          ) : (
+            <div className="flex items-center gap-2 text-xs font-mono text-text-secondary/80 py-1 bg-surface-2/40 px-2.5 rounded border border-border/60">
+              <span className="text-amber-400 font-semibold">[bio: none]</span>
+              <span>No repository bio or description provided on GitHub.</span>
+            </div>
+          )}
 
           {/* Project Stats */}
           <div className="flex flex-wrap items-center gap-4 text-xs text-text-secondary pt-2 border-t border-border/60">
@@ -169,19 +177,27 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           </div>
         </header>
 
-        {/* Document Content Rendered from body.mdoc or rich profile readme */}
+        {/* Document Content Rendered from body.mdoc, rich profile readme, or explicit NoReadmeView */}
         <div className="pt-2">
           {project.slug === '0xraiven' ? (
             <ProfileReadmeView />
+          ) : !project.hasReadme ? (
+            <NoReadmeView
+              projectTitle={project.title}
+              slug={project.slug}
+              githubUrl={project.githubUrl}
+              hasBio={Boolean(project.description && project.description.trim().length > 0)}
+              technologies={project.technologies}
+            />
           ) : project.body ? (
             <DocumentContent document={project.body as unknown as Parameters<typeof DocumentContent>[0]['document']} />
           ) : (
-            <StayTuned
-              title="Project Documentation In Progress"
-              category="in-progress"
-              description="Documentation, architecture notes, and usage guides for this project are currently being prepared."
-              returnUrl="/projects"
-              returnLabel="All Projects"
+            <NoReadmeView
+              projectTitle={project.title}
+              slug={project.slug}
+              githubUrl={project.githubUrl}
+              hasBio={Boolean(project.description && project.description.trim().length > 0)}
+              technologies={project.technologies}
             />
           )}
         </div>

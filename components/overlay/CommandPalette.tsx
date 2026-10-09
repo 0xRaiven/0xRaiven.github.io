@@ -389,6 +389,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
       case "system":
         return "text-accent bg-accent/15 border-accent/35 font-bold";
       case "red-team-tooling":
+      case "communication-platform":
       case "field-reports":
       case "research":
       case "lab-environment":

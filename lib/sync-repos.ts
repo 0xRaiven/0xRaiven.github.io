@@ -44,7 +44,21 @@ function formatTitle(name: string): string {
 function inferCategory(repo: GitHubRepo): ProjectCategory {
   const topics = (repo.topics || []).map((t) => t.toLowerCase());
   const desc = (repo.description || '').toLowerCase();
-  const combined = `${topics.join(' ')} ${desc} ${repo.name.toLowerCase()}`;
+  const name = repo.name.toLowerCase();
+  const combined = `${topics.join(' ')} ${desc} ${name}`;
+
+  if (
+    name === 'veil' ||
+    combined.includes('chat') ||
+    combined.includes('call') ||
+    combined.includes('stream') ||
+    combined.includes('communication') ||
+    combined.includes('message') ||
+    combined.includes('mirroring') ||
+    combined.includes('webrtc')
+  ) {
+    return 'communication-platform';
+  }
 
   if (
     combined.includes('phish') ||
@@ -87,7 +101,15 @@ function inferCategory(repo: GitHubRepo): ProjectCategory {
     return 'cloud-security';
   }
 
-  return 'red-team-tooling';
+  if (combined.includes('backend') || combined.includes('server') || combined.includes('api')) {
+    return 'backend-services';
+  }
+
+  if (combined.includes('frontend') || combined.includes('react') || combined.includes('ui')) {
+    return 'clientside-interface';
+  }
+
+  return 'basic-utility';
 }
 
 function inferStatus(repo: GitHubRepo): ProjectStatus {
@@ -107,6 +129,7 @@ async function fetchRepoLanguages(repoName: string): Promise<string[]> {
 
     const res = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${repoName}/languages`, {
       headers,
+      next: { revalidate: 3600 },
     });
     if (!res.ok) return [];
     const data = (await res.json()) as Record<string, number>;
@@ -128,6 +151,7 @@ async function fetchRepoReadme(repoName: string): Promise<string | null> {
 
     const res = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${repoName}/readme`, {
       headers,
+      next: { revalidate: 3600 },
     });
     if (!res.ok) return null;
     const data = (await res.json()) as { content?: string; encoding?: string };
@@ -186,29 +210,15 @@ See interactive architecture and telemetry components rendered in the profile vi
   }
   cleaned = tightLines.join('\n');
 
-  if (cleaned.length < 30) {
-    return generateDefaultScaffold(repoName);
+  if (cleaned.length < 10) {
+    return '';
   }
 
   return cleaned;
 }
 
-function generateDefaultScaffold(repoName: string): string {
-  const title = formatTitle(repoName);
-  return `# ${title}
-
-## Overview
-
-Technical implementation artifact and repository.
-
-## Architecture
-
-Modular implementation detailing operational components and threat model considerations.
-
-## Usage & Verification
-
-Refer to repository documentation and build instructions for local lab reproduction.
-`;
+function generateDefaultScaffold(_repoName: string): string {
+  return '';
 }
 
 /**
@@ -234,7 +244,7 @@ export async function syncGitHubRepos(options: { forceFetch?: boolean } = {}): P
   try {
     const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=pushed`, {
       headers,
-      ...(options.forceFetch ? { cache: 'no-store' } : {}),
+      next: { revalidate: 3600 },
     });
 
     if (!res.ok) {
@@ -288,18 +298,26 @@ export async function syncGitHubRepos(options: { forceFetch?: boolean } = {}): P
         ])
       );
 
+      const hasReadme = Boolean(readme && readme.trim().length > 0);
+      let repoDescription = repo.description || '';
+      if (repo.description == "") {
+        repoDescription =
+          'No description provided from the source.';
+      }
+
       const metadata = {
         title: formatTitle(repo.name),
-        description: repo.description || `${formatTitle(repo.name)} security engineering artifact.`,
+        description: repoDescription,
         status,
         category,
         technologies: techStack,
         githubUrl: repo.html_url,
         screenshots: [],
         relatedWriteupSlugs: [],
+        hasReadme,
       };
 
-      const bodyText = readme || generateDefaultScaffold(repo.name);
+      const bodyText = hasReadme ? (readme ?? '') : '';
       const frontmatter = yaml.dump(metadata, { lineWidth: -1 }).trim();
       const mdocContent = `---\n${frontmatter}\n---\n\n${bodyText}\n`;
 

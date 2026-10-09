@@ -30,6 +30,7 @@ export const PROJECT_CATEGORY_OPTIONS = [
   { label: "Assignment Repo", value: "assignment-repo" },
   { label: "Client-side Interface", value: "clientside-interface" },
   { label: "Blockchain Technology", value: "blockchain-technology" },
+  { label: "Communication Platform", value: "communication-platform" },
 ] as const;
 
 export type ProjectCategory = (typeof PROJECT_CATEGORY_OPTIONS)[number]["value"];

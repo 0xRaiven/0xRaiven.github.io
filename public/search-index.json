@@ -289,20 +289,18 @@
   {
     "id": "project-veil",
     "title": "Veil",
-    "description": "Veil security engineering artifact.",
+    "description": "Multi-purpose communication platform enabling real-time chat, audio & video calls, live streaming, screen mirroring, and location sharing.",
     "url": "/projects/veil",
     "kind": "project",
-    "category": "red-team-tooling",
+    "category": "communication-platform",
     "tags": [
+      "React Native",
       "TypeScript",
-      "PLpgSQL",
-      "JavaScript",
-      "Kotlin",
-      "Ruby",
-      "android",
-      "android-application",
-      "localstorage",
-      "multi-purpose-chat-application"
+      "Android",
+      "Supabase",
+      "SQL",
+      "LocalStorage",
+      "WebRTC"
     ]
   },
   {

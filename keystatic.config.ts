@@ -122,6 +122,10 @@ export default config({
           itemLabel: (p) => p.value,
         }),
         githubUrl: fields.url({ label: "GitHub URL" }),
+        hasReadme: fields.checkbox({
+          label: "Has README",
+          defaultValue: true,
+        }),
         screenshots: fields.array(
           fields.image({
             label: "Screenshot",
