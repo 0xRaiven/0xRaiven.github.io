@@ -6,6 +6,7 @@ import { getArticles } from "@/lib/articles";
 import { StayTuned } from "@/components/content/StayTuned";
 import { ArrowRight, Clock, Calendar, Tag, FlaskConical } from "lucide-react";
 import { ScrambleText } from "@/components/animation/ScrambleText";
+import { GlassCard } from "@/components/chrome/GlassSurface";
 
 export const metadata: Metadata = {
   title: "Security Research",
@@ -57,9 +58,10 @@ export default async function ResearchPage() {
         ) : (
           <div className="space-y-3">
             {researchItems.map((item) => (
-              <article
+              <GlassCard
+                as="article"
                 key={item.slug}
-                className="p-4 rounded border border-border bg-surface hover:border-accent/40 transition-colors group space-y-2.5"
+                className="p-4 space-y-2.5 group"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-text-secondary">
                   <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-surface-2 border border-border font-semibold text-text-primary whitespace-nowrap shrink-0">
@@ -111,7 +113,7 @@ export default async function ResearchPage() {
                     ))}
                   </div>
                 )}
-              </article>
+              </GlassCard>
             ))}
           </div>
         )}

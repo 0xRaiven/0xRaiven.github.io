@@ -4,6 +4,7 @@ import { KnowledgeBaseLayout } from "@/components/layout/KnowledgeBaseLayout";
 import { TerminalBlock } from "@/components/content/TerminalBlock";
 import { FileText, ArrowUpRight, FolderGit2, Shield, Terminal, Layers, ArrowRight } from "lucide-react";
 import { ScrambleText } from "@/components/animation/ScrambleText";
+import { GlassCard } from "@/components/chrome/GlassSurface";
 import { RelatedItem } from "@/types";
 import { getProjects } from "@/lib/projects";
 
@@ -234,42 +235,46 @@ export default async function Home() {
               <Link
                 key={project.slug}
                 href={`/projects/${project.slug}`}
-                className={`p-3.5 rounded border border-border bg-surface space-y-2 hover:border-accent/40 transition-all hover:-translate-y-0.5 shadow-sm block group animate-page-reveal stagger-${pIdx + 1}`}
+                className="block group"
               >
-                <div className="flex items-center justify-between text-text-secondary">
-                  <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-surface-2 border border-border font-semibold">
-                    {project.category}
-                  </span>
-                  <span
-                    className={`text-[11px] font-semibold ${project.status === "active"
-                      ? "text-emerald-400"
-                      : project.status === "building"
-                        ? "text-amber-400"
-                        : "text-text-secondary"
-                      }`}
-                  >
-                    {project.status}
-                  </span>
-                </div>
-                <h3 className="font-semibold text-text-primary text-sm group-hover:text-accent transition-colors flex items-center justify-between">
-                  <span>{project.title}</span>
-                  <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </h3>
-                <p className="text-text-secondary text-[11px] leading-relaxed line-clamp-2">
-                  {project.description}
-                </p>
-                {project.technologies && project.technologies.length > 0 && (
-                  <div className="flex flex-wrap gap-1 pt-1">
-                    {project.technologies.slice(0, 3).map((t) => (
-                      <span
-                        key={t}
-                        className="text-[9px] px-1 py-0.5 rounded bg-surface-2 text-text-secondary border border-border/60"
-                      >
-                        {t}
-                      </span>
-                    ))}
+                <GlassCard
+                  className={`p-3.5 h-full space-y-2 shadow-sm block group animate-page-reveal stagger-${pIdx + 1}`}
+                >
+                  <div className="flex items-center justify-between text-text-secondary">
+                    <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-surface-2 border border-border font-semibold">
+                      {project.category}
+                    </span>
+                    <span
+                      className={`text-[11px] font-semibold ${project.status === "active"
+                        ? "text-emerald-400"
+                        : project.status === "building"
+                          ? "text-amber-400"
+                          : "text-text-secondary"
+                        }`}
+                    >
+                      {project.status}
+                    </span>
                   </div>
-                )}
+                  <h3 className="font-semibold text-text-primary text-sm group-hover:text-accent transition-colors flex items-center justify-between">
+                    <span>{project.title}</span>
+                    <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </h3>
+                  <p className="text-text-secondary text-[11px] leading-relaxed line-clamp-2">
+                    {project.description}
+                  </p>
+                  {project.technologies && project.technologies.length > 0 && (
+                    <div className="flex flex-wrap gap-1 pt-1">
+                      {project.technologies.slice(0, 3).map((t) => (
+                        <span
+                          key={t}
+                          className="text-[9px] px-1 py-0.5 rounded bg-surface-2 text-text-secondary border border-border/60"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </GlassCard>
               </Link>
             ))}
           </div>
@@ -283,26 +288,26 @@ export default async function Home() {
           </h2>
 
           <div className="space-y-2 text-xs font-mono text-text-secondary leading-relaxed">
-            <div className="p-3 rounded border border-border bg-surface space-y-1">
+            <GlassCard className="p-3.5 space-y-1">
               <div className="text-text-primary font-semibold">1. Proof of Work Over Claims</div>
               <p>
                 Capabilities are proven through reproducible lab walk-throughs, custom scripts, and architectural teardowns rather than lists of buzzwords or credentials.
               </p>
-            </div>
+            </GlassCard>
 
-            <div className="p-3 rounded border border-border bg-surface space-y-1">
+            <GlassCard className="p-3.5 space-y-1">
               <div className="text-text-primary font-semibold">2. Documentation-First Architecture</div>
               <p>
                 Designed as a high-density, fast-loading personal wiki and notebook. Clean typography, dark mode by default, keyboard-friendly navigation, and zero marketing clutter.
               </p>
-            </div>
+            </GlassCard>
 
-            <div className="p-3 rounded border border-border bg-surface space-y-1">
+            <GlassCard className="p-3.5 space-y-1">
               <div className="text-text-primary font-semibold">3. Code-Free Publishing</div>
               <p>
                 Content remains separate from presentation. All knowledge base entries are file-backed Markdown/MDX documents rendered statically without runtime overhead.
               </p>
-            </div>
+            </GlassCard>
           </div>
         </section>
       </article>

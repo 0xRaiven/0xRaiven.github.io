@@ -10,6 +10,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { ScrambleText } from '@/components/animation/ScrambleText';
+import { GlassCard } from '@/components/chrome/GlassSurface';
 
 export const metadata: Metadata = {
   title: 'Projects',
@@ -64,9 +65,9 @@ export default async function ProjectsPage() {
               statusStyles[project.status as keyof typeof statusStyles] || statusStyles.active;
 
             return (
-              <div
+              <GlassCard
                 key={project.slug}
-                className="p-4 rounded border border-border bg-surface flex flex-col justify-between space-y-3 hover:border-accent/40 transition-colors group"
+                className="p-4 flex flex-col justify-between space-y-3 group"
               >
                 <div className="space-y-2">
                   <div className="flex flex-wrap items-center justify-between gap-2">
@@ -154,7 +155,7 @@ export default async function ProjectsPage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </GlassCard>
             );
           })}
         </section>
