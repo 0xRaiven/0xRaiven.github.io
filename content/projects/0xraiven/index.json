@@ -1,9 +1,17 @@
 {
   "title": "0xraiven",
-  "description": "0xraiven security engineering artifact.",
+  "description": "Security researcher & software engineer focused on Linux systems, threat detection, and practical security tooling.",
   "status": "active",
   "category": "profile-readme",
-  "technologies": [],
+  "technologies": [
+    "Python",
+    "Go",
+    "C / C++",
+    "Bash",
+    "TypeScript",
+    "Linux",
+    "Docker"
+  ],
   "githubUrl": "https://github.com/0xraiven/0xraiven",
   "screenshots": [],
   "relatedWriteupSlugs": []

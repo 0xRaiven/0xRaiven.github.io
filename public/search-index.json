@@ -123,15 +123,18 @@
   {
     "id": "project-0xraiven",
     "title": "0xraiven",
-    "description": "0xraiven GitHub profile README and operational security portfolio overview.",
+    "description": "Security researcher & software engineer focused on Linux systems, threat detection, and practical security tooling.",
     "url": "/projects/0xraiven",
     "kind": "project",
     "category": "profile-readme",
     "tags": [
       "Python",
+      "Go",
+      "C / C++",
       "Bash",
+      "TypeScript",
       "Linux",
-      "Machine Learning"
+      "Docker"
     ]
   },
   {
