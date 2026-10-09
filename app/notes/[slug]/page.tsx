@@ -25,14 +25,14 @@ export async function generateMetadata({ params }: NotePageProps): Promise<Metad
 
   if (article) {
     return {
-      title: `${article.meta.title} // r41n`,
+      title: article.meta.title,
       description: article.meta.description || "Technical note and reference.",
     };
   }
 
   const categoryLabel = formatCategoryLabel(slug);
   return {
-    title: `${categoryLabel} Notes // r41n`,
+    title: `${categoryLabel} Notes`,
     description: `Technical guides, notes, and command references for ${categoryLabel}.`,
   };
 }
@@ -141,7 +141,7 @@ export default async function NoteDetailPage({ params }: NotePageProps) {
               <DocumentContent document={article.body as unknown as Parameters<typeof DocumentContent>[0]["document"]} />
             ) : (
               <StayTuned
-                sector={`Notes // ${article.meta.title}`}
+                sector={`Notes · ${article.meta.title}`}
                 category={article.meta.category}
                 returnUrl="/notes"
                 returnLabel="Back to Notes"
@@ -198,7 +198,7 @@ export default async function NoteDetailPage({ params }: NotePageProps) {
 
         {categoryNotes.length === 0 ? (
           <StayTuned
-            sector={`Notes // ${categoryLabel}`}
+            sector={`Notes · ${categoryLabel}`}
             category={slug}
             description={`No notes or cheat sheets are currently published in the ${categoryLabel} section. Content is actively being curated.`}
             returnUrl="/notes"

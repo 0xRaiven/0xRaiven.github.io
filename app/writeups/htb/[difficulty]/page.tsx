@@ -73,12 +73,12 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: DifficultyPageProps): Promise<Metadata> {
   const { difficulty } = await params;
   if (!VALID_DIFFICULTIES.includes(difficulty as Difficulty)) {
-    return { title: "Not Found // r41n" };
+    return { title: "Not Found" };
   }
 
   const meta = TIER_META[difficulty as Difficulty];
   return {
-    title: `HTB ${meta.title} Machines // r41n`,
+    title: `HTB ${meta.title} Machines`,
     description: meta.description,
   };
 }
@@ -138,7 +138,7 @@ export default async function HTBDifficultyPage({ params }: DifficultyPageProps)
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-text-primary uppercase flex items-center gap-2">
               <TierIcon className={`w-6 h-6 ${tier.colorClass}`} />
-              <ScrambleText text={`HTB // ${tier.title} Machines`} as="span" />
+              <ScrambleText text={`HTB ${tier.title} Machines`} as="span" />
             </h1>
             <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded border ${tier.badgeClass}`}>
               {tier.badge}
@@ -176,7 +176,7 @@ export default async function HTBDifficultyPage({ params }: DifficultyPageProps)
         {/* Machine Writeups */}
         {matchingWriteups.length === 0 ? (
           <StayTuned
-            sector={`Writeups // HTB ${tier.title}`}
+            sector={`Writeups · HTB ${tier.title}`}
             category={`htb-${difficulty}`}
             description={`No published writeups currently exist in the ${tier.title} HTB tier. Machine walkthroughs are actively being prepared following retired machine disclosure guidelines.`}
             returnUrl="/writeups/htb"

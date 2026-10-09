@@ -8,7 +8,7 @@ import { ArrowLeft, ArrowRight, Box, Shield, Terminal, Zap, Skull, Layers } from
 import { ScrambleText } from "@/components/animation/ScrambleText";
 
 export const metadata: Metadata = {
-  title: "Hack The Box Writeups // r41n",
+  title: "HTB Writeups",
   description: "Hack The Box machine walkthroughs, initial access footholds, and privilege escalation notes across all difficulty tiers.",
 };
 
@@ -104,7 +104,7 @@ export default async function HTBOverviewPage() {
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-text-primary uppercase flex items-center gap-2">
               <Box className="w-6 h-6 text-accent" />
-              <ScrambleText text="Hack The Box // Writeups" as="span" />
+              <ScrambleText text="Hack The Box Writeups" as="span" />
             </h1>
             <span className="text-xs text-text-secondary">
               [{htbWriteups.length} writeups published]
@@ -176,7 +176,7 @@ export default async function HTBOverviewPage() {
         {/* Published Writeups List */}
         {htbWriteups.length === 0 ? (
           <StayTuned
-            sector="Writeups // Hack The Box"
+            sector="Writeups · Hack The Box"
             category="htb-machines"
             description="Hack The Box machine writeups are actively being prepared in accordance with HTB disclosure rules for retired machines. Check back soon for walkthroughs."
             returnUrl="/writeups"

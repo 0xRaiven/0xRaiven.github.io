@@ -8,7 +8,7 @@ import { ArrowRight, Clock, Calendar, Tag, FlaskConical } from "lucide-react";
 import { ScrambleText } from "@/components/animation/ScrambleText";
 
 export const metadata: Metadata = {
-  title: "Security Research // r41n",
+  title: "Security Research",
   description: "Security research, vulnerability analysis, technical papers, and lab experiments.",
 };
 

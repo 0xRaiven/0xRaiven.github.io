@@ -8,7 +8,7 @@ import { ArrowRight, Clock, Calendar, Tag, FileText } from "lucide-react";
 import { ScrambleText } from "@/components/animation/ScrambleText";
 
 export const metadata: Metadata = {
-  title: "Notes // r41n",
+  title: "Notes",
   description: "Technical notes, cheat sheets, command references, and practical guides.",
 };
 

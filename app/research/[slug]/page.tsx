@@ -25,14 +25,14 @@ export async function generateMetadata({ params }: ResearchPageProps): Promise<M
 
   if (article) {
     return {
-      title: `${article.meta.title} // r41n`,
+      title: article.meta.title,
       description: article.meta.description || "Security research and analysis.",
     };
   }
 
   const label = formatCategoryLabel(slug);
   return {
-    title: `${label} // Security Research // r41n`,
+    title: `${label} Research`,
     description: `Security research and technical papers for ${label}.`,
   };
 }
@@ -132,7 +132,7 @@ export default async function ResearchDetailPage({ params }: ResearchPageProps) 
               <DocumentContent document={article.body as unknown as Parameters<typeof DocumentContent>[0]["document"]} />
             ) : (
               <StayTuned
-                sector={`Research // ${article.meta.title}`}
+                sector={`Research · ${article.meta.title}`}
                 category={article.meta.category}
                 returnUrl="/research"
                 returnLabel="Back to Research"
@@ -189,7 +189,7 @@ export default async function ResearchDetailPage({ params }: ResearchPageProps) 
 
           {allResearch.length === 0 ? (
             <StayTuned
-              sector={`Research // ${label}`}
+              sector={`Research · ${label}`}
               category={slug}
               description="Security vulnerability research, protocol analysis, and lab studies are currently undergoing validation and review."
               returnUrl="/research"

@@ -25,14 +25,14 @@ export async function generateMetadata({ params }: WriteupPageProps): Promise<Me
 
   if (article) {
     return {
-      title: `${article.meta.title} // r41n`,
+      title: article.meta.title,
       description: article.meta.description || "Security writeup and technical walkthrough.",
     };
   }
 
   const categoryLabel = formatCategoryLabel(slug);
   return {
-    title: `${categoryLabel} Writeups // r41n`,
+    title: `${categoryLabel} Writeups`,
     description: `Security writeups, challenge breakdowns, and lab notes for ${categoryLabel}.`,
   };
 }
@@ -139,7 +139,7 @@ export default async function WriteupDetailPage({ params }: WriteupPageProps) {
               <DocumentContent document={article.body as unknown as Parameters<typeof DocumentContent>[0]["document"]} />
             ) : (
               <StayTuned
-                sector={`Writeups // ${article.meta.title}`}
+                sector={`Writeups · ${article.meta.title}`}
                 category={article.meta.category}
                 returnUrl="/writeups"
                 returnLabel="Back to Writeups"
@@ -196,7 +196,7 @@ export default async function WriteupDetailPage({ params }: WriteupPageProps) {
 
         {categoryArticles.length === 0 ? (
           <StayTuned
-            sector={`Writeups // ${categoryLabel}`}
+            sector={`Writeups · ${categoryLabel}`}
             category={slug}
             description={`No published writeups currently exist in the ${categoryLabel} category. Walkthroughs and lab notes are actively being prepared.`}
             returnUrl="/writeups"

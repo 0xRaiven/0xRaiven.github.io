@@ -4,7 +4,7 @@ import { KnowledgeBaseLayout } from "@/components/layout/KnowledgeBaseLayout";
 import { ContactClient } from "./ContactClient";
 
 export const metadata: Metadata = {
-  title: "Contact // r41n",
+  title: "Contact",
   description: "Communication channels, social profiles, and email details for 0xraiven.",
 };
 

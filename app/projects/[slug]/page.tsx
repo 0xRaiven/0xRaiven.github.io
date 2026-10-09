@@ -26,12 +26,12 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
   if (!project) {
     return {
-      title: 'Project Not Found // r41n',
+      title: 'Project Not Found',
     };
   }
 
   return {
-    title: `${project.title} // r41n`,
+    title: project.title,
     description: project.description || `Documentation and details for ${project.title}.`,
   };
 }

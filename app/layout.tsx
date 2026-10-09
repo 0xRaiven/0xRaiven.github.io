@@ -17,8 +17,8 @@ const monoFont = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://0xRaiven.github.io"),
   title: {
-    default: "r41n // Portfolio & Knowledge Base",
-    template: "%s // r41n",
+    default: "r41n",
+    template: "%s",
   },
   description: "Cybersecurity portfolio, offensive security research, red team notes, and technical knowledge base.",
   keywords: [
@@ -37,12 +37,12 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://0xRaiven.github.io",
     siteName: "r41n Knowledge Base",
-    title: "r41n // Portfolio & Knowledge Base",
+    title: "r41n",
     description: "Cybersecurity portfolio, offensive security research, red team notes, and technical knowledge base.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "r41n // Portfolio & Knowledge Base",
+    title: "r41n",
     description: "Cybersecurity portfolio, offensive security research, red team notes, and technical knowledge base.",
   },
   icons: {

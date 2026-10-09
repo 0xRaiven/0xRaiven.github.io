@@ -12,7 +12,7 @@ import {
 import { ScrambleText } from '@/components/animation/ScrambleText';
 
 export const metadata: Metadata = {
-  title: 'Projects // r41n',
+  title: 'Projects',
   description: 'Open source tools, security software, detection frameworks, and personal projects.',
 };
 

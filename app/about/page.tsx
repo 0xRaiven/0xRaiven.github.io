@@ -23,7 +23,7 @@ import {
 import { ScrambleText } from "@/components/animation/ScrambleText";
 
 export const metadata: Metadata = {
-  title: "About // r41n",
+  title: "About",
   description: "Background overview, technical focus, research areas, and engineering approach.",
 };
 
@@ -52,7 +52,7 @@ export default async function AboutPage() {
     },
     {
       name: "PhishGuard",
-      type: "Open Source // Browser Security",
+      type: "Open Source · Browser Security",
       status: "In Progress",
       desc: "Privacy-first ML phishing detection extension (Chrome MV3, Edge) & Flask backend evaluating Random Forest/CNN with explainability (Apache 2.0).",
       href: "/projects/phishguard",

@@ -7,7 +7,7 @@ import { ArrowRight, Clock, Calendar, Tag } from 'lucide-react';
 import { ScrambleText } from '@/components/animation/ScrambleText';
 
 export const metadata: Metadata = {
-  title: 'Writeups // r41n',
+  title: 'Writeups',
   description: 'Walkthroughs, CTF challenges, machine writeups, and security lab guides.',
 };
 

@@ -19,7 +19,7 @@ import {
 import { ScrambleText } from "@/components/animation/ScrambleText";
 
 export const metadata: Metadata = {
-  title: "Resume // r41n",
+  title: "Resume",
   description: "Resume, technical skills, and security engineering background.",
 };
 

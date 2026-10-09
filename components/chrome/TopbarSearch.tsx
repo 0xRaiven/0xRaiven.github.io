@@ -382,7 +382,7 @@ export function TopbarSearch() {
               )}
             </span>
             <span className="text-[9px] text-accent/80 font-mono">
-              r41n // search
+              search
             </span>
           </div>
 
