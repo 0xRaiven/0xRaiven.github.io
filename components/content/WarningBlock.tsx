@@ -1,5 +1,6 @@
 import React from 'react';
 import { AlertTriangle } from 'lucide-react';
+import { renderInlineHtmlToReact } from '@/lib/ast-transform';
 
 export interface WarningBlockProps {
   text?: string;
@@ -14,7 +15,8 @@ export function WarningBlock({
   children,
   className = '',
 }: WarningBlockProps) {
-  const content = children ?? text;
+  const raw = children ?? text;
+  const content = typeof raw === 'string' ? renderInlineHtmlToReact(raw) : raw;
 
   return (
     <aside

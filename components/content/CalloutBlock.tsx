@@ -1,4 +1,5 @@
 import React from 'react';
+import { renderInlineHtmlToReact } from '@/lib/ast-transform';
 
 export interface CalloutBlockProps {
   text?: string;
@@ -7,7 +8,8 @@ export interface CalloutBlockProps {
 }
 
 export function CalloutBlock({ text, children, className = '' }: CalloutBlockProps) {
-  const content = children ?? text;
+  const raw = children ?? text;
+  const content = typeof raw === 'string' ? renderInlineHtmlToReact(raw) : raw;
 
   return (
     <div

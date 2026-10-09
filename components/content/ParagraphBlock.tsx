@@ -1,4 +1,5 @@
 import React from 'react';
+import { renderInlineHtmlToReact } from '@/lib/ast-transform';
 
 export interface ParagraphBlockProps {
   text?: string;
@@ -7,9 +8,10 @@ export interface ParagraphBlockProps {
 }
 
 export function ParagraphBlock({ text, children, className = '' }: ParagraphBlockProps) {
+  const content = children ?? text;
   return (
     <p className={`text-sm text-text-secondary leading-relaxed my-3.5 ${className}`}>
-      {children || text}
+      {typeof content === 'string' ? renderInlineHtmlToReact(content) : content}
     </p>
   );
 }

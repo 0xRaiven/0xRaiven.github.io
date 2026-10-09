@@ -171,8 +171,7 @@
       "QML",
       "Shell",
       "Lua",
-      "CSS",
-      "Python"
+      "CSS"
     ]
   },
   {
@@ -187,8 +186,7 @@
       "batch-script",
       "gaming",
       "low-end-pc",
-      "performance-optimization",
-      "windows"
+      "performance-optimization"
     ]
   },
   {
@@ -220,8 +218,7 @@
       "css3",
       "framer-motion",
       "reactjs",
-      "typescipt",
-      "vercel-deployment"
+      "typescipt"
     ]
   },
   {
@@ -249,10 +246,7 @@
       "linux",
       "persistent-storage",
       "python3",
-      "security-audit",
-      "security-tools",
-      "shell",
-      "vulernability-scanner"
+      "security-audit"
     ]
   },
   {
@@ -270,15 +264,7 @@
       "chrome-extensions",
       "cybersecurity",
       "cybersecurity-tools",
-      "flask",
-      "machine-learning",
-      "phishing-detector",
-      "phishing-protection",
-      "python",
-      "security",
-      "shap",
-      "threat-detection",
-      "xai"
+      "flask"
     ]
   },
   {
@@ -297,8 +283,26 @@
       "blockchain-technology",
       "icp",
       "internet-computer",
-      "motoko-lang",
-      "on-chain"
+      "motoko-lang"
+    ]
+  },
+  {
+    "id": "project-veil",
+    "title": "Veil",
+    "description": "Veil security engineering artifact.",
+    "url": "/projects/veil",
+    "kind": "project",
+    "category": "red-team-tooling",
+    "tags": [
+      "TypeScript",
+      "PLpgSQL",
+      "JavaScript",
+      "Kotlin",
+      "Ruby",
+      "android",
+      "android-application",
+      "localstorage",
+      "multi-purpose-chat-application"
     ]
   },
   {
@@ -315,10 +319,7 @@
       "css",
       "html",
       "js",
-      "open-street-map",
-      "openweathermap-api",
-      "weather-app",
-      "wttrin"
+      "open-street-map"
     ]
   },
   {

@@ -23,6 +23,7 @@ import { FileTreeBlock } from './FileTreeBlock';
 import { DividerBlock } from './DividerBlock';
 import { CalloutBlock } from './CalloutBlock';
 import { TwoColumnBlock } from './TwoColumnBlock';
+import { transformDocumentAst } from '@/lib/ast-transform';
 
 // Custom Component Blocks mapping delegating to modular blocks
 const componentBlocks = {
@@ -207,10 +208,13 @@ export function DocumentContent({ document }: DocumentContentProps) {
     return null;
   }
 
+  // Preprocess AST to convert any raw HTML tags (e.g. <kbd>, <a>, <code>) in text nodes to inline mark/element nodes
+  const transformedDoc = (transformDocumentAst(document) || document) as DocumentRendererProps['document'];
+
   return (
     <div className="space-y-4 text-sm font-sans text-text-secondary leading-relaxed">
       <KeystaticDocumentRenderer
-        document={document}
+        document={transformedDoc}
         componentBlocks={componentBlocks}
         renderers={{
           inline: {
@@ -231,12 +235,23 @@ export function DocumentContent({ document }: DocumentContentProps) {
                 {children}
               </code>
             ),
+            keyboard: ({ children }) => (
+              <kbd className="inline-flex items-center justify-center px-1.5 py-0.5 mx-0.5 text-[11px] font-mono font-medium text-text-primary bg-surface-2 border border-border/80 rounded shadow-xs select-none align-baseline">
+                {children}
+              </kbd>
+            ),
+            italic: ({ children }) => <em className="italic text-text-primary/90">{children}</em>,
+            strikethrough: ({ children }) => <s className="line-through text-text-secondary/70">{children}</s>,
+            underline: ({ children }) => <u className="underline underline-offset-2">{children}</u>,
+            subscript: ({ children }) => <sub className="text-[10px] align-sub text-text-secondary">{children}</sub>,
+            superscript: ({ children }) => <sup className="text-[10px] align-super text-text-secondary">{children}</sup>,
           },
           block: {
             heading: ({ level, children }) => {
               const lvl = level === 1 ? 1 : level === 2 ? 2 : 3;
               return <HeadingBlock level={lvl}>{children}</HeadingBlock>;
             },
+            blockquote: ({ children }) => <QuoteBlock>{children}</QuoteBlock>,
             paragraph: ({ children }) => <ParagraphBlock>{children}</ParagraphBlock>,
             code: ({ children, language }) => <CodeBlock language={language} code={children} />,
             divider: () => <DividerBlock />,

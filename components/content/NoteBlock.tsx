@@ -1,5 +1,6 @@
 import React from 'react';
 import { Info } from 'lucide-react';
+import { renderInlineHtmlToReact } from '@/lib/ast-transform';
 
 export interface NoteBlockProps {
   text?: string;
@@ -14,7 +15,8 @@ export function NoteBlock({
   children,
   className = '',
 }: NoteBlockProps) {
-  const content = children ?? text;
+  const raw = children ?? text;
+  const content = typeof raw === 'string' ? renderInlineHtmlToReact(raw) : raw;
 
   return (
     <aside
