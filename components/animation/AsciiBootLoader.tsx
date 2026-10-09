@@ -21,20 +21,7 @@ interface WaveNode {
   pulsePhase: number;
 }
 
-/**
- * Minimal & Asset-Gated Boot Loader
- * 
- * Features:
- * - Minimalist typographic presentation: `LOADING %d%`
- * - Sleek, luminous horizontal progress line directly beneath the text with glowing tip
- * - Multi-Octave Harmonic Wave Spectrum:
- *     - 8 distinct harmonic wave ribbons with volumetric depth, interference, and micro-filaments
- *     - Kinetic vertical diffraction light needles scanning through atmospheric space (instead of particles)
- *     - Dynamic harmonic crest nodes that travel directly along the mathematical wave equations
- * - Full Dark & Light mode compatibility
- * - Calibrated ~2.8s - 3.2s pacing so viewers enjoy the living atmosphere
- * - Strict asset-gated progression with NO skip option
- */
+
 export function MinimalBootLoader() {
   const [isVisible, setIsVisible] = useState(true);
   const [isDismissing, setIsDismissing] = useState(false);
@@ -159,7 +146,7 @@ export function MinimalBootLoader() {
     };
   }, []);
 
-  // Living Generative Ambient Canvas Background (8 Harmonic Waves + Diffraction Needles + Crest Nodes)
+  // Living Generative Ambient Canvas Background (High-DPI Retina + Mobile-Adaptive Frequency)
   useEffect(() => {
     if (!isVisible) return;
     const canvas = canvasRef.current;
@@ -169,8 +156,22 @@ export function MinimalBootLoader() {
     if (!ctx) return;
 
     let animId: number;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    // Retina High-DPI support to ensure crystal-sharp curves on mobile screens
+    const setupCanvasResolution = () => {
+      if (!canvas || !ctx) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+    };
+
+    setupCanvasResolution();
 
     mouseRef.current = {
       x: width * 0.5,
@@ -180,9 +181,7 @@ export function MinimalBootLoader() {
     };
 
     const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      setupCanvasResolution();
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -190,25 +189,33 @@ export function MinimalBootLoader() {
       mouseRef.current.targetY = e.clientY;
     };
 
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches && e.touches[0]) {
+        mouseRef.current.targetX = e.touches[0].clientX;
+        mouseRef.current.targetY = e.touches[0].clientY;
+      }
+    };
+
     window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
 
-    // 1. Kinetic Vertical Diffraction Needles (Scanning light slivers)
-    const needles: LightNeedle[] = Array.from({ length: 14 }, () => ({
+    // 1. Kinetic Vertical Diffraction Needles (Scanning light slivers across expanded height)
+    const needles: LightNeedle[] = Array.from({ length: 16 }, () => ({
       x: Math.random() * width,
       speed: (Math.random() - 0.5) * 0.45 + (Math.random() > 0.5 ? 0.25 : -0.25),
-      height: 45 + Math.random() * 95,
-      width: 1.0 + Math.random() * 1.5,
+      height: 80 + Math.random() * 100,
+      width: 1.0 + Math.random() * 1.4,
       alpha: 0.15 + Math.random() * 0.35,
       phase: Math.random() * Math.PI * 2,
     }));
 
-    // 2. Harmonic Wave Crest Nodes (Travel directly along wave curves)
+    // 2. Harmonic Wave Crest Nodes
     const waveNodes: WaveNode[] = Array.from({ length: 18 }, (_, i) => ({
       waveIndex: i % 8,
       xRatio: Math.random(),
       speed: 0.0006 + Math.random() * 0.0012,
-      radius: 1.5 + Math.random() * 2.0,
+      radius: 0.9 + Math.random() * 0.6,
       pulsePhase: Math.random() * Math.PI * 2,
     }));
 
@@ -217,7 +224,7 @@ export function MinimalBootLoader() {
     const render = () => {
       time += 0.015;
 
-      // Smooth inertia on mouse coordinates
+      // Smooth inertia on cursor / touch coordinates
       const mouse = mouseRef.current;
       mouse.x += (mouse.targetX - mouse.x) * 0.04;
       mouse.y += (mouse.targetY - mouse.y) * 0.04;
@@ -225,64 +232,67 @@ export function MinimalBootLoader() {
       ctx.clearRect(0, 0, width, height);
 
       const isLight = theme === "light";
+      const isMobile = width < 640;
+
+      // Viewport-adaptive wave frequency and amplitude multipliers:
+      const freqMultiplier = isMobile ? Math.min(1.8, 750 / Math.max(width, 320)) : 1;
+      // Harmonic wave packet amplitude: balanced so the waves tightly resonate without sprawling vertically
+      const ampMultiplier = isMobile ? 0.85 : 1.0;
 
       // Base Canvas Background
       ctx.fillStyle = isLight ? "#fbf9f4" : "#08080b";
       ctx.fillRect(0, 0, width, height);
 
-      // Breathing Central Caustic Light Aura
+      // Breathing Central Caustic Light Aura (Centered with the harmonic packet)
       const breath = Math.sin(time * 0.8);
-      const auraRadius = Math.min(width, height) * (0.44 + breath * 0.04);
-      const auraX = width * 0.5 + (mouse.x - width * 0.5) * 0.05;
-      const auraY = height * 0.48 + (mouse.y - height * 0.5) * 0.05;
+      const auraRadius = isMobile
+        ? Math.max(width * 0.65, height * 0.35) * (1 + breath * 0.05)
+        : Math.max(width * 0.45, height * 0.40) * (1 + breath * 0.04);
+      const auraX = width * 0.5 + (mouse.x - width * 0.5) * 0.04;
+      const auraY = height * 0.50 + (mouse.y - height * 0.5) * 0.04;
 
       const aura = ctx.createRadialGradient(auraX, auraY, 0, auraX, auraY, auraRadius);
       if (isLight) {
         aura.addColorStop(0, "rgba(158, 27, 50, 0.20)");
-        aura.addColorStop(0.5, "rgba(184, 35, 61, 0.07)");
+        aura.addColorStop(0.55, "rgba(184, 35, 61, 0.07)");
         aura.addColorStop(1, "rgba(251, 249, 244, 0)");
       } else {
-        aura.addColorStop(0, "rgba(209, 44, 75, 0.30)");
-        aura.addColorStop(0.5, "rgba(230, 57, 86, 0.10)");
+        aura.addColorStop(0, "rgba(209, 44, 75, 0.28)");
+        aura.addColorStop(0.55, "rgba(230, 57, 86, 0.09)");
         aura.addColorStop(1, "rgba(8, 8, 11, 0)");
       }
       ctx.fillStyle = aura;
       ctx.fillRect(0, 0, width, height);
 
-      // 8 Harmonic Wave Configurations (Multi-Octave Horizon Ribbons)
+      // 8 Intertwined Harmonic Wave Modes: Sharing a central equilibrium axis (~0.50)
+      // Natural frequency ratios (f0, 1.5f0, 2f0, 2.5f0, 3f0, 4f0, 5f0, 6f0) for true resonant nodal crossings
       const waveConfigs = isLight
         ? [
-          // Low-frequency foundation swells
-          { amp: 52, freq: 0.0012, speed: 0.65, yOffset: 0.49, color: "rgba(158, 27, 50, 0.24)", fill: "rgba(158, 27, 50, 0.035)", width: 2.2 },
-          { amp: 42, freq: 0.0018, speed: -0.55, yOffset: 0.51, color: "rgba(184, 35, 61, 0.20)", fill: "rgba(184, 35, 61, 0.025)", width: 1.8 },
-          // Mid-frequency harmonic ribbons
-          { amp: 35, freq: 0.0024, speed: 0.85, yOffset: 0.47, color: "rgba(158, 27, 50, 0.22)", fill: "rgba(158, 27, 50, 0.020)", width: 1.5 },
-          { amp: 30, freq: 0.0028, speed: -0.75, yOffset: 0.53, color: "rgba(184, 35, 61, 0.18)", fill: "rgba(184, 35, 61, 0.020)", width: 1.4 },
-          { amp: 24, freq: 0.0034, speed: 0.95, yOffset: 0.50, color: "rgba(158, 27, 50, 0.16)", fill: null, width: 1.2 },
-          // High-frequency micro-filaments
-          { amp: 18, freq: 0.0042, speed: -1.15, yOffset: 0.48, color: "rgba(184, 35, 61, 0.22)", fill: null, width: 1.0 },
-          { amp: 14, freq: 0.0055, speed: 1.30, yOffset: 0.52, color: "rgba(158, 27, 50, 0.18)", fill: null, width: 0.9 },
-          { amp: 10, freq: 0.0068, speed: -1.45, yOffset: 0.50, color: "rgba(184, 35, 61, 0.15)", fill: null, width: 0.8 },
+          { amp: 48 * ampMultiplier, freq: 0.0016 * freqMultiplier, speed: 0.55, yOffset: 0.500, color: "rgba(158, 27, 50, 0.32)", fill: "rgba(158, 27, 50, 0.020)", width: 2.2 },
+          { amp: 38 * ampMultiplier, freq: 0.0024 * freqMultiplier, speed: -0.65, yOffset: 0.506, color: "rgba(184, 35, 61, 0.26)", fill: null, width: 1.8 },
+          { amp: 30 * ampMultiplier, freq: 0.0032 * freqMultiplier, speed: 0.75, yOffset: 0.494, color: "rgba(158, 27, 50, 0.24)", fill: null, width: 1.5 },
+          { amp: 24 * ampMultiplier, freq: 0.0040 * freqMultiplier, speed: -0.85, yOffset: 0.510, color: "rgba(184, 35, 61, 0.22)", fill: null, width: 1.3 },
+          { amp: 19 * ampMultiplier, freq: 0.0048 * freqMultiplier, speed: 0.95, yOffset: 0.490, color: "rgba(158, 27, 50, 0.20)", fill: null, width: 1.2 },
+          { amp: 15 * ampMultiplier, freq: 0.0064 * freqMultiplier, speed: -1.10, yOffset: 0.504, color: "rgba(184, 35, 61, 0.18)", fill: null, width: 1.0 },
+          { amp: 11 * ampMultiplier, freq: 0.0080 * freqMultiplier, speed: 1.25, yOffset: 0.496, color: "rgba(158, 27, 50, 0.16)", fill: null, width: 0.9 },
+          { amp: 8 * ampMultiplier, freq: 0.0096 * freqMultiplier, speed: -1.40, yOffset: 0.500, color: "rgba(184, 35, 61, 0.14)", fill: null, width: 0.8 },
         ]
         : [
-          // Low-frequency foundation swells
-          { amp: 58, freq: 0.0012, speed: 0.65, yOffset: 0.49, color: "rgba(209, 44, 75, 0.36)", fill: "rgba(209, 44, 75, 0.055)", width: 2.4 },
-          { amp: 46, freq: 0.0018, speed: -0.55, yOffset: 0.51, color: "rgba(230, 57, 86, 0.28)", fill: "rgba(230, 57, 86, 0.040)", width: 2.0 },
-          // Mid-frequency harmonic ribbons
-          { amp: 38, freq: 0.0024, speed: 0.85, yOffset: 0.47, color: "rgba(209, 44, 75, 0.28)", fill: "rgba(209, 44, 75, 0.030)", width: 1.6 },
-          { amp: 32, freq: 0.0028, speed: -0.75, yOffset: 0.53, color: "rgba(230, 57, 86, 0.24)", fill: "rgba(230, 57, 86, 0.025)", width: 1.5 },
-          { amp: 26, freq: 0.0034, speed: 0.95, yOffset: 0.50, color: "rgba(209, 44, 75, 0.22)", fill: null, width: 1.3 },
-          // High-frequency micro-filaments
-          { amp: 20, freq: 0.0042, speed: -1.15, yOffset: 0.48, color: "rgba(230, 57, 86, 0.26)", fill: null, width: 1.1 },
-          { amp: 15, freq: 0.0055, speed: 1.30, yOffset: 0.52, color: "rgba(209, 44, 75, 0.22)", fill: null, width: 1.0 },
-          { amp: 11, freq: 0.0068, speed: -1.45, yOffset: 0.50, color: "rgba(255, 255, 255, 0.20)", fill: null, width: 0.8 },
+          { amp: 54 * ampMultiplier, freq: 0.0016 * freqMultiplier, speed: 0.55, yOffset: 0.500, color: "rgba(209, 44, 75, 0.40)", fill: "rgba(209, 44, 75, 0.030)", width: 2.2 },
+          { amp: 42 * ampMultiplier, freq: 0.0024 * freqMultiplier, speed: -0.65, yOffset: 0.506, color: "rgba(230, 57, 86, 0.34)", fill: null, width: 1.8 },
+          { amp: 33 * ampMultiplier, freq: 0.0032 * freqMultiplier, speed: 0.75, yOffset: 0.494, color: "rgba(209, 44, 75, 0.30)", fill: null, width: 1.5 },
+          { amp: 26 * ampMultiplier, freq: 0.0040 * freqMultiplier, speed: -0.85, yOffset: 0.510, color: "rgba(230, 57, 86, 0.26)", fill: null, width: 1.3 },
+          { amp: 20 * ampMultiplier, freq: 0.0048 * freqMultiplier, speed: 0.95, yOffset: 0.490, color: "rgba(209, 44, 75, 0.24)", fill: null, width: 1.2 },
+          { amp: 16 * ampMultiplier, freq: 0.0064 * freqMultiplier, speed: -1.10, yOffset: 0.504, color: "rgba(230, 57, 86, 0.22)", fill: null, width: 1.0 },
+          { amp: 12 * ampMultiplier, freq: 0.0080 * freqMultiplier, speed: 1.25, yOffset: 0.496, color: "rgba(209, 44, 75, 0.20)", fill: null, width: 0.9 },
+          { amp: 9 * ampMultiplier, freq: 0.0096 * freqMultiplier, speed: -1.40, yOffset: 0.500, color: "rgba(255, 255, 255, 0.22)", fill: null, width: 0.8 },
         ];
 
       // Helper to compute Y coordinate for a wave equation at position X
       const getWaveY = (x: number, w: (typeof waveConfigs)[0]) => {
         const baseY = height * w.yOffset;
         const wave1 = Math.sin(x * w.freq + time * w.speed) * w.amp;
-        const wave2 = Math.cos(x * 0.0009 + time * 0.45) * (w.amp * 0.35);
+        const wave2 = Math.cos(x * (w.freq * 0.75) + time * (w.speed * 0.5)) * (w.amp * 0.28);
         return baseY + wave1 + wave2;
       };
 
@@ -292,7 +302,8 @@ export function MinimalBootLoader() {
         const baseY = height * w.yOffset;
         ctx.moveTo(0, baseY);
 
-        for (let x = 0; x <= width; x += 8) {
+        const stepX = isMobile ? 6 : 8;
+        for (let x = 0; x <= width; x += stepX) {
           ctx.lineTo(x, getWaveY(x, w));
         }
 
@@ -309,7 +320,7 @@ export function MinimalBootLoader() {
         }
       });
 
-      // Draw Kinetic Vertical Diffraction Needles (Scanning optical light slits)
+      // Draw Kinetic Vertical Diffraction Needles
       needles.forEach((needle) => {
         needle.x += needle.speed;
         needle.phase += 0.03;
@@ -318,8 +329,8 @@ export function MinimalBootLoader() {
         if (needle.x > width + 10) needle.x = -10;
 
         const currentAlpha = needle.alpha * (0.65 + 0.35 * Math.sin(needle.phase));
-        const centerY = height * 0.5 + Math.sin(time * 0.5 + needle.x * 0.002) * 35;
-        const halfH = needle.height * 0.5;
+        const centerY = height * 0.50 + Math.sin(needle.x * 0.003 + time * 0.4) * (height * 0.12);
+        const halfH = needle.height * (isMobile ? 0.7 : 0.85) * 0.5;
 
         const grad = ctx.createLinearGradient(needle.x, centerY - halfH, needle.x, centerY + halfH);
         if (isLight) {
@@ -340,8 +351,10 @@ export function MinimalBootLoader() {
         ctx.stroke();
       });
 
-      // Draw Harmonic Wave Crest Nodes (Travel directly along the wave crests)
-      waveNodes.forEach((node) => {
+      // Draw Harmonic Wave Crest Nodes (Delicate micro-sparks on wave crests)
+      const nodesCount = isMobile ? 10 : waveNodes.length;
+      for (let i = 0; i < nodesCount; i++) {
+        const node = waveNodes[i];
         node.xRatio += node.speed;
         if (node.xRatio > 1) node.xRatio = 0;
         node.pulsePhase += 0.04;
@@ -351,8 +364,11 @@ export function MinimalBootLoader() {
         const posY = getWaveY(posX, targetWave);
         const pulse = 0.55 + 0.45 * Math.sin(node.pulsePhase);
 
+        // Calibrated micro-radius: subtle pinpoint on mobile (~0.7px - 1.0px), crisp on desktop
+        const coreRadius = (isMobile ? 0.75 : 1.3) * (0.8 + pulse * 0.25);
+
         ctx.beginPath();
-        ctx.arc(posX, posY, node.radius * (0.8 + pulse * 0.3), 0, Math.PI * 2);
+        ctx.arc(posX, posY, coreRadius, 0, Math.PI * 2);
 
         if (isLight) {
           ctx.fillStyle = `rgba(158, 27, 50, ${pulse * 0.75})`;
@@ -361,16 +377,16 @@ export function MinimalBootLoader() {
         }
         ctx.fill();
 
-        // Subtle soft halo around the crest node
+        // Subtle soft whisper halo
         ctx.beginPath();
-        ctx.arc(posX, posY, node.radius * 2.8, 0, Math.PI * 2);
+        ctx.arc(posX, posY, coreRadius * (isMobile ? 1.5 : 2.0), 0, Math.PI * 2);
         if (isLight) {
-          ctx.fillStyle = `rgba(184, 35, 61, ${pulse * 0.18})`;
+          ctx.fillStyle = `rgba(184, 35, 61, ${pulse * 0.14})`;
         } else {
-          ctx.fillStyle = `rgba(209, 44, 75, ${pulse * 0.25})`;
+          ctx.fillStyle = `rgba(209, 44, 75, ${pulse * 0.18})`;
         }
         ctx.fill();
-      });
+      }
 
       // Vignette framing
       const vignette = ctx.createRadialGradient(
@@ -400,6 +416,7 @@ export function MinimalBootLoader() {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchmove", handleTouchMove);
     };
   }, [isVisible, theme]);
 
@@ -509,8 +526,7 @@ export function MinimalBootLoader() {
       const timeRatio = Math.min(1, elapsed / MIN_CINEMATIC_DURATION_MS);
       const timeTarget = Math.round(timeRatio * 100);
 
-      // Real asset gating constraint:
-      // While assets are still loading, cap at 92%. When assets finish AND time elapsed, allow 100%.
+      // Real asset gating constraint
       const maxAllowed = allAssetsReadyRef.current ? 100 : Math.min(targetProgressRef.current, 92);
       const effectiveTarget = Math.min(maxAllowed, Math.max(targetProgressRef.current, timeTarget));
 
@@ -570,7 +586,7 @@ export function MinimalBootLoader() {
       aria-modal="true"
       aria-label="Loading"
       suppressHydrationWarning
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 select-none cursor-default transition-all duration-700 ease-out overflow-hidden ${isDismissing ? "opacity-0 pointer-events-none scale-[1.015] blur-[4px]" : "opacity-100"
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 select-none cursor-default transition-all duration-700 ease-out overflow-hidden ${isDismissing ? "opacity-0 pointer-events-none scale-[1.015] blur-[4px]" : "opacity-100"
         } ${isLight ? "bg-[#fbf9f4] text-[#120e10]" : "bg-[#08080b] text-[#f2eeea]"}`}
     >
       {/* Living Generative Background Canvas (8 Harmonic Waves + Diffraction Needles + Crest Nodes) */}
@@ -588,27 +604,27 @@ export function MinimalBootLoader() {
         }}
       />
 
-      {/* Discreet corner aesthetic watermark */}
+      {/* Discreet corner aesthetic watermark with safe-area spacing */}
       <div
-        className={`absolute top-6 left-6 text-[10px] font-mono tracking-[0.25em] uppercase pointer-events-none select-none transition-colors ${isLight ? "text-text-secondary/40" : "text-text-secondary/30"
+        className={`absolute top-4 sm:top-6 left-4 sm:left-6 pt-[env(safe-area-inset-top)] text-[9px] sm:text-[10px] font-mono tracking-[0.2em] sm:tracking-[0.25em] uppercase pointer-events-none select-none transition-colors ${isLight ? "text-text-secondary/40" : "text-text-secondary/30"
           }`}
       >
         0xraiven // portfolio
       </div>
 
-      {/* Minimal Center Screen: Typography & Progress Indicator Line */}
-      <div className="relative z-10 flex flex-col items-center justify-center space-y-4 w-full max-w-xs sm:max-w-sm md:max-w-md px-6">
-        {/* Typographic Title: LOADING %d */}
-        <div className="flex items-baseline justify-center gap-2.5 font-mono text-3xl sm:text-4xl md:text-5xl font-extralight tracking-[0.2em] select-none text-text-primary">
+      {/* Responsive Center Screen: Typography & Progress Indicator Line */}
+      <div className="relative z-10 flex flex-col items-center justify-center space-y-3 sm:space-y-4 w-full max-w-[280px] xs:max-w-xs sm:max-w-sm md:max-w-md px-2 sm:px-6">
+        {/* Typographic Title: Responsive LOADING %d (never wraps or squeezes on mobile) */}
+        <div className="flex items-baseline justify-center gap-2 sm:gap-2.5 font-mono text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-extralight tracking-[0.14em] sm:tracking-[0.2em] select-none text-text-primary whitespace-nowrap">
           <span className="font-light">LOADING</span>
           <span className="font-semibold text-accent tabular-nums tracking-tight">
             {currentPercent}%
           </span>
         </div>
 
-        {/* Minimal Progress Indicator Line Directly Underneath (Sketch Accurate) */}
+        {/* Minimal Progress Indicator Line Directly Underneath (Fluid Responsive Width) */}
         <div
-          className={`w-full h-[2px] rounded-full overflow-hidden relative shadow-inner ${isLight ? "bg-black/10" : "bg-white/10"
+          className={`w-full max-w-[240px] xs:max-w-[270px] sm:max-w-full h-[2px] rounded-full overflow-hidden relative shadow-inner ${isLight ? "bg-black/10" : "bg-white/10"
             }`}
         >
           {/* Luminous accent bar matching theme accent */}
@@ -616,9 +632,9 @@ export function MinimalBootLoader() {
             className="h-full bg-accent rounded-full transition-all duration-100 ease-out relative shadow-[0_0_12px_var(--accent)]"
             style={{ width: `${progress}%` }}
           >
-            {/* Glowing beacon at the leading edge tip */}
+            {/* Glowing beacon at leading edge tip */}
             <div
-              className={`absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full ${isLight
+              className={`absolute right-0 top-1/2 -translate-y-1/2 w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full ${isLight
                 ? "bg-accent shadow-[0_0_8px_var(--accent),0_0_14px_rgba(158,27,50,0.6)]"
                 : "bg-white shadow-[0_0_8px_#ffffff,0_0_16px_var(--accent)]"
                 }`}
