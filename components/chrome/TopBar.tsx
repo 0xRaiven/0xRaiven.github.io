@@ -214,12 +214,12 @@ export function TopBar({
                     setOverflowOpen(false);
                     try {
                       sessionStorage.removeItem("r41n_booted");
-                    } catch {}
+                    } catch { }
                     window.dispatchEvent(new CustomEvent("r41n:boot"));
                   }}
                   className="w-full text-left px-3 py-1.5 text-text-secondary hover:text-accent hover:bg-surface-2 flex items-center justify-between font-mono"
                 >
-                  <span>Replay Intro</span>
+                  <span>Reload</span>
                   <span className="text-[10px] text-accent font-bold">[PLAY]</span>
                 </button>
 
@@ -236,8 +236,8 @@ export function TopBar({
                         setOverflowOpen(false);
                       }}
                       className={`py-1 rounded text-center text-[10px] font-bold uppercase transition-colors ${theme === "dark"
-                          ? "bg-accent text-white"
-                          : "text-text-secondary hover:bg-surface-2 hover:text-text-primary"
+                        ? "bg-accent text-white"
+                        : "text-text-secondary hover:bg-surface-2 hover:text-text-primary"
                         }`}
                     >
                       Dark
@@ -249,8 +249,8 @@ export function TopBar({
                         setOverflowOpen(false);
                       }}
                       className={`py-1 rounded text-center text-[10px] font-bold uppercase transition-colors ${theme === "light"
-                          ? "bg-accent text-white"
-                          : "text-text-secondary hover:bg-surface-2 hover:text-text-primary"
+                        ? "bg-accent text-white"
+                        : "text-text-secondary hover:bg-surface-2 hover:text-text-primary"
                         }`}
                     >
                       Light
@@ -262,8 +262,8 @@ export function TopBar({
                         setOverflowOpen(false);
                       }}
                       className={`py-1 rounded text-center text-[10px] font-bold uppercase transition-colors ${theme === "system"
-                          ? "bg-accent text-white"
-                          : "text-text-secondary hover:bg-surface-2 hover:text-text-primary"
+                        ? "bg-accent text-white"
+                        : "text-text-secondary hover:bg-surface-2 hover:text-text-primary"
                         }`}
                     >
                       Auto

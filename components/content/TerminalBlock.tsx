@@ -85,7 +85,7 @@ role       :: Security Engineering & Research`,
   whoami                - Display user identity & role
   ls                    - List directories & files
   uptime                - Print homelab cluster uptime
-  reboot                - Replay intro animation
+  reboot                - Reload the page
   clear                 - Reset terminal session
   help                  - Show this manual`,
   },
@@ -221,7 +221,7 @@ drwxr-xr-x  r41n  staff   4096 Sep 04 23:40 research/
       setTimeout(() => {
         try {
           sessionStorage.removeItem("r41n_booted");
-        } catch {}
+        } catch { }
         if (typeof window !== "undefined") {
           window.dispatchEvent(new CustomEvent("r41n:boot"));
         }
@@ -431,11 +431,10 @@ drwxr-xr-x  r41n  staff   4096 Sep 04 23:40 research/
                   key={preset.label}
                   type="button"
                   onClick={() => handleRunPreset(preset)}
-                  className={`inline-flex items-center gap-1 px-2 py-1 sm:py-0.5 rounded border transition-all shrink-0 text-[10px] sm:text-[11px] touch-manipulation ${
-                    isSelected
+                  className={`inline-flex items-center gap-1 px-2 py-1 sm:py-0.5 rounded border transition-all shrink-0 text-[10px] sm:text-[11px] touch-manipulation ${isSelected
                       ? "bg-accent/15 border-accent/60 text-accent font-semibold shadow-xs"
                       : "border-border bg-surface hover:bg-surface-2 text-text-secondary hover:text-text-primary"
-                  }`}
+                    }`}
                 >
                   <span className="text-accent select-none font-bold text-[9px] sm:text-[10px]">&gt;</span>
                   <span>{preset.label}</span>

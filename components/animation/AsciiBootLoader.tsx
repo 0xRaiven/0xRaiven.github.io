@@ -1,107 +1,100 @@
 "use client";
 
-import React, { useEffect, useState, useCallback, useMemo, useRef } from "react";
-import { X, ArrowRight } from "lucide-react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 
-/**
- * System Matrix Boot Loader
- * 
- * High-precision industrial LED dot matrix boot loader:
- * - Panoramic 25x9 LED micro-dot matrix (225 dots) occupying the full width of the card
- * - 4 distinct choreographed cyberpunk sequences, each showcased for >= 2.0 seconds:
- *     1. RADAR_SWEEP (0s - 2.2s): Bi-directional radar sweep with phosphor decay trails
- *     2. SPECTRUM_EQ (2.2s - 4.4s): 25-channel kinetic harmonic VU meter with peak hold diodes
- *     3. ORBITAL_LOCK (4.4s - 6.6s): Expanding concentric reticle & 64-bulb orbital perimeter tracer
- *     4. SYSTEM_READY (6.6s - 8.6s): Calibrated center core glyph lock & horizon axes at 100%
- * - Seamless automatic dismissal at completion with instant keyboard skip (Esc / Enter / Space)
- */
 export const BOOT_STORAGE_KEY = "r41n_booted";
 
-export interface BootPhaseConfig {
-  id: number;
-  tag: string;
-  name: string;
-  status: string;
-  startProgress: number;
-  endProgress: number;
-  durationMs: number;
+interface LightNeedle {
+  x: number;
+  speed: number;
+  height: number;
+  width: number;
+  alpha: number;
+  phase: number;
 }
 
-export const BOOT_SEQUENCE_PHASES: BootPhaseConfig[] = [
-  {
-    id: 0,
-    tag: "( 01 )",
-    name: "ENVIRONMENT",
-    status: "INITIALIZING ENVIRONMENT...",
-    startProgress: 0,
-    endProgress: 28,
-    durationMs: 1000,
-  },
-  {
-    id: 1,
-    tag: "( 02 )",
-    name: "STYLES",
-    status: "LOADING DESIGN TOKENS & TYPOGRAPHY...",
-    startProgress: 29,
-    endProgress: 60,
-    durationMs: 1000,
-  },
-  {
-    id: 2,
-    tag: "( 03 )",
-    name: "INDEX",
-    status: "INDEXING WORKSPACE & ENTRIES...",
-    startProgress: 61,
-    endProgress: 88,
-    durationMs: 1000,
-  },
-  {
-    id: 3,
-    tag: "( 04 )",
-    name: "READY",
-    status: "READY [100%]",
-    startProgress: 89,
-    endProgress: 100,
-    durationMs: 1000,
-  },
-];
+interface WaveNode {
+  waveIndex: number;
+  xRatio: number;
+  speed: number;
+  radius: number;
+  pulsePhase: number;
+}
 
-export function SystemMatrixBootLoader() {
+/**
+ * Minimal & Asset-Gated Boot Loader
+ * 
+ * Features:
+ * - Minimalist typographic presentation: `LOADING %d%`
+ * - Sleek, luminous horizontal progress line directly beneath the text with glowing tip
+ * - Multi-Octave Harmonic Wave Spectrum:
+ *     - 8 distinct harmonic wave ribbons with volumetric depth, interference, and micro-filaments
+ *     - Kinetic vertical diffraction light needles scanning through atmospheric space (instead of particles)
+ *     - Dynamic harmonic crest nodes that travel directly along the mathematical wave equations
+ * - Full Dark & Light mode compatibility
+ * - Calibrated ~2.8s - 3.2s pacing so viewers enjoy the living atmosphere
+ * - Strict asset-gated progression with NO skip option
+ */
+export function MinimalBootLoader() {
   const [isVisible, setIsVisible] = useState(true);
   const [isDismissing, setIsDismissing] = useState(false);
-  const [phaseIndex, setPhaseIndex] = useState(0);
   const [progress, setProgress] = useState(0);
-  const [tick, setTick] = useState(0);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
-  // Asset loading telemetry
-  const [isAssetsLoaded, setIsAssetsLoaded] = useState(false);
-  const [assetStatus, setAssetStatus] = useState("PREPARING WORKSPACE...");
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
+  const targetProgressRef = useRef(15);
+  const allAssetsReadyRef = useRef(false);
+  const hasDismissedRef = useRef(false);
 
-  const startTimeRef = useRef<number>(Date.now());
-  const hasAutoDismissedRef = useRef(false);
+  // Synchronous theme detection & live theme mutation observer
+  useEffect(() => {
+    const detectTheme = () => {
+      if (typeof document === "undefined") return;
+      const isLight =
+        document.documentElement.classList.contains("light") ||
+        document.documentElement.getAttribute("data-theme") === "light";
+      setTheme(isLight ? "light" : "dark");
+    };
+
+    detectTheme();
+
+    const observer = new MutationObserver(detectTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class", "data-theme"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const dismiss = useCallback(() => {
+    if (hasDismissedRef.current) return;
+    hasDismissedRef.current = true;
     setIsDismissing(true);
+
     if (typeof document !== "undefined") {
       document.documentElement.classList.remove("booting-active");
       document.body.classList.remove("booting-active");
       document.body.classList.add("booting-complete");
     }
+
     try {
       sessionStorage.setItem(BOOT_STORAGE_KEY, "true");
     } catch {
       // ignore
     }
+
     setTimeout(() => {
       setIsVisible(false);
       setIsDismissing(false);
       if (typeof document !== "undefined") {
         document.body.classList.remove("booting-complete");
       }
-    }, 750);
+    }, 700);
   }, []);
 
-  // Check session storage on mount + support URL force boot (?boot=true or ?reboot=true)
+  // Check sessionStorage on mount & support ?boot=true / ?reboot=true
   useEffect(() => {
     try {
       if (typeof window !== "undefined" && window.location.pathname.startsWith("/keystat")) {
@@ -138,16 +131,15 @@ export function SystemMatrixBootLoader() {
       }
     }
 
+    // Support system reload event (e.g. from Command Palette, Sidebar, or TopBar)
     const handleReboot = () => {
       try {
         sessionStorage.removeItem(BOOT_STORAGE_KEY);
       } catch { }
-      startTimeRef.current = Date.now();
-      hasAutoDismissedRef.current = false;
-      setPhaseIndex(0);
+      hasDismissedRef.current = false;
+      allAssetsReadyRef.current = false;
+      targetProgressRef.current = 15;
       setProgress(0);
-      setIsAssetsLoaded(false);
-      setTick(0);
       setIsDismissing(false);
       setIsVisible(true);
       if (typeof document !== "undefined") {
@@ -167,490 +159,479 @@ export function SystemMatrixBootLoader() {
     };
   }, []);
 
-  // Asset readiness monitor: DOM readiness + fonts + page avatar
+  // Living Generative Ambient Canvas Background (8 Harmonic Waves + Diffraction Needles + Crest Nodes)
   useEffect(() => {
     if (!isVisible) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    let cancelled = false;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    async function monitorPageAssets() {
-      // 1. Wait for document ready
-      if (typeof document !== "undefined" && document.readyState !== "complete") {
-        setAssetStatus("LOADING PAGE CONTENT...");
-        await new Promise<void>((resolve) => {
-          const onComplete = () => {
-            window.removeEventListener("load", onComplete);
-            resolve();
-          };
-          window.addEventListener("load", onComplete);
-        });
+    let animId: number;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    mouseRef.current = {
+      x: width * 0.5,
+      y: height * 0.5,
+      targetX: width * 0.5,
+      targetY: height * 0.5,
+    };
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseRef.current.targetX = e.clientX;
+      mouseRef.current.targetY = e.clientY;
+    };
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("mousemove", handleMouseMove);
+
+    // 1. Kinetic Vertical Diffraction Needles (Scanning light slivers)
+    const needles: LightNeedle[] = Array.from({ length: 14 }, () => ({
+      x: Math.random() * width,
+      speed: (Math.random() - 0.5) * 0.45 + (Math.random() > 0.5 ? 0.25 : -0.25),
+      height: 45 + Math.random() * 95,
+      width: 1.0 + Math.random() * 1.5,
+      alpha: 0.15 + Math.random() * 0.35,
+      phase: Math.random() * Math.PI * 2,
+    }));
+
+    // 2. Harmonic Wave Crest Nodes (Travel directly along wave curves)
+    const waveNodes: WaveNode[] = Array.from({ length: 18 }, (_, i) => ({
+      waveIndex: i % 8,
+      xRatio: Math.random(),
+      speed: 0.0006 + Math.random() * 0.0012,
+      radius: 1.5 + Math.random() * 2.0,
+      pulsePhase: Math.random() * Math.PI * 2,
+    }));
+
+    let time = 0;
+
+    const render = () => {
+      time += 0.015;
+
+      // Smooth inertia on mouse coordinates
+      const mouse = mouseRef.current;
+      mouse.x += (mouse.targetX - mouse.x) * 0.04;
+      mouse.y += (mouse.targetY - mouse.y) * 0.04;
+
+      ctx.clearRect(0, 0, width, height);
+
+      const isLight = theme === "light";
+
+      // Base Canvas Background
+      ctx.fillStyle = isLight ? "#fbf9f4" : "#08080b";
+      ctx.fillRect(0, 0, width, height);
+
+      // Breathing Central Caustic Light Aura
+      const breath = Math.sin(time * 0.8);
+      const auraRadius = Math.min(width, height) * (0.44 + breath * 0.04);
+      const auraX = width * 0.5 + (mouse.x - width * 0.5) * 0.05;
+      const auraY = height * 0.48 + (mouse.y - height * 0.5) * 0.05;
+
+      const aura = ctx.createRadialGradient(auraX, auraY, 0, auraX, auraY, auraRadius);
+      if (isLight) {
+        aura.addColorStop(0, "rgba(158, 27, 50, 0.20)");
+        aura.addColorStop(0.5, "rgba(184, 35, 61, 0.07)");
+        aura.addColorStop(1, "rgba(251, 249, 244, 0)");
+      } else {
+        aura.addColorStop(0, "rgba(209, 44, 75, 0.30)");
+        aura.addColorStop(0.5, "rgba(230, 57, 86, 0.10)");
+        aura.addColorStop(1, "rgba(8, 8, 11, 0)");
       }
-      if (cancelled) return;
+      ctx.fillStyle = aura;
+      ctx.fillRect(0, 0, width, height);
 
-      // 2. Wait for fonts
-      setAssetStatus("LOADING SYSTEM FONTS [INTER + JETBRAINS]...");
-      if (typeof document !== "undefined" && document.fonts) {
-        try {
-          await document.fonts.ready;
-        } catch {
-          // font fallback
+      // 8 Harmonic Wave Configurations (Multi-Octave Horizon Ribbons)
+      const waveConfigs = isLight
+        ? [
+          // Low-frequency foundation swells
+          { amp: 52, freq: 0.0012, speed: 0.65, yOffset: 0.49, color: "rgba(158, 27, 50, 0.24)", fill: "rgba(158, 27, 50, 0.035)", width: 2.2 },
+          { amp: 42, freq: 0.0018, speed: -0.55, yOffset: 0.51, color: "rgba(184, 35, 61, 0.20)", fill: "rgba(184, 35, 61, 0.025)", width: 1.8 },
+          // Mid-frequency harmonic ribbons
+          { amp: 35, freq: 0.0024, speed: 0.85, yOffset: 0.47, color: "rgba(158, 27, 50, 0.22)", fill: "rgba(158, 27, 50, 0.020)", width: 1.5 },
+          { amp: 30, freq: 0.0028, speed: -0.75, yOffset: 0.53, color: "rgba(184, 35, 61, 0.18)", fill: "rgba(184, 35, 61, 0.020)", width: 1.4 },
+          { amp: 24, freq: 0.0034, speed: 0.95, yOffset: 0.50, color: "rgba(158, 27, 50, 0.16)", fill: null, width: 1.2 },
+          // High-frequency micro-filaments
+          { amp: 18, freq: 0.0042, speed: -1.15, yOffset: 0.48, color: "rgba(184, 35, 61, 0.22)", fill: null, width: 1.0 },
+          { amp: 14, freq: 0.0055, speed: 1.30, yOffset: 0.52, color: "rgba(158, 27, 50, 0.18)", fill: null, width: 0.9 },
+          { amp: 10, freq: 0.0068, speed: -1.45, yOffset: 0.50, color: "rgba(184, 35, 61, 0.15)", fill: null, width: 0.8 },
+        ]
+        : [
+          // Low-frequency foundation swells
+          { amp: 58, freq: 0.0012, speed: 0.65, yOffset: 0.49, color: "rgba(209, 44, 75, 0.36)", fill: "rgba(209, 44, 75, 0.055)", width: 2.4 },
+          { amp: 46, freq: 0.0018, speed: -0.55, yOffset: 0.51, color: "rgba(230, 57, 86, 0.28)", fill: "rgba(230, 57, 86, 0.040)", width: 2.0 },
+          // Mid-frequency harmonic ribbons
+          { amp: 38, freq: 0.0024, speed: 0.85, yOffset: 0.47, color: "rgba(209, 44, 75, 0.28)", fill: "rgba(209, 44, 75, 0.030)", width: 1.6 },
+          { amp: 32, freq: 0.0028, speed: -0.75, yOffset: 0.53, color: "rgba(230, 57, 86, 0.24)", fill: "rgba(230, 57, 86, 0.025)", width: 1.5 },
+          { amp: 26, freq: 0.0034, speed: 0.95, yOffset: 0.50, color: "rgba(209, 44, 75, 0.22)", fill: null, width: 1.3 },
+          // High-frequency micro-filaments
+          { amp: 20, freq: 0.0042, speed: -1.15, yOffset: 0.48, color: "rgba(230, 57, 86, 0.26)", fill: null, width: 1.1 },
+          { amp: 15, freq: 0.0055, speed: 1.30, yOffset: 0.52, color: "rgba(209, 44, 75, 0.22)", fill: null, width: 1.0 },
+          { amp: 11, freq: 0.0068, speed: -1.45, yOffset: 0.50, color: "rgba(255, 255, 255, 0.20)", fill: null, width: 0.8 },
+        ];
+
+      // Helper to compute Y coordinate for a wave equation at position X
+      const getWaveY = (x: number, w: (typeof waveConfigs)[0]) => {
+        const baseY = height * w.yOffset;
+        const wave1 = Math.sin(x * w.freq + time * w.speed) * w.amp;
+        const wave2 = Math.cos(x * 0.0009 + time * 0.45) * (w.amp * 0.35);
+        return baseY + wave1 + wave2;
+      };
+
+      // Draw all 8 waves
+      waveConfigs.forEach((w) => {
+        ctx.beginPath();
+        const baseY = height * w.yOffset;
+        ctx.moveTo(0, baseY);
+
+        for (let x = 0; x <= width; x += 8) {
+          ctx.lineTo(x, getWaveY(x, w));
         }
-      }
-      if (cancelled) return;
 
-      // 3. Track DOM images + profile avatar specifically
-      const avatarUrl = "https://github.com/0xraiven.png";
-      const imageSources = new Set<string>();
-      imageSources.add(avatarUrl);
+        ctx.strokeStyle = w.color;
+        ctx.lineWidth = w.width;
+        ctx.stroke();
 
-      const domImgs = Array.from(document.querySelectorAll<HTMLImageElement>("img"));
-      domImgs.forEach((img) => {
-        if (img.src) imageSources.add(img.src);
+        if (w.fill) {
+          ctx.lineTo(width, height);
+          ctx.lineTo(0, height);
+          ctx.closePath();
+          ctx.fillStyle = w.fill;
+          ctx.fill();
+        }
       });
 
-      const promises = Array.from(imageSources).map((src) => {
-        return new Promise<void>((resolve) => {
-          const domImg = domImgs.find((i) => i.src === src);
-          if (domImg && domImg.complete && domImg.naturalWidth !== 0) {
-            if (!cancelled) {
-              setAssetStatus(`DECODED: ${src.split("/").pop() || "resource"}`);
-            }
-            resolve();
-            return;
-          }
+      // Draw Kinetic Vertical Diffraction Needles (Scanning optical light slits)
+      needles.forEach((needle) => {
+        needle.x += needle.speed;
+        needle.phase += 0.03;
 
-          const loader = new Image();
-          loader.src = src;
-          const onDone = () => {
-            if (!cancelled) {
-              setAssetStatus(`DECODED: ${src.split("/").pop() || "resource"}`);
-            }
-            resolve();
-          };
+        if (needle.x < -10) needle.x = width + 10;
+        if (needle.x > width + 10) needle.x = -10;
 
-          if (loader.complete && loader.naturalWidth !== 0) {
-            onDone();
-          } else {
-            loader.onload = onDone;
-            loader.onerror = onDone; // Do not hang indefinitely if an image 404s
-          }
-        });
+        const currentAlpha = needle.alpha * (0.65 + 0.35 * Math.sin(needle.phase));
+        const centerY = height * 0.5 + Math.sin(time * 0.5 + needle.x * 0.002) * 35;
+        const halfH = needle.height * 0.5;
+
+        const grad = ctx.createLinearGradient(needle.x, centerY - halfH, needle.x, centerY + halfH);
+        if (isLight) {
+          grad.addColorStop(0, "rgba(158, 27, 50, 0)");
+          grad.addColorStop(0.5, `rgba(158, 27, 50, ${currentAlpha * 0.65})`);
+          grad.addColorStop(1, "rgba(158, 27, 50, 0)");
+        } else {
+          grad.addColorStop(0, "rgba(209, 44, 75, 0)");
+          grad.addColorStop(0.5, `rgba(230, 57, 86, ${currentAlpha * 0.85})`);
+          grad.addColorStop(1, "rgba(209, 44, 75, 0)");
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(needle.x, centerY - halfH);
+        ctx.lineTo(needle.x, centerY + halfH);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = needle.width;
+        ctx.stroke();
       });
 
-      // Cap at 3.0s maximum so offline / slow connections never get stuck
-      await Promise.race([
-        Promise.all(promises),
-        new Promise((resolve) => setTimeout(resolve, 3000)),
-      ]);
+      // Draw Harmonic Wave Crest Nodes (Travel directly along the wave crests)
+      waveNodes.forEach((node) => {
+        node.xRatio += node.speed;
+        if (node.xRatio > 1) node.xRatio = 0;
+        node.pulsePhase += 0.04;
 
-      if (!cancelled) {
-        setAssetStatus("ALL PAGE ASSETS READY");
-        setIsAssetsLoaded(true);
+        const targetWave = waveConfigs[node.waveIndex % waveConfigs.length];
+        const posX = node.xRatio * width;
+        const posY = getWaveY(posX, targetWave);
+        const pulse = 0.55 + 0.45 * Math.sin(node.pulsePhase);
+
+        ctx.beginPath();
+        ctx.arc(posX, posY, node.radius * (0.8 + pulse * 0.3), 0, Math.PI * 2);
+
+        if (isLight) {
+          ctx.fillStyle = `rgba(158, 27, 50, ${pulse * 0.75})`;
+        } else {
+          ctx.fillStyle = `rgba(255, 255, 255, ${pulse * 0.85})`;
+        }
+        ctx.fill();
+
+        // Subtle soft halo around the crest node
+        ctx.beginPath();
+        ctx.arc(posX, posY, node.radius * 2.8, 0, Math.PI * 2);
+        if (isLight) {
+          ctx.fillStyle = `rgba(184, 35, 61, ${pulse * 0.18})`;
+        } else {
+          ctx.fillStyle = `rgba(209, 44, 75, ${pulse * 0.25})`;
+        }
+        ctx.fill();
+      });
+
+      // Vignette framing
+      const vignette = ctx.createRadialGradient(
+        width * 0.5,
+        height * 0.5,
+        Math.min(width, height) * 0.32,
+        width * 0.5,
+        height * 0.5,
+        Math.max(width, height) * 0.75
+      );
+      if (isLight) {
+        vignette.addColorStop(0, "rgba(251, 249, 244, 0)");
+        vignette.addColorStop(1, "rgba(240, 235, 224, 0.75)");
+      } else {
+        vignette.addColorStop(0, "rgba(8, 8, 11, 0)");
+        vignette.addColorStop(1, "rgba(5, 5, 7, 0.92)");
       }
-    }
+      ctx.fillStyle = vignette;
+      ctx.fillRect(0, 0, width, height);
 
-    monitorPageAssets();
+      animId = requestAnimationFrame(render);
+    };
+
+    animId = requestAnimationFrame(render);
 
     return () => {
-      cancelled = true;
+      cancelAnimationFrame(animId);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [isVisible]);
+  }, [isVisible, theme]);
 
-  // Dot matrix animation timer
+  // Asset Gating + Calibrated Cinematic Pacing (~2.8s - 3.2s)
   useEffect(() => {
     if (!isVisible) return;
 
-    const tickInterval = setInterval(() => {
-      setTick((t) => (t + 1) % 300);
-    }, 55);
+    let isCancelled = false;
+    const startTime = Date.now();
+    const MIN_CINEMATIC_DURATION_MS = 2800; // ~2.8 seconds minimum display time
 
-    return () => clearInterval(tickInterval);
-  }, [isVisible]);
+    targetProgressRef.current = 15;
+    allAssetsReadyRef.current = false;
 
-  // Keyboard shortcut (Escape / Enter / Space) to skip
-  useEffect(() => {
-    if (!isVisible) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" || e.key === "Enter" || e.key === " ") {
-        dismiss();
+    // 1. Monitor DOM ReadyState
+    const checkDocumentReady = () => {
+      if (typeof document !== "undefined" && document.readyState === "complete") {
+        return Promise.resolve();
       }
+      return new Promise<void>((resolve) => {
+        const onComplete = () => {
+          window.removeEventListener("load", onComplete);
+          resolve();
+        };
+        window.addEventListener("load", onComplete);
+      });
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isVisible, dismiss]);
 
-  // Sequential phase ticker: guarantees each sequence runs cleanly for exactly 1.0 second (1000ms)
-  useEffect(() => {
-    if (!isVisible || isDismissing) return;
+    // 2. Monitor Font Face Loading
+    const checkFontsReady = () => {
+      if (typeof document !== "undefined" && document.fonts) {
+        return document.fonts.ready.catch(() => { });
+      }
+      return Promise.resolve();
+    };
 
-    startTimeRef.current = Date.now();
-    hasAutoDismissedRef.current = false;
+    // 3. Monitor Media & Image Assets
+    const checkMediaReady = () => {
+      if (typeof document === "undefined") return Promise.resolve();
 
-    const interval = setInterval(() => {
-      const elapsed = Date.now() - startTimeRef.current;
+      const domImgs = Array.from(document.querySelectorAll<HTMLImageElement>("img"));
+      const criticalUrls = ["https://github.com/0xraiven.png", "/icon.svg"];
 
-      // Sequence 0: Radar Sweep (0ms - 1000ms)
-      if (elapsed < 1000) {
-        setPhaseIndex(0);
-        const ratio = Math.min(1, elapsed / 1000);
-        const p = Math.round(
-          BOOT_SEQUENCE_PHASES[0].startProgress +
-          (BOOT_SEQUENCE_PHASES[0].endProgress - BOOT_SEQUENCE_PHASES[0].startProgress) * ratio
-        );
-        setProgress(p);
-      }
-      // Sequence 1: 25-Channel VU Spectrum Equalizer (1000ms - 2000ms)
-      else if (elapsed < 2000) {
-        setPhaseIndex(1);
-        const ratio = Math.min(1, (elapsed - 1000) / 1000);
-        const p = Math.round(
-          BOOT_SEQUENCE_PHASES[1].startProgress +
-          (BOOT_SEQUENCE_PHASES[1].endProgress - BOOT_SEQUENCE_PHASES[1].startProgress) * ratio
-        );
-        setProgress(p);
-      }
-      // Sequence 2: Concentric Reticle & Orbital Perimeter Tracer (2000ms - 3000ms)
-      else if (elapsed < 3000) {
-        setPhaseIndex(2);
-        const ratio = Math.min(1, (elapsed - 2000) / 1000);
-        const p = Math.round(
-          BOOT_SEQUENCE_PHASES[2].startProgress +
-          (BOOT_SEQUENCE_PHASES[2].endProgress - BOOT_SEQUENCE_PHASES[2].startProgress) * ratio
-        );
-        setProgress(p);
-      }
-      // Sequence 3: System Core Lock & Authorization (3000ms - 4000ms)
-      else if (elapsed < 4000) {
-        setPhaseIndex(3);
-        const ratio = Math.min(1, (elapsed - 3000) / 750);
-        const p = Math.min(
-          100,
-          Math.round(
-            BOOT_SEQUENCE_PHASES[3].startProgress +
-            (100 - BOOT_SEQUENCE_PHASES[3].startProgress) * ratio
-          )
-        );
-        setProgress(p);
-      }
-      // Sequence Complete (4000ms+): Auto-dismiss into main page
-      else {
-        setPhaseIndex(3);
-        setProgress(100);
-        if (!hasAutoDismissedRef.current) {
-          hasAutoDismissedRef.current = true;
-          dismiss();
+      const assetImages: HTMLImageElement[] = [...domImgs];
+      criticalUrls.forEach((url) => {
+        if (!assetImages.some((img) => img.src === url)) {
+          const img = new Image();
+          img.src = url;
+          assetImages.push(img);
         }
-      }
+      });
+
+      if (assetImages.length === 0) return Promise.resolve();
+
+      let loadedCount = 0;
+      const total = assetImages.length;
+
+      return new Promise<void>((resolve) => {
+        const onAssetDone = () => {
+          loadedCount++;
+          if (!isCancelled) {
+            // Scale progress from 55% to 95% as images decode
+            const imgProgress = 55 + Math.round((loadedCount / total) * 40);
+            targetProgressRef.current = Math.max(targetProgressRef.current, imgProgress);
+          }
+          if (loadedCount >= total) {
+            resolve();
+          }
+        };
+
+        assetImages.forEach((img) => {
+          if (img.complete && img.naturalWidth !== 0) {
+            onAssetDone();
+          } else {
+            img.addEventListener("load", onAssetDone, { once: true });
+            img.addEventListener("error", onAssetDone, { once: true });
+          }
+        });
+
+        // Safety fallback for media assets: max 2.5s
+        setTimeout(resolve, 2500);
+      });
+    };
+
+    // Execute asset-gated sequence
+    (async () => {
+      targetProgressRef.current = 30;
+      await checkDocumentReady();
+      if (isCancelled) return;
+
+      targetProgressRef.current = 60;
+      await checkFontsReady();
+      if (isCancelled) return;
+
+      await checkMediaReady();
+      if (isCancelled) return;
+
+      allAssetsReadyRef.current = true;
+      targetProgressRef.current = 100;
+    })();
+
+    // Smooth ticker: interpolates displayed progress toward targetProgressRef with calibrated timing
+    const ticker = setInterval(() => {
+      if (isCancelled) return;
+
+      const elapsed = Date.now() - startTime;
+      const timeRatio = Math.min(1, elapsed / MIN_CINEMATIC_DURATION_MS);
+      const timeTarget = Math.round(timeRatio * 100);
+
+      // Real asset gating constraint:
+      // While assets are still loading, cap at 92%. When assets finish AND time elapsed, allow 100%.
+      const maxAllowed = allAssetsReadyRef.current ? 100 : Math.min(targetProgressRef.current, 92);
+      const effectiveTarget = Math.min(maxAllowed, Math.max(targetProgressRef.current, timeTarget));
+
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(ticker);
+          return 100;
+        }
+
+        const diff = effectiveTarget - prev;
+        if (diff <= 0) return prev;
+
+        // Controlled cinematic progression step
+        const step = Math.max(1, Math.ceil(diff * 0.12));
+        const next = Math.min(effectiveTarget, prev + step);
+
+        if (next >= 100) {
+          clearInterval(ticker);
+          // Satisfying 350ms pause at 100% so the user enjoys the complete state before smooth cross-dissolve
+          setTimeout(() => {
+            if (!isCancelled) {
+              dismiss();
+            }
+          }, 350);
+        }
+
+        return next;
+      });
     }, 25);
 
-    return () => clearInterval(interval);
-  }, [isVisible, isDismissing, dismiss]);
-
-  // Panoramic 25x9 Dot Matrix Geometry (225 bulbs spanning full card width)
-  const matrixDots = useMemo(() => {
-    const dots: { r: number; c: number; intensity: number; isGlow: boolean }[] = [];
-    const centerC = 12;
-    const centerR = 4;
-
-    // Ping-pong radar scanner column (0 to 24)
-    const scanCol = Math.round(Math.abs(((tick * 0.95) % 48) - 24));
-
-    // Outer perimeter sequence index for orbital tracer (64 bulbs around the border)
-    const perimeterTick = (tick * 2) % 64;
-
-    // Diagnostic sector coordinate ping
-    const pingC = (tick * 7) % 25;
-    const pingR = (tick * 11) % 9;
-
-    for (let r = 0; r < 9; r++) {
-      for (let c = 0; c < 25; c++) {
-        let intensity = 0.08;
-        let isGlow = false;
-
-        if (phaseIndex === 3) {
-          // Phase 4: Calibrated System Lock & Harmonic Horizon Glyph
-          const isCenterCore = Math.abs(r - centerR) + Math.abs((c - centerC) * 0.5) <= 1.8;
-          const isHorizon = r === centerR && (c <= 4 || c >= 20);
-          const isBracket =
-            ((r === 1 || r === 7) && (c === 2 || c === 22)) ||
-            ((r === 2 || r === 6) && (c === 1 || c === 23));
-
-          if (isCenterCore) {
-            intensity = 0.95 + 0.05 * Math.sin(tick * 0.3);
-            isGlow = true;
-          } else if (isHorizon) {
-            intensity = 0.85;
-            isGlow = true;
-          } else if (isBracket) {
-            intensity = 0.75;
-          } else {
-            intensity = 0.08;
-          }
-        } else if (phaseIndex === 0) {
-          // Phase 1: High-Speed Bi-Directional Radar Beam with Phosphor Trails
-          const distToScan = Math.abs(c - scanCol);
-          const isHorizonAxis = r === centerR;
-
-          if (distToScan === 0) {
-            intensity = 1.0;
-            isGlow = true;
-          } else if (distToScan === 1) {
-            intensity = 0.75;
-          } else if (distToScan === 2) {
-            intensity = 0.45;
-          } else if (distToScan === 3) {
-            intensity = 0.22;
-          } else if (isHorizonAxis && (c % 2 === 0)) {
-            // Faint telemetry guide line
-            intensity = 0.28;
-          }
-
-          // Random sector coordinate ping
-          if (c === pingC && r === pingR) {
-            intensity = 1.0;
-            isGlow = true;
-          }
-        } else if (phaseIndex === 1) {
-          // Phase 2: 25-Channel Kinetic VU Spectrum Equalizer with Peak Hold Diodes
-          const harmonic1 = Math.sin(c * 0.48 + tick * 0.3);
-          const harmonic2 = Math.cos(c * 0.24 - tick * 0.2);
-          const rawHeight = (harmonic1 * 0.65 + harmonic2 * 0.35 + 1) * 0.5;
-          const barHeight = Math.max(1, Math.min(8, Math.round(rawHeight * 8)));
-
-          // Distance from bottom row (r = 8 is bottom, r = 0 is top)
-          const rowFromBottom = 8 - r;
-
-          if (rowFromBottom === barHeight) {
-            // Floating peak diode
-            intensity = 1.0;
-            isGlow = true;
-          } else if (rowFromBottom < barHeight) {
-            // Active column meter bar
-            intensity = rowFromBottom > barHeight - 2 ? 0.88 : 0.6;
-          } else {
-            // Standby bulb
-            intensity = 0.08;
-          }
-        } else {
-          // Phase 3: Cybernetic Concentric Reticle & Traveling Perimeter Orbit (phaseIndex === 2)
-          const boxRadius = Math.max(Math.abs(c - centerC), Math.abs((r - centerR) * 2.6));
-          const wavePhase = (boxRadius * 0.85 - tick * 0.4) % 6;
-          const isRing = Math.abs(wavePhase) < 1.1;
-
-          // Perimeter orbital tracer
-          let isOrbital = false;
-          let perimeterIndex = -1;
-          if (r === 0) perimeterIndex = c;
-          else if (c === 24) perimeterIndex = 25 + (r - 1);
-          else if (r === 8) perimeterIndex = 32 + (24 - c);
-          else if (c === 0) perimeterIndex = 57 + (7 - r);
-
-          if (perimeterIndex >= 0) {
-            const orbitDist = Math.abs(perimeterIndex - perimeterTick);
-            if (orbitDist === 0 || orbitDist === 64) {
-              isOrbital = true;
-            }
-          }
-
-          if (isOrbital) {
-            intensity = 1.0;
-            isGlow = true;
-          } else if (isRing) {
-            intensity = 0.85;
-            isGlow = true;
-          } else if (Math.abs(c - centerC) <= 1 && Math.abs(r - centerR) <= 1) {
-            // Center reticle
-            intensity = 0.7;
-          } else {
-            intensity = 0.08;
-          }
-        }
-
-        dots.push({ r, c, intensity, isGlow });
+    // Global safety timer: ensure loader resolves within 4.0s even on disconnected networks
+    const safetyTimer = setTimeout(() => {
+      if (!isCancelled) {
+        allAssetsReadyRef.current = true;
+        targetProgressRef.current = 100;
+        setProgress(100);
+        setTimeout(dismiss, 300);
       }
-    }
-    return dots;
-  }, [phaseIndex, tick]);
+    }, 4000);
+
+    return () => {
+      isCancelled = true;
+      clearInterval(ticker);
+      clearTimeout(safetyTimer);
+    };
+  }, [isVisible, dismiss]);
 
   if (!isVisible) return null;
 
-  const currentPhase = BOOT_SEQUENCE_PHASES[phaseIndex] || BOOT_SEQUENCE_PHASES[0];
-  const currentStatus =
-    isAssetsLoaded && phaseIndex === 3
-      ? "READY [100%]"
-      : currentPhase.status;
-
-  // Segmented 16-bar progress indicator
-  const totalSegments = 16;
-  const filledSegments = Math.min(totalSegments, Math.floor((progress / 100) * totalSegments));
+  const currentPercent = Math.min(100, Math.round(progress));
+  const isLight = theme === "light";
 
   return (
     <div
       id="system-boot-loader"
       role="dialog"
       aria-modal="true"
-      aria-label="System Matrix Bootloader"
+      aria-label="Loading"
       suppressHydrationWarning
-      className={`fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#070709] select-none cursor-pointer transition-all duration-700 ease-out ${isDismissing ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
-      style={{
-        backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px)`,
-        backgroundSize: "22px 22px",
-      }}
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 select-none cursor-default transition-all duration-700 ease-out overflow-hidden ${isDismissing ? "opacity-0 pointer-events-none scale-[1.015] blur-[4px]" : "opacity-100"
+        } ${isLight ? "bg-[#fbf9f4] text-[#120e10]" : "bg-[#08080b] text-[#f2eeea]"}`}
     >
+      {/* Living Generative Background Canvas (8 Harmonic Waves + Diffraction Needles + Crest Nodes) */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+      />
+
+      {/* Subtle fine dot grid overlay for tactile physical grounding */}
       <div
-        onClick={(e) => e.stopPropagation()}
-        className={`relative w-full max-w-lg rounded-2xl border border-white/10 bg-[#0c0c10]/95 backdrop-blur-xl p-5 sm:p-7 font-mono text-xs shadow-[0_20px_60px_rgba(0,0,0,0.8)] space-y-5 overflow-hidden transition-all duration-700 ease-out ${isDismissing
-          ? "opacity-0 scale-[1.025] -translate-y-2 filter blur-[4px]"
-          : "opacity-100 scale-100 translate-y-0 filter blur-0"
-          } ${progress >= 100 && !isDismissing ? "animate-glyph-flash" : ""}`}
+        className="absolute inset-0 pointer-events-none opacity-20"
+        style={{
+          backgroundImage: `radial-gradient(${isLight ? "rgba(55, 30, 36, 0.15)" : "rgba(255, 255, 255, 0.10)"} 1px, transparent 1px)`,
+          backgroundSize: "32px 32px",
+        }}
+      />
+
+      {/* Discreet corner aesthetic watermark */}
+      <div
+        className={`absolute top-6 left-6 text-[10px] font-mono tracking-[0.25em] uppercase pointer-events-none select-none transition-colors ${isLight ? "text-text-secondary/40" : "text-text-secondary/30"
+          }`}
       >
-        {/* Hardware Corner Registration Marks */}
-        <span className="absolute top-2.5 left-2.5 text-[10px] text-white/20 font-mono select-none">+</span>
-        <span className="absolute top-2.5 right-2.5 text-[10px] text-white/20 font-mono select-none">+</span>
-        <span className="absolute bottom-2.5 left-2.5 text-[10px] text-white/20 font-mono select-none">+</span>
-        <span className="absolute bottom-2.5 right-2.5 text-[10px] text-white/20 font-mono select-none">+</span>
+        0xraiven // portfolio
+      </div>
 
-        {/* Top Hardware Header */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-3 text-[11px] text-text-secondary">
-          <div className="flex items-center gap-2.5">
-            <span className="font-pixel text-xs text-accent tracking-widest">{currentPhase.tag}</span>
-            <span className="font-mono font-bold tracking-widest text-text-primary text-[11px] uppercase">
-              WORKSPACE // {currentPhase.name}
-            </span>
-          </div>
+      {/* Minimal Center Screen: Typography & Progress Indicator Line */}
+      <div className="relative z-10 flex flex-col items-center justify-center space-y-4 w-full max-w-xs sm:max-w-sm md:max-w-md px-6">
+        {/* Typographic Title: LOADING %d */}
+        <div className="flex items-baseline justify-center gap-2.5 font-mono text-3xl sm:text-4xl md:text-5xl font-extralight tracking-[0.2em] select-none text-text-primary">
+          <span className="font-light">LOADING</span>
+          <span className="font-semibold text-accent tabular-nums tracking-tight">
+            {currentPercent}%
+          </span>
+        </div>
 
-          <button
-            type="button"
-            onClick={dismiss}
-            aria-label="Skip initialization"
-            className="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-surface-2 border border-border text-text-secondary hover:text-text-primary hover:border-accent/40 transition-colors"
+        {/* Minimal Progress Indicator Line Directly Underneath (Sketch Accurate) */}
+        <div
+          className={`w-full h-[2px] rounded-full overflow-hidden relative shadow-inner ${isLight ? "bg-black/10" : "bg-white/10"
+            }`}
+        >
+          {/* Luminous accent bar matching theme accent */}
+          <div
+            className="h-full bg-accent rounded-full transition-all duration-100 ease-out relative shadow-[0_0_12px_var(--accent)]"
+            style={{ width: `${progress}%` }}
           >
-            <span className="font-pixel text-[9px]">ESC</span>
-            <X className="w-3 h-3" />
-          </button>
-        </div>
-
-        {/* Center: Full Card Width Panoramic LED Dot Matrix (No Circles) */}
-        <div className="space-y-3 py-1 w-full select-none">
-          <div className="w-full p-3 sm:p-4 rounded-xl bg-black/60 border border-white/5 shadow-inner">
-            <svg
-              viewBox="0 0 380 130"
-              className="w-full h-28 sm:h-36"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <defs>
-                <filter id="dotGlow" x="-30%" y="-30%" width="160%" height="160%">
-                  <feDropShadow dx="0" dy="0" stdDeviation="2" floodColor="#ffffff" floodOpacity="0.95" />
-                </filter>
-              </defs>
-
-              {/* 25x9 Micro Dot Matrix spanning full card width */}
-              {matrixDots.map((dot, idx) => {
-                const cx = 14 + dot.c * 14.65;
-                const cy = 14 + dot.r * 12.75;
-                const isPeak = dot.intensity >= 0.85;
-                const isActive = dot.intensity >= 0.5;
-                const isDim = dot.intensity >= 0.2;
-
-                const radius = isPeak ? 3.05 : isActive ? 2.55 : isDim ? 2.05 : 1.75;
-                const fill = isPeak
-                  ? "#ffffff"
-                  : isActive
-                    ? "rgba(255, 255, 255, 0.85)"
-                    : isDim
-                      ? "rgba(255, 255, 255, 0.35)"
-                      : "rgba(255, 255, 255, 0.08)";
-
-                return (
-                  <circle
-                    key={idx}
-                    cx={cx}
-                    cy={cy}
-                    r={radius}
-                    fill={fill}
-                    filter={dot.isGlow ? "url(#dotGlow)" : undefined}
-                    style={{
-                      transition: "r 50ms cubic-bezier(0.4, 0, 0.2, 1), fill 50ms cubic-bezier(0.4, 0, 0.2, 1)",
-                    }}
-                  />
-                );
-              })}
-            </svg>
+            {/* Glowing beacon at the leading edge tip */}
+            <div
+              className={`absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full ${isLight
+                ? "bg-accent shadow-[0_0_8px_var(--accent),0_0_14px_rgba(158,27,50,0.6)]"
+                : "bg-white shadow-[0_0_8px_#ffffff,0_0_16px_var(--accent)]"
+                }`}
+            />
           </div>
-
-          {/* Dotted Matrix Percentage Display */}
-          <div className="text-center">
-            <span className="font-pixel text-base sm:text-lg text-text-primary tracking-widest">
-              [ {progress.toString().padStart(3, "0")}% ]
-            </span>
-          </div>
-        </div>
-
-        {/* Real-time Telemetry & Asset Decoding Status (No raw asset count) */}
-        <div className="space-y-2 pt-1 border-t border-white/10">
-          <div className="flex items-center justify-between text-[10px] text-text-secondary">
-            <span className="flex items-center gap-1.5">
-              <span className={`w-1.5 h-1.5 rounded-full ${phaseIndex === 3 ? "bg-emerald-400" : "bg-accent animate-pulse"}`} />
-              <span className="font-mono uppercase tracking-wider">
-                STATUS: {phaseIndex === 3 ? "READY" : `SEQUENCE 0${phaseIndex + 1}/04`}
-              </span>
-            </span>
-            <span className="font-pixel text-[10px] text-text-secondary tracking-wider">
-              {progress >= 100 ? "READY" : "LOADING"}
-            </span>
-          </div>
-
-          <div className="p-2 rounded bg-black/50 border border-white/5 text-[10px] text-text-secondary font-mono truncate flex items-center justify-between">
-            <div className="flex items-center gap-1.5 truncate">
-              <span className="text-accent mr-1.5">›</span>
-              <span className="truncate">{currentStatus}</span>
-            </div>
-            <span className="font-pixel text-[9px] text-white/40 shrink-0 ml-2">
-              [{phaseIndex + 1}/4]
-            </span>
-          </div>
-
-          {/* 16-Segment Discrete Progress Bar */}
-          <div className="flex items-center gap-1 pt-1">
-            {Array.from({ length: totalSegments }).map((_, i) => {
-              const isFilled = i < filledSegments;
-              const isLeading = i === filledSegments - 1;
-              return (
-                <div
-                  key={i}
-                  className={`h-1.5 flex-1 rounded-[1px] transition-all duration-150 ${isLeading
-                    ? "bg-accent shadow-[0_0_6px_rgba(209,44,75,0.9)]"
-                    : isFilled
-                      ? "bg-white shadow-[0_0_4px_rgba(255,255,255,0.8)]"
-                      : "bg-white/10"
-                    }`}
-                />
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Footer Technical Bar */}
-        <div className="flex items-center justify-between pt-2 border-t border-white/5 text-[10px] text-text-secondary">
-          <span className="font-pixel uppercase tracking-widest text-white/40">WORKSPACE // R41N</span>
-          <button
-            type="button"
-            onClick={dismiss}
-            className="flex items-center gap-1 text-accent hover:text-accent-hover font-semibold transition-colors font-mono"
-          >
-            <span>{progress >= 100 ? "ENTER >>" : "SKIP [ESC]"}</span>
-            <ArrowRight className="w-3 h-3" />
-          </button>
         </div>
       </div>
     </div>
   );
 }
 
-// Re-export for layout compatibility
-export const AsciiBootLoader = SystemMatrixBootLoader;
-export const GlyphBootLoader = SystemMatrixBootLoader;
-export default SystemMatrixBootLoader;
+// Re-exports for compatibility across the codebase
+export const AsciiBootLoader = MinimalBootLoader;
+export const SystemMatrixBootLoader = MinimalBootLoader;
+export const GlyphBootLoader = MinimalBootLoader;
+export default MinimalBootLoader;
