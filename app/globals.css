@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *, .dark, .dark *));
+
 :root {
   /* Common geometry tokens */
   --radius: 6px;
@@ -27,10 +29,6 @@
   /* Fluid Liquid Glass tokens (Dark) */
   --accent-rgb: 209, 44, 75;
   --liquid-bg: rgba(18, 17, 23, 0.72);
-  --liquid-specular: rgba(255, 255, 255, 0.08);
-  --liquid-caustic: rgba(209, 44, 75, 0.06);
-  --liquid-highlight: rgba(230, 57, 86, 0.03);
-  --liquid-rim: rgba(242, 238, 234, 0.16);
   --liquid-bevel-top: rgba(255, 255, 255, 0.08);
   --liquid-bevel-bottom: rgba(0, 0, 0, 0.25);
   --liquid-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4);
@@ -64,10 +62,6 @@ html.dark,
   /* Fluid Liquid Glass tokens (Dark) */
   --accent-rgb: 209, 44, 75;
   --liquid-bg: rgba(18, 17, 23, 0.72);
-  --liquid-specular: rgba(255, 255, 255, 0.08);
-  --liquid-caustic: rgba(209, 44, 75, 0.06);
-  --liquid-highlight: rgba(230, 57, 86, 0.03);
-  --liquid-rim: rgba(242, 238, 234, 0.16);
   --liquid-bevel-top: rgba(255, 255, 255, 0.08);
   --liquid-bevel-bottom: rgba(0, 0, 0, 0.25);
   --liquid-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4);
@@ -102,10 +96,6 @@ html.light,
   /* Fluid Liquid Glass tokens (Light) */
   --accent-rgb: 158, 27, 50;
   --liquid-bg: rgba(251, 249, 244, 0.82);
-  --liquid-specular: rgba(255, 255, 255, 0.45);
-  --liquid-caustic: rgba(158, 27, 50, 0.04);
-  --liquid-highlight: rgba(184, 35, 61, 0.02);
-  --liquid-rim: rgba(55, 30, 36, 0.14);
   --liquid-bevel-top: rgba(255, 255, 255, 0.75);
   --liquid-bevel-bottom: rgba(55, 30, 36, 0.04);
   --liquid-shadow: 0 8px 24px -4px rgba(45, 25, 30, 0.06);
@@ -140,10 +130,6 @@ html.light,
     /* Fluid Liquid Glass tokens (Light) */
     --accent-rgb: 158, 27, 50;
     --liquid-bg: rgba(251, 249, 244, 0.82);
-    --liquid-specular: rgba(255, 255, 255, 0.45);
-    --liquid-caustic: rgba(158, 27, 50, 0.04);
-    --liquid-highlight: rgba(184, 35, 61, 0.02);
-    --liquid-rim: rgba(55, 30, 36, 0.14);
     --liquid-bevel-top: rgba(255, 255, 255, 0.75);
     --liquid-bevel-bottom: rgba(55, 30, 36, 0.04);
     --liquid-shadow: 0 8px 24px -4px rgba(45, 25, 30, 0.06);
@@ -165,9 +151,6 @@ html.light,
     --glass-blur: 0px;
     --glass-highlight: transparent;
     --liquid-bg: var(--surface);
-    --liquid-specular: transparent;
-    --liquid-caustic: transparent;
-    --liquid-rim: transparent;
   }
 }
 
@@ -213,92 +196,19 @@ html.light,
 }
 
 /* Glass surface foundation utility */
-.glass-surface {
-  position: relative;
-  background: var(--liquid-bg);
-  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--glass-radius);
-  box-shadow: 
-    inset 0 1px 1px 0 var(--liquid-bevel-top),
-    inset 0 -1px 2px 0 var(--liquid-bevel-bottom),
-    var(--liquid-shadow);
-}
-
-/* Fluid Liquid Glass Surface */
+.glass-surface,
 .glass-surface-liquid {
   position: relative;
-  isolation: isolate;
   background: var(--liquid-bg);
-  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
   border: 1px solid var(--glass-border);
   border-radius: var(--glass-radius);
   box-shadow: 
     inset 0 1px 1px 0 var(--liquid-bevel-top),
     inset 0 -1px 2px 0 var(--liquid-bevel-bottom),
     var(--liquid-shadow);
-  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Ambient Fluid Caustic Current Animations */
-@keyframes liquidCausticDrift {
-  0% {
-    transform: translate3d(-3%, -2%, 0) rotate(0deg) scale(1.02);
-  }
-  50% {
-    transform: translate3d(3%, 2%, 0) rotate(1deg) scale(1.05);
-  }
-  100% {
-    transform: translate3d(-3%, -2%, 0) rotate(0deg) scale(1.02);
-  }
-}
-
-.liquid-caustic-drift {
-  background: 
-    radial-gradient(circle 60% at 35% 40%, var(--liquid-caustic) 0%, transparent 75%),
-    radial-gradient(circle 50% at 75% 60%, var(--liquid-highlight) 0%, transparent 70%);
-  filter: blur(28px);
-  animation: liquidCausticDrift 18s ease-in-out infinite alternate;
-  will-change: transform;
-}
-
-.liquid-caustic-mesh {
-  background: radial-gradient(circle 50% at 60% 35%, var(--liquid-specular) 0%, transparent 65%);
-  filter: blur(24px);
-  animation: liquidCausticDrift 22s ease-in-out infinite alternate-reverse;
-  will-change: transform;
-}
-
-/* Interactive Specular Satin Glare (Natural broad falloff) */
-.liquid-specular-glare {
-  background: 
-    radial-gradient(
-      320px circle at var(--liquid-x, 50%) var(--liquid-y, 50%),
-      var(--liquid-specular) 0%,
-      transparent 75%
-    ),
-    radial-gradient(
-      220px circle at var(--liquid-x, 50%) var(--liquid-y, 50%),
-      var(--liquid-caustic) 0%,
-      transparent 70%
-    );
-}
-
-/* Liquid Refractive Rim Light (Delicate perimeter sheen) */
-.liquid-rim-border {
-  padding: 1px;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  background: radial-gradient(
-    280px circle at var(--liquid-x, 50%) var(--liquid-y, 50%),
-    var(--liquid-rim) 0%,
-    transparent 70%
-  );
+  transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
 /* Base resets */

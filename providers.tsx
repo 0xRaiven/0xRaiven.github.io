@@ -23,12 +23,24 @@ interface UIContextType {
 
 const UIContext = createContext<UIContextType | null>(null);
 
+const DEFAULT_UI_CONTEXT: UIContextType = {
+  commandPaletteOpen: false,
+  openCommandPalette: () => { },
+  closeCommandPalette: () => { },
+  toggleCommandPalette: () => { },
+  mobileSidebarOpen: false,
+  openMobileSidebar: () => { },
+  closeMobileSidebar: () => { },
+  toggleMobileSidebar: () => { },
+  theme: "dark",
+  resolvedTheme: "dark",
+  setTheme: () => { },
+  cycleTheme: () => { },
+};
+
 export function useUI(): UIContextType {
   const context = useContext(UIContext);
-  if (!context) {
-    throw new Error("useUI must be used within a Providers tree");
-  }
-  return context;
+  return context || DEFAULT_UI_CONTEXT;
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -64,7 +76,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       setThemeState(initialTheme);
       applyTheme(initialTheme);
     } catch {
-      applyTheme("dark");
+      applyTheme("system");
     }
   }, [applyTheme]);
 

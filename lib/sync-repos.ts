@@ -217,15 +217,11 @@ See interactive architecture and telemetry components rendered in the profile vi
   return cleaned;
 }
 
-function generateDefaultScaffold(_repoName: string): string {
-  return '';
-}
-
 /**
  * Synchronize all repositories from GitHub for 0xraiven and scaffold missing project content.
  * GUARANTEE: Never overwrites existing index.json or body.mdoc files!
  */
-export async function syncGitHubRepos(options: { forceFetch?: boolean } = {}): Promise<SyncResult> {
+export async function syncGitHubRepos(_options: { forceFetch?: boolean } = {}): Promise<SyncResult> {
   const result: SyncResult = {
     scaffolded: [],
     skipped: [],

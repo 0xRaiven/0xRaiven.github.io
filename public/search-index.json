@@ -134,7 +134,10 @@
       "Bash",
       "TypeScript",
       "Linux",
-      "Docker"
+      "Docker",
+      "github",
+      "github-config",
+      "readme-profile"
     ]
   },
   {

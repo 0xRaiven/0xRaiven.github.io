@@ -8,9 +8,6 @@ import {
   Copy,
   Check,
   Terminal,
-  Info,
-  GitBranch,
-  Layers,
 } from "lucide-react";
 
 export interface NoReadmeViewProps {
