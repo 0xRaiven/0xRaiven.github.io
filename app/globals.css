@@ -144,6 +144,7 @@ html.light,
 }
 
 @media (prefers-reduced-transparency: reduce) {
+
   :root,
   html.dark,
   html.light {
@@ -155,6 +156,7 @@ html.light,
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -204,7 +206,7 @@ html.light,
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
   border: 1px solid var(--glass-border);
   border-radius: var(--glass-radius);
-  box-shadow: 
+  box-shadow:
     inset 0 1px 1px 0 var(--liquid-bevel-top),
     inset 0 -1px 2px 0 var(--liquid-bevel-bottom),
     var(--liquid-shadow);
@@ -238,7 +240,10 @@ body {
   transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-code, kbd, samp, pre {
+code,
+kbd,
+samp,
+pre {
   font-family: var(--font-mono);
 }
 
@@ -259,6 +264,7 @@ code, kbd, samp, pre {
     transform: translateY(10px);
     filter: blur(2px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -271,27 +277,53 @@ code, kbd, samp, pre {
   animation: pageReveal 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.stagger-1 { animation-delay: 50ms; }
-.stagger-2 { animation-delay: 110ms; }
-.stagger-3 { animation-delay: 170ms; }
-.stagger-4 { animation-delay: 230ms; }
-.stagger-5 { animation-delay: 290ms; }
-.stagger-6 { animation-delay: 350ms; }
-.stagger-7 { animation-delay: 410ms; }
-.stagger-8 { animation-delay: 470ms; }
+.stagger-1 {
+  animation-delay: 50ms;
+}
+
+.stagger-2 {
+  animation-delay: 110ms;
+}
+
+.stagger-3 {
+  animation-delay: 170ms;
+}
+
+.stagger-4 {
+  animation-delay: 230ms;
+}
+
+.stagger-5 {
+  animation-delay: 290ms;
+}
+
+.stagger-6 {
+  animation-delay: 350ms;
+}
+
+.stagger-7 {
+  animation-delay: 410ms;
+}
+
+.stagger-8 {
+  animation-delay: 470ms;
+}
 
 /* Custom Matrix Scrollbar */
 .terminal-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: var(--accent) var(--surface);
 }
+
 .terminal-scrollbar::-webkit-scrollbar {
   width: 4px;
   height: 4px;
 }
+
 .terminal-scrollbar::-webkit-scrollbar-track {
   background: var(--surface);
 }
+
 .terminal-scrollbar::-webkit-scrollbar-thumb {
   background: var(--accent);
   border-radius: 2px;
@@ -302,6 +334,7 @@ code, kbd, samp, pre {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -313,6 +346,7 @@ code, kbd, samp, pre {
     transform: translateY(-24px) scale(0.96);
     filter: blur(4px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -355,6 +389,7 @@ code, kbd, samp, pre {
     opacity: 0;
     transform: translateY(-8px) scale(0.96);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -373,6 +408,7 @@ code, kbd, samp, pre {
     transform: translateY(-8px) scale(0.97);
     filter: blur(4px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -390,6 +426,7 @@ code, kbd, samp, pre {
     opacity: 0;
     transform: translateY(4px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -405,15 +442,19 @@ code, kbd, samp, pre {
   0% {
     opacity: 1;
   }
+
   20% {
     opacity: 0.2;
   }
+
   40% {
     opacity: 1;
   }
+
   60% {
     opacity: 0.3;
   }
+
   100% {
     opacity: 1;
   }
@@ -427,6 +468,7 @@ code, kbd, samp, pre {
   0% {
     transform: translateX(-100%);
   }
+
   100% {
     transform: translateX(500%);
   }
@@ -452,7 +494,7 @@ code, kbd, samp, pre {
   user-select: none;
   cursor: default;
   color: var(--bulb-text);
-  text-shadow: 
+  text-shadow:
     0 0 2px var(--bulb-glow-core),
     0 0 6px var(--bulb-glow-mid),
     0 0 14px var(--bulb-glow-far);
@@ -476,7 +518,7 @@ code, kbd, samp, pre {
 /* Interactive hover: intense arc spark and full stabilization */
 .bulb-sign:hover {
   animation: bulbHoverArc 0.25s infinite alternate ease-in-out;
-  text-shadow: 
+  text-shadow:
     0 0 3px var(--bulb-glow-core),
     0 0 10px var(--bulb-glow-mid),
     0 0 22px var(--bulb-glow-far);
@@ -489,53 +531,68 @@ code, kbd, samp, pre {
 
 /* Keyframes simulating authentic incandescent / neon bulb electrical flutter */
 @keyframes bulbMasterFlicker {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.95;
     text-shadow: 0 0 2px var(--bulb-glow-core), 0 0 6px var(--bulb-glow-mid), 0 0 14px var(--bulb-glow-far);
   }
+
   18% {
     opacity: 0.95;
   }
+
   18.5% {
     opacity: 0.25;
     text-shadow: none;
   }
+
   19% {
     opacity: 0.85;
     text-shadow: 0 0 2px var(--bulb-glow-core), 0 0 5px var(--bulb-glow-mid);
   }
+
   19.4% {
     opacity: 0.15;
     text-shadow: none;
   }
+
   20% {
     opacity: 1;
     text-shadow: 0 0 3px var(--bulb-glow-core), 0 0 8px var(--bulb-glow-mid), 0 0 18px var(--bulb-glow-far);
   }
+
   54% {
     opacity: 0.95;
   }
+
   54.4% {
     opacity: 0.4;
     text-shadow: 0 0 1px var(--bulb-glow-core);
   }
+
   55% {
     opacity: 0.95;
   }
+
   79% {
     opacity: 0.95;
   }
+
   79.3% {
     opacity: 0.2;
     text-shadow: none;
   }
+
   79.8% {
     opacity: 0.9;
   }
+
   80.2% {
     opacity: 0.25;
     text-shadow: none;
   }
+
   80.8% {
     opacity: 1;
     text-shadow: 0 0 3px var(--bulb-glow-core), 0 0 7px var(--bulb-glow-mid);
@@ -543,89 +600,115 @@ code, kbd, samp, pre {
 }
 
 @keyframes bulbTubeFlicker1 {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
     text-shadow: 0 0 2px var(--bulb-glow-core), 0 0 6px var(--bulb-glow-mid);
   }
+
   8% {
     opacity: 1;
   }
+
   8.4% {
     opacity: 0.15;
     text-shadow: none;
   }
+
   9% {
     opacity: 0.8;
   }
+
   9.5% {
     opacity: 0.1;
     text-shadow: none;
   }
+
   10.2% {
     opacity: 0.3;
   }
+
   11% {
     opacity: 1;
     text-shadow: 0 0 2px var(--bulb-glow-core), 0 0 6px var(--bulb-glow-mid);
   }
+
   42% {
     opacity: 1;
   }
+
   42.5% {
     opacity: 0.2;
     text-shadow: none;
   }
+
   43.2% {
     opacity: 1;
   }
+
   71% {
     opacity: 1;
   }
+
   71.5% {
     opacity: 0.18;
     text-shadow: none;
   }
+
   72.1% {
     opacity: 0.85;
   }
+
   72.6% {
     opacity: 0.22;
     text-shadow: none;
   }
+
   73.4% {
     opacity: 1;
   }
 }
 
 @keyframes bulbTubeFlicker2 {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.92;
   }
+
   27% {
     opacity: 0.92;
   }
+
   27.4% {
     opacity: 0.18;
     text-shadow: none;
   }
+
   28.1% {
     opacity: 0.75;
   }
+
   28.6% {
     opacity: 0.12;
     text-shadow: none;
   }
+
   29.4% {
     opacity: 1;
     text-shadow: 0 0 3px var(--bulb-glow-core), 0 0 7px var(--bulb-glow-mid);
   }
+
   63% {
     opacity: 0.92;
   }
+
   63.5% {
     opacity: 0.2;
     text-shadow: none;
   }
+
   64.1% {
     opacity: 0.92;
   }
@@ -636,6 +719,7 @@ code, kbd, samp, pre {
     opacity: 0.92;
     text-shadow: 0 0 2px var(--bulb-glow-core), 0 0 6px var(--bulb-glow-mid);
   }
+
   100% {
     opacity: 1;
     text-shadow: 0 0 4px var(--bulb-glow-core), 0 0 12px var(--bulb-glow-mid), 0 0 24px var(--bulb-glow-far);
@@ -668,8 +752,6 @@ body.booting-complete #page-content-wrapper {
   transform: scale(1) translateY(0);
   filter: blur(0px);
   transition: opacity 750ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 750ms cubic-bezier(0.16, 1, 0.3, 1),
-              filter 750ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform 750ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 750ms cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 export interface ScrambleTextProps {
   text: string;
@@ -15,87 +15,95 @@ const CIPHER_GLYPHS = "01!@#$%&*<>[]{}~=+/\\λπΩΨΔ";
 export function ScrambleText({
   text,
   as: Component = "span",
-  speed = 28,
+  speed = 30,
   delay = 0,
   className = "",
 }: ScrambleTextProps) {
-  const [displayText, setDisplayText] = useState("");
-  const [hasStarted, setHasStarted] = useState(false);
   const elementRef = useRef<HTMLElement | null>(null);
+  const hasAnimatedRef = useRef(false);
 
-  // Trigger when visible in viewport
   useEffect(() => {
     const el = elementRef.current;
-    if (!el) return;
+    if (!el || hasAnimatedRef.current) return;
+
+    // Fast check for reduced motion
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      el.textContent = text;
+      return;
+    }
+
+    let animFrame: number;
+    let timeoutId: NodeJS.Timeout;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting && !hasStarted) {
-          setHasStarted(true);
+        if (entries[0]?.isIntersecting && !hasAnimatedRef.current) {
+          hasAnimatedRef.current = true;
           observer.disconnect();
+
+          timeoutId = setTimeout(() => {
+            let frame = 0;
+            const totalFrames = Math.min(18, Math.max(8, Math.floor(text.length * 1.2)));
+            let lastTimestamp = 0;
+
+            const step = (timestamp: number) => {
+              if (!lastTimestamp) lastTimestamp = timestamp;
+              const delta = timestamp - lastTimestamp;
+
+              if (delta >= speed) {
+                lastTimestamp = timestamp;
+                frame++;
+                const progress = frame / totalFrames;
+                const revealedChars = Math.floor(progress * text.length);
+
+                let scrambled = "";
+                for (let i = 0; i < text.length; i++) {
+                  const char = text[i];
+                  if (char === " ") {
+                    scrambled += " ";
+                  } else if (i < revealedChars) {
+                    scrambled += char;
+                  } else {
+                    scrambled += CIPHER_GLYPHS[Math.floor(Math.random() * CIPHER_GLYPHS.length)];
+                  }
+                }
+
+                if (el) el.textContent = scrambled;
+
+                if (frame >= totalFrames) {
+                  if (el) el.textContent = text;
+                  return;
+                }
+              }
+
+              animFrame = requestAnimationFrame(step);
+            };
+
+            animFrame = requestAnimationFrame(step);
+          }, delay);
         }
       },
       { threshold: 0.1 }
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
-  }, [hasStarted]);
-
-  useEffect(() => {
-    if (!hasStarted) {
-      // Show initial scrambled placeholder
-      setDisplayText(
-        text
-          .split("")
-          .map((char) =>
-            char === " " ? " " : CIPHER_GLYPHS[Math.floor(Math.random() * CIPHER_GLYPHS.length)]
-          )
-          .join("")
-      );
-      return;
-    }
-
-    let frame = 0;
-    const totalFrames = text.length * 3;
-    let timeoutId: NodeJS.Timeout;
-
-    const timeout = setTimeout(() => {
-      const interval = setInterval(() => {
-        frame++;
-        const progress = frame / totalFrames;
-        const revealedChars = Math.floor(progress * text.length);
-
-        const current = text
-          .split("")
-          .map((char, index) => {
-            if (char === " ") return " ";
-            if (index < revealedChars) return char;
-            return CIPHER_GLYPHS[Math.floor(Math.random() * CIPHER_GLYPHS.length)];
-          })
-          .join("");
-
-        setDisplayText(current);
-
-        if (frame >= totalFrames) {
-          clearInterval(interval);
-          setDisplayText(text);
-        }
-      }, speed);
-
-      timeoutId = interval as unknown as NodeJS.Timeout;
-    }, delay);
 
     return () => {
-      clearTimeout(timeout);
-      if (timeoutId) clearInterval(timeoutId);
+      observer.disconnect();
+      clearTimeout(timeoutId);
+      if (animFrame) cancelAnimationFrame(animFrame);
+      if (el) el.textContent = text;
     };
-  }, [hasStarted, text, speed, delay]);
+  }, [text, speed, delay]);
 
   return (
     // @ts-expect-error Component dynamic tag type
     <Component ref={elementRef} className={`font-mono inline-block ${className}`}>
-      {displayText || text}
+      {text}
     </Component>
   );
 }

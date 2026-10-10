@@ -77,11 +77,10 @@ export function PageTransition({ children }: PageTransitionProps) {
     <div className="relative min-w-0 w-full">
       {/* Nothing OS Glyph Route Telemetry Bar */}
       <div
-        className={`transition-all duration-300 font-mono text-[11px] select-none flex items-center justify-between px-3.5 py-2 mb-5 rounded-xl border backdrop-blur-md ${
-          isTransitioning
-            ? "border-accent/40 bg-surface/95 shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)] opacity-100 translate-y-0"
-            : "border-border/60 bg-surface-2/40 opacity-70 hover:opacity-100 transition-opacity -translate-y-0.5"
-        }`}
+        className={`transition-all duration-300 font-mono text-[11px] select-none flex items-center justify-between px-3.5 py-2 mb-5 rounded-xl border backdrop-blur-md ${isTransitioning
+          ? "border-accent/40 bg-surface/95 shadow-[0_4px_20px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)] opacity-100 translate-y-0"
+          : "border-border/60 bg-surface-2/40 opacity-70 hover:opacity-100 transition-opacity -translate-y-0.5"
+          }`}
       >
         {/* Left: Sector Index + Glyph Dot-Matrix Micro Array */}
         <div className="flex items-center gap-3 truncate">
@@ -99,13 +98,12 @@ export function PageTransition({ children }: PageTransitionProps) {
               return (
                 <span
                   key={i}
-                  className={`w-1.5 h-1.5 rounded-full transition-all duration-150 ${
-                    isTransitioning
-                      ? isActive
-                        ? "bg-white shadow-[0_0_6px_rgba(255,255,255,0.95)] scale-125"
-                        : "bg-white/15"
-                      : "bg-emerald-400/80 shadow-[0_0_4px_rgba(52,211,153,0.6)]"
-                  }`}
+                  className={`w-1.5 h-1.5 rounded-full transition-all duration-150 ${isTransitioning
+                    ? isActive
+                      ? "bg-white shadow-[0_0_6px_rgba(255,255,255,0.95)] scale-125"
+                      : "bg-white/15"
+                    : "bg-emerald-400/80 shadow-[0_0_4px_rgba(52,211,153,0.6)]"
+                    }`}
                 />
               );
             })}
@@ -119,11 +117,10 @@ export function PageTransition({ children }: PageTransitionProps) {
         {/* Right: Status & Coordinates */}
         <div className="flex items-center gap-2.5 shrink-0">
           <span
-            className={`font-pixel text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full transition-colors duration-200 ${
-              isTransitioning
-                ? "bg-accent/15 text-accent border border-accent/30 animate-pulse"
-                : "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-medium"
-            }`}
+            className={`font-pixel text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full transition-colors duration-200 ${isTransitioning
+              ? "bg-accent/15 text-accent border border-accent/30 animate-pulse"
+              : "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-medium"
+              }`}
           >
             {isTransitioning ? "SYNC" : "READY"}
           </span>
@@ -144,11 +141,10 @@ export function PageTransition({ children }: PageTransitionProps) {
       {/* Progressive Page Content Container with Silky Smooth Reveal */}
       <div
         key={pathname}
-        className={`transition-all duration-500 ease-out w-full ${
-          isTransitioning
-            ? "opacity-50 filter blur-[0.75px] translate-y-1 pointer-events-none"
-            : "opacity-100 filter blur-0 translate-y-0"
-        }`}
+        className={`transition-all duration-500 ease-out w-full ${isTransitioning
+          ? "opacity-50 filter blur-[0.75px] translate-y-1 pointer-events-none"
+          : "opacity-100 filter blur-0 translate-y-0"
+          }`}
       >
         {children}
       </div>

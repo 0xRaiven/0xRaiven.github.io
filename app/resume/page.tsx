@@ -202,38 +202,6 @@ export default async function ResumePage() {
           )}
         </header>
 
-        {/* Recruiters & Hiring Managers Section */}
-        <section className="relative overflow-hidden rounded border border-accent/40 bg-surface-2/70 p-4 sm:p-5 transition-all hover:border-accent/60">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-2">
-                <span className="flex h-2 w-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-[11px] font-mono uppercase tracking-wider text-accent font-semibold">
-                  Recruiters &amp; Hiring Managers
-                </span>
-              </div>
-              <h2 className="text-sm sm:text-base font-bold text-text-primary font-mono tracking-tight">
-                Looking for a copy of my resume? Download PDF
-              </h2>
-              <p className="text-xs text-text-secondary font-mono leading-relaxed max-w-xl">
-                If you are reviewing qualifications for security engineering, detection engineering, or software roles, access the complete, printable PDF below.
-              </p>
-            </div>
-
-            <div className="shrink-0">
-              <a
-                href={pdfHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded bg-accent text-bg hover:bg-accent-hover font-mono text-xs font-bold transition-all shadow-sm hover:shadow-accent/20 hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <FileDown className="w-4 h-4" />
-                <span>Download Resume (PDF)</span>
-              </a>
-            </div>
-          </div>
-        </section>
-
         {/* Technical Skills & Competencies */}
         <section className="space-y-4">
           <div className="flex items-center justify-between border-b border-border/60 pb-2">

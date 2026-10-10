@@ -119,21 +119,7 @@ function getActiveGroupForPath(path: string | null | undefined): string | null {
 function MalfunctioningBulbText({ text, className }: { text: string; className?: string }) {
   return (
     <span className={`bulb-sign ${className || ""}`}>
-      {text.split("").map((char, index) => {
-        if (char === " ") {
-          return <span key={index} className="inline-block w-2">&nbsp;</span>;
-        }
-        // Asynchronous loose-contact filaments simulating malfunctioning bulbs
-        const isFaulty1 = index === 3 || index === 7;
-        const isFaulty2 = index === 1 || index === 8;
-        const faultyClass = isFaulty1 ? "bulb-flicker-faulty-1" : isFaulty2 ? "bulb-flicker-faulty-2" : "";
-
-        return (
-          <span key={index} className={`bulb-char ${faultyClass}`}>
-            {char}
-          </span>
-        );
-      })}
+      {text}
     </span>
   );
 }

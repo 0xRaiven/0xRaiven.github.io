@@ -78,7 +78,7 @@ export function MinimalBootLoader() {
       if (typeof document !== "undefined") {
         document.body.classList.remove("booting-complete");
       }
-    }, 700);
+    }, 250);
   }, []);
 
   // Check sessionStorage on mount & support ?boot=true / ?reboot=true
@@ -148,7 +148,7 @@ export function MinimalBootLoader() {
 
   // Living Generative Ambient Canvas Background (High-DPI Retina + Mobile-Adaptive Frequency)
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible || isDismissing) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -418,17 +418,17 @@ export function MinimalBootLoader() {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [isVisible, theme]);
+  }, [isVisible, isDismissing, theme]);
 
-  // Asset Gating + Calibrated Cinematic Pacing (~2.8s - 3.2s)
+  // Asset Gating + Calibrated Snappy Pacing (~380ms)
   useEffect(() => {
     if (!isVisible) return;
 
     let isCancelled = false;
     const startTime = Date.now();
-    const MIN_CINEMATIC_DURATION_MS = 2800; // ~2.8 seconds minimum display time
+    const MIN_CINEMATIC_DURATION_MS = 380;
 
-    targetProgressRef.current = 15;
+    targetProgressRef.current = 25;
     allAssetsReadyRef.current = false;
 
     // 1. Monitor DOM ReadyState
@@ -442,6 +442,7 @@ export function MinimalBootLoader() {
           resolve();
         };
         window.addEventListener("load", onComplete);
+        setTimeout(resolve, 300);
       });
     };
 
@@ -453,65 +454,14 @@ export function MinimalBootLoader() {
       return Promise.resolve();
     };
 
-    // 3. Monitor Media & Image Assets
-    const checkMediaReady = () => {
-      if (typeof document === "undefined") return Promise.resolve();
-
-      const domImgs = Array.from(document.querySelectorAll<HTMLImageElement>("img"));
-      const criticalUrls = ["https://github.com/0xraiven.png", "/icon.svg"];
-
-      const assetImages: HTMLImageElement[] = [...domImgs];
-      criticalUrls.forEach((url) => {
-        if (!assetImages.some((img) => img.src === url)) {
-          const img = new Image();
-          img.src = url;
-          assetImages.push(img);
-        }
-      });
-
-      if (assetImages.length === 0) return Promise.resolve();
-
-      let loadedCount = 0;
-      const total = assetImages.length;
-
-      return new Promise<void>((resolve) => {
-        const onAssetDone = () => {
-          loadedCount++;
-          if (!isCancelled) {
-            // Scale progress from 55% to 95% as images decode
-            const imgProgress = 55 + Math.round((loadedCount / total) * 40);
-            targetProgressRef.current = Math.max(targetProgressRef.current, imgProgress);
-          }
-          if (loadedCount >= total) {
-            resolve();
-          }
-        };
-
-        assetImages.forEach((img) => {
-          if (img.complete && img.naturalWidth !== 0) {
-            onAssetDone();
-          } else {
-            img.addEventListener("load", onAssetDone, { once: true });
-            img.addEventListener("error", onAssetDone, { once: true });
-          }
-        });
-
-        // Safety fallback for media assets: max 2.5s
-        setTimeout(resolve, 2500);
-      });
-    };
-
     // Execute asset-gated sequence
     (async () => {
-      targetProgressRef.current = 30;
+      targetProgressRef.current = 40;
       await checkDocumentReady();
       if (isCancelled) return;
 
-      targetProgressRef.current = 60;
+      targetProgressRef.current = 75;
       await checkFontsReady();
-      if (isCancelled) return;
-
-      await checkMediaReady();
       if (isCancelled) return;
 
       allAssetsReadyRef.current = true;
@@ -526,8 +476,7 @@ export function MinimalBootLoader() {
       const timeRatio = Math.min(1, elapsed / MIN_CINEMATIC_DURATION_MS);
       const timeTarget = Math.round(timeRatio * 100);
 
-      // Real asset gating constraint
-      const maxAllowed = allAssetsReadyRef.current ? 100 : Math.min(targetProgressRef.current, 92);
+      const maxAllowed = allAssetsReadyRef.current ? 100 : Math.min(targetProgressRef.current, 95);
       const effectiveTarget = Math.min(maxAllowed, Math.max(targetProgressRef.current, timeTarget));
 
       setProgress((prev) => {
@@ -539,33 +488,31 @@ export function MinimalBootLoader() {
         const diff = effectiveTarget - prev;
         if (diff <= 0) return prev;
 
-        // Controlled cinematic progression step
-        const step = Math.max(1, Math.ceil(diff * 0.12));
+        const step = Math.max(2, Math.ceil(diff * 0.25));
         const next = Math.min(effectiveTarget, prev + step);
 
         if (next >= 100) {
           clearInterval(ticker);
-          // Satisfying 350ms pause at 100% so the user enjoys the complete state before smooth cross-dissolve
           setTimeout(() => {
             if (!isCancelled) {
               dismiss();
             }
-          }, 350);
+          }, 80);
         }
 
         return next;
       });
-    }, 25);
+    }, 20);
 
-    // Global safety timer: ensure loader resolves within 4.0s even on disconnected networks
+    // Global safety timer
     const safetyTimer = setTimeout(() => {
       if (!isCancelled) {
         allAssetsReadyRef.current = true;
         targetProgressRef.current = 100;
         setProgress(100);
-        setTimeout(dismiss, 300);
+        setTimeout(dismiss, 50);
       }
-    }, 4000);
+    }, 1200);
 
     return () => {
       isCancelled = true;
