@@ -93,39 +93,30 @@ status     :: active / defensive evasion & tooling`,
     label: "help",
     cmd: "help",
     output: `Available operational commands:
-  [CONFIGURATION & SPECS]
+  [PORTFOLIO & FOCUS]
     cat /etc/profile      - View profile configuration & technical focus
-    neofetch              - Display system specs & homelab telemetry
+    neofetch              - Display system specs & research environment
     tools                 - View security toolchain & software stack
     whoami                - Display user identity, role & PGP key
-    uptime                - Print homelab cluster uptime
-    uname -a              - Print kernel and architecture info
-    top / ps              - View live processes
 
-  [FILE SYSTEM & FILES]
-    ls [dir]              - List directory contents (e.g. 'ls', 'ls projects', 'ls notes')
+  [SITE EXPLORATION]
+    ls [dir]              - List files & sections (e.g. 'ls', 'ls projects', 'ls notes')
     cat <file>            - View file contents (e.g. 'cat README.md', 'cat r41n.conf')
-    pwd                   - Print current working directory
-
-  [PAGE NAVIGATION]
-    cd <section>          - Navigate to page (e.g. 'cd projects', 'cd writeups', 'cd notes', 'cd research', 'cd about', 'cd contact', 'cd ~')
+    cd <section>          - Navigate to section (e.g. 'cd projects', 'cd writeups', 'cd notes', 'cd contact')
     goto <page>           - Alias for navigation (e.g. 'goto projects', 'goto home')
 
   [PAGE CONTROLS]
-    theme <mode>          - Control theme ('theme dark', 'theme light', 'theme system', 'theme toggle')
-    scroll <target>       - Scroll page ('scroll top', 'scroll bottom', 'scroll projects', 'scroll profile', 'scroll index')
+    theme <mode>          - Control theme ('theme dark', 'theme light', 'theme toggle')
+    scroll <target>       - Scroll page ('scroll top', 'scroll bottom', 'scroll projects')
     search / palette      - Open command palette search modal
-    sidebar / menu        - Toggle mobile navigation drawer
+    sidebar               - Toggle mobile navigation drawer
 
-  [UTILITIES]
-    history               - View session command history
-    copy                  - Copy terminal buffer to clipboard
-    echo <text>           - Echo text to terminal
-    date                  - Print current system date & time
-    socials               - Display GitHub, Twitter & contact links
+  [SESSION]
     clear                 - Clear terminal buffer
-    reboot                - Re-trigger system bootloader
-    reset                 - Reset terminal to initial state`,
+    reset                 - Reset terminal to default configuration
+    copy                  - Copy terminal buffer to clipboard
+    history               - View session command history
+    help                  - Show this manual`,
   },
 ];
 
@@ -190,19 +181,12 @@ const AUTOCOMPLETE_LIST = [
   "ls writeups",
   "ls notes",
   "ls research",
-  "uptime",
-  "uname -a",
-  "date",
-  "pwd",
-  "top",
-  "ps",
   "history",
   "palette",
   "search",
   "sidebar",
   "socials",
   "clear",
-  "reboot",
   "reset",
   "copy",
 ];
@@ -460,28 +444,7 @@ export function TerminalBlock({
         return;
       }
 
-      // 3. REBOOT / RESTART
-      if (
-        lower === "reboot" ||
-        lower === "restart" ||
-        lower === "reboot system" ||
-        lower === "systemctl reboot"
-      ) {
-        output = `[+] Rebooting session and initiating system bootloader...`;
-        setActivePreset("");
-        setTimeout(() => {
-          try {
-            sessionStorage.removeItem("r41n_booted");
-          } catch {
-            // ignore
-          }
-          if (typeof window !== "undefined") {
-            window.dispatchEvent(new CustomEvent("r41n:boot"));
-          }
-        }, 500);
-      }
-
-      // 4. THEME CONTROLS (Toggles terminal & page theme)
+      // 3. THEME CONTROLS (Toggles terminal & page theme)
       else if (mainCmd === "theme") {
         if (lowerArgStr === "dark") {
           setTheme("dark");
@@ -698,35 +661,12 @@ drwxr-xr-x  r41n  staff   4096 cloud-iam-privesc/`;
         setActivePreset("");
       }
 
-      // 13. SYSTEM TELEMETRY & UTILITIES
-      else if (lower.includes("uptime")) {
-        output = `23:45:00 up 42 days, 13:37,  1 user,  load average: 0.08, 0.04, 0.01`;
-        setActivePreset("");
-      } else if (lower.startsWith("uname")) {
-        output = `Linux homelab 6.10.10-hardened-x86_64 #1 SMP PREEMPT_DYNAMIC GNU/Linux`;
-        setActivePreset("");
-      } else if (lower === "date") {
-        output = new Date().toUTCString();
-        setActivePreset("");
-      } else if (lower === "pwd") {
-        output = `/home/r41n`;
-        setActivePreset("");
-      } else if (mainCmd === "echo") {
-        output = argStr;
-        setActivePreset("");
-      } else if (lower === "history") {
+      // 11. SESSION & UTILITIES
+      else if (lower === "history") {
         output =
           history.length > 0
             ? history.map((h, i) => `  ${i + 1}  ${h}`).join("\n")
             : `  1  ${cmd}`;
-        setActivePreset("");
-      } else if (lower === "top" || lower === "ps" || lower === "htop") {
-        output = `PID  USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
-  1  root      20   0  168540  13516   8920 S   0.0   0.0   0:02.14 systemd
-420  r41n      20   0   42180   6240   3810 S   0.2   0.0   1:12.44 zsh
-777  r41n      20   0  892140 184512  64210 S   1.4   0.3   4:20.19 nvim
-1337 r41n      20   0 1420500 482100 125400 S   3.8   0.7  18:42.50 burpsuite
-2048 r41n      20   0  352100  98210  45120 S   0.8   0.1   2:15.02 wazuh-agent`;
         setActivePreset("");
       } else if (lower === "socials" || lower === "contact" || lower === "links") {
         output = `github     :: https://github.com/0xraiven
